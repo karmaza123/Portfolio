@@ -1,0 +1,55 @@
+/* Mara Solis — scroll reveal: 40px Y, opacity; stagger 100ms; product easing */
+
+:root {
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-duration: 0.7s;
+  --motion-stagger: 100ms;
+  --motion-reveal-y: 40px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--motion-reveal-y), 0);
+  filter: blur(0);
+  transition:
+    opacity var(--motion-duration) var(--motion-ease-out),
+    transform var(--motion-duration) var(--motion-ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal--visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal--blur.reveal:not(.reveal--visible) {
+    filter: blur(3px);
+  }
+
+  .reveal--blur.reveal--visible {
+    filter: blur(0);
+    transition:
+      opacity var(--motion-duration) var(--motion-ease-out),
+      transform var(--motion-duration) var(--motion-ease-out),
+      filter 0.55s var(--motion-ease-soft);
+  }
+}

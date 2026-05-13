@@ -1,0 +1,90 @@
+/**
+ * Mara Solis Design System — global chrome (noise, cursor).
+ * Tokens live in index.css :root.
+ */
+
+/* Noise overlay — fixed above app surfaces, 2.2% opacity (see MaraNoise in App) */
+.mara-noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mara-noise {
+    opacity: 0.012;
+  }
+}
+
+.app-stack {
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+}
+
+.app-stack > .mara-router {
+  position: relative;
+  z-index: 6;
+}
+
+/* Custom cursor — circle, difference blend; position via translate3d (JS) */
+.mara-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 30;
+  will-change: transform;
+  transform: translate3d(-100px, -100px, 0);
+  opacity: 1;
+  transition: opacity 0.18s ease;
+}
+
+.mara-cursor-inner {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  transform: scale(0.25);
+  transform-origin: center;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mara-cursor--expanded .mara-cursor-inner {
+  transform: scale(1);
+}
+
+.mara-cursor-dot {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #f0ede6;
+  display: block;
+  flex-shrink: 0;
+}
+
+.mara-cursor--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+html.mara-cursor-on,
+html.mara-cursor-on body,
+html.mara-cursor-on a,
+html.mara-cursor-on button,
+html.mara-cursor-on [role="button"] {
+  cursor: none !important;
+}

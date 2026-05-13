@@ -1,0 +1,84 @@
+/* Mara Solis Design System — tokens (source: Mara_Solis_Design_System.pdf) */
+
+:root {
+  --mara-bg: #0b0b09;
+  --mara-accent: #c8f53f;
+  --mara-text-high: #f0ede6;
+  --mara-text-muted: #7a7870;
+
+  --color-bg: var(--mara-bg);
+  --color-surface: #121210;
+  --color-surface-elevated: #181816;
+  --color-fg: var(--mara-text-high);
+  --color-muted: var(--mara-text-muted);
+  --color-border: rgba(240, 237, 230, 0.08);
+  --color-border-strong: rgba(240, 237, 230, 0.14);
+  --color-lime: var(--mara-accent);
+  --color-lime-ink: #0b0b09;
+  --color-accent-soft: rgba(200, 245, 63, 0.12);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.5rem;
+  --radius-pill: 999px;
+
+  --layout-max: 75rem;
+
+  /* Typography: Display / Technical / Body */
+  --font-display: "Playfair Display", ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono: "DM Mono", ui-monospace, "Cascadia Code", monospace;
+  --font-sans: "Syne", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --mara-ease-product: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout breakpoints (reference for media queries) */
+  --bp-sm: 480px;
+  --bp-md: 720px;
+  --bp-lg: 960px;
+  --bp-xl: 1100px;
+
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--color-fg);
+  background-color: var(--color-bg);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  /* Avoid accidental horizontal scroll from full-bleed sections */
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+/* Technical / label style (apply class where needed) */
+.mara-label {
+  font-family: var(--font-mono);
+}
