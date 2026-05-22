@@ -53,7 +53,6 @@
 .mp-nav-brand {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
   flex-shrink: 0;
   min-width: min-content;
   max-width: 100%;
@@ -75,20 +74,18 @@
   object-position: center;
   transition:
     opacity 0.2s ease,
-    transform 0.2s ease;
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+/* brand-mark.svg exports white strokes — invert on light theme */
+html[data-mp-theme="light"] .mp-nav-brand-mark {
+  filter: invert(1);
 }
 
 .mp-nav-brand:hover .mp-nav-brand-mark {
   opacity: 0.92;
   transform: scale(1.03);
-}
-
-.mp-nav-logo-text {
-  font-family: var(--font-display, "Playfair Display", serif);
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
 }
 
 .mp-nav-end {
@@ -190,18 +187,6 @@ a.mp-nav-status--action:focus-visible {
     padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
     padding-left: max(20px, env(safe-area-inset-left, 0px));
     padding-right: max(20px, env(safe-area-inset-right, 0px));
-  }
-
-  .mp-nav-logo-text {
-    white-space: normal;
-    font-size: 17px;
-    line-height: 1.15;
-    max-width: min(22rem, calc(100vw - 120px));
-  }
-
-  .mp-nav-brand {
-    align-items: flex-start;
-    gap: 12px 16px;
   }
 }
 
@@ -1421,16 +1406,21 @@ html[data-mp-theme="light"][data-mp-contrast="high"] .mp {
 .mp-nav-appearance-summary {
   list-style: none;
   cursor: pointer;
-  font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--mp-muted);
-  padding: 8px 10px;
+  padding: 8px;
   border-radius: 6px;
   transition:
     color 0.2s ease,
     background 0.2s ease;
+}
+
+.mp-nav-appearance-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
 .mp-nav-appearance-summary::-webkit-details-marker {
@@ -1474,8 +1464,7 @@ html[data-mp-theme="light"] .mp-nav-appearance-panel {
   }
 
   .mp-nav-appearance-summary {
-    padding-inline: 8px;
-    font-size: 10px;
+    padding: 8px;
   }
 }
 
@@ -1490,11 +1479,30 @@ html[data-mp-theme="light"] .mp-nav-appearance-panel {
   flex-direction: column;
   justify-content: space-between;
   gap: 14px;
+  width: 100%;
   min-height: 5.5rem;
   padding: 12px 12px 10px;
   border-radius: 12px;
   border: 1px solid var(--mp-border2);
   background: color-mix(in srgb, var(--mp-surface2) 55%, var(--mp-surface));
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.mp-appearance-card:hover {
+  border-color: color-mix(in srgb, var(--mp-border2) 70%, var(--mp-text));
+  background: color-mix(in srgb, var(--mp-surface2) 70%, var(--mp-surface));
+}
+
+.mp-appearance-card:focus-visible {
+  outline: 2px solid var(--mp-accent);
+  outline-offset: 2px;
 }
 
 .mp-appearance-card-top {
@@ -1521,14 +1529,13 @@ html[data-mp-theme="light"] .mp-nav-appearance-panel {
 
 .mp-appearance-switch {
   position: relative;
+  display: block;
   width: 44px;
   height: 26px;
   flex-shrink: 0;
-  padding: 0;
-  border: none;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.12);
-  cursor: pointer;
+  pointer-events: none;
   transition: background 0.2s ease;
 }
 
@@ -1536,11 +1543,11 @@ html[data-mp-theme="light"] .mp-appearance-switch {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.mp-appearance-switch[aria-checked="true"] {
+.mp-appearance-card[aria-checked="true"] .mp-appearance-switch {
   background: #121826;
 }
 
-html[data-mp-theme="light"] .mp-appearance-switch[aria-checked="true"] {
+html[data-mp-theme="light"] .mp-appearance-card[aria-checked="true"] .mp-appearance-switch {
   background: #0b0b09;
 }
 
@@ -1561,11 +1568,6 @@ html[data-mp-theme="light"] .mp-appearance-switch-thumb {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
-.mp-appearance-switch[aria-checked="true"] .mp-appearance-switch-thumb {
+.mp-appearance-card[aria-checked="true"] .mp-appearance-switch-thumb {
   transform: translateX(18px);
-}
-
-.mp-appearance-switch:focus-visible {
-  outline: 2px solid var(--mp-accent);
-  outline-offset: 3px;
 }

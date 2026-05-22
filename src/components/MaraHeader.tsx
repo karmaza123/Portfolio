@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { AppearanceToggles } from "./AppearanceToggles";
+import { AppearanceToggles, IconDisplay } from "./AppearanceToggles";
 import { BrandMark } from "./BrandMark";
 import { CONTACT_MAILTO } from "../constants/contact";
 import { useIsMobileLayout } from "../hooks/useIsMobileLayout";
@@ -55,9 +55,8 @@ export function MaraHeader({ active = "home" }: MaraHeaderProps) {
   return (
     <>
       <nav className="mp-nav" aria-label="Primary">
-        <Link to="/" className="mp-nav-brand" aria-label="D. Karmazanashvili — Home" onClick={close}>
+        <Link to="/" className="mp-nav-brand" aria-label="Home" onClick={close}>
           <BrandMark className="mp-nav-brand-mark" />
-          <span className="mp-nav-logo-text">D. Karmazanashvili</span>
         </Link>
 
         <ul className="mp-nav-links mp-nav-links--desktop">
@@ -84,7 +83,9 @@ export function MaraHeader({ active = "home" }: MaraHeaderProps) {
 
         <div className="mp-nav-end">
           <details ref={appearanceDetailsRef} className="mp-nav-appearance">
-            <summary className="mp-nav-appearance-summary mara-label">Display</summary>
+            <summary className="mp-nav-appearance-summary" aria-label="Display preferences">
+              <IconDisplay className="mp-nav-appearance-icon" />
+            </summary>
             <div className="mp-nav-appearance-panel">
               <AppearanceToggles />
             </div>
@@ -108,10 +109,10 @@ export function MaraHeader({ active = "home" }: MaraHeaderProps) {
           <a
             href={CONTACT_MAILTO}
             className="mp-nav-status mp-nav-status--action"
-            aria-label="Email Dimitri — available for work"
+            aria-label="Email Dimitri — available"
           >
             <span className="mp-status-dot" aria-hidden />
-            Available for work
+            Available
           </a>
         </div>
       </nav>

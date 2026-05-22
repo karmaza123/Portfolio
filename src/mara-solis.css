@@ -3,7 +3,7 @@
  * Tokens live in index.css :root.
  */
 
-/* Noise overlay — fixed above app surfaces, 2.2% opacity (see MaraNoise in App) */
+/* Noise overlay — fixed above app surfaces (see App.tsx). */
 .mara-noise {
   position: fixed;
   inset: 0;
@@ -74,6 +74,28 @@
   background: #f0ede6;
   display: block;
   flex-shrink: 0;
+}
+
+.mara-cursor-slash {
+  display: none;
+  width: 3px;
+  height: 30px;
+  background: #f0ede6;
+  border-radius: 2px;
+  transform: rotate(24deg);
+  flex-shrink: 0;
+}
+
+.mara-cursor--text .mara-cursor-inner {
+  transform: scale(1);
+}
+
+.mara-cursor--text .mara-cursor-dot {
+  display: none;
+}
+
+.mara-cursor--text .mara-cursor-slash {
+  display: block;
 }
 
 .mara-cursor--hidden {
