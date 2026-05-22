@@ -19,6 +19,22 @@ function IconLightMode({ className }: { className?: string }) {
   );
 }
 
+export function IconDisplay({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <circle cx="4" cy="14" r="2" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="12" cy="6" r="2" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="20" cy="16" r="2" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
 function IconContrast({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -44,38 +60,38 @@ export function AppearanceToggles() {
   return (
     <div className="mp-appearance" role="group" aria-label="Display preferences">
       <div className="mp-appearance-grid">
-        <div className="mp-appearance-card">
+        <button
+          type="button"
+          className="mp-appearance-card"
+          role="switch"
+          aria-checked={lightOn}
+          aria-label="Light mode"
+          onClick={toggleLight}
+        >
           <div className="mp-appearance-card-top">
             <IconLightMode className="mp-appearance-icon" />
-            <button
-              type="button"
-              className="mp-appearance-switch"
-              role="switch"
-              aria-checked={lightOn}
-              aria-label="Light mode"
-              onClick={toggleLight}
-            >
+            <span className="mp-appearance-switch" aria-hidden>
               <span className="mp-appearance-switch-thumb" />
-            </button>
+            </span>
           </div>
           <span className="mp-appearance-card-title">Light mode</span>
-        </div>
-        <div className="mp-appearance-card">
+        </button>
+        <button
+          type="button"
+          className="mp-appearance-card"
+          role="switch"
+          aria-checked={highContrast}
+          aria-label="High contrast"
+          onClick={toggleContrast}
+        >
           <div className="mp-appearance-card-top">
             <IconContrast className="mp-appearance-icon" />
-            <button
-              type="button"
-              className="mp-appearance-switch"
-              role="switch"
-              aria-checked={highContrast}
-              aria-label="High contrast"
-              onClick={toggleContrast}
-            >
+            <span className="mp-appearance-switch" aria-hidden>
               <span className="mp-appearance-switch-thumb" />
-            </button>
+            </span>
           </div>
           <span className="mp-appearance-card-title">Contrast</span>
-        </div>
+        </button>
       </div>
     </div>
   );

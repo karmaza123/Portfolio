@@ -9,21 +9,21 @@ import { WorkPage } from "./screens/WorkPage";
 function App() {
   return (
     <MaraAppearanceProvider>
-    <div className="app-stack">
-      <div className="mara-noise" aria-hidden />
-      <MaraChrome />
-      <div className="mara-router">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<MaraHomePage />} />
-            <Route path="/work" element={<WorkPage />} />
-            <Route path="/resume" element={<ResumeScreen />} />
-            <Route path="/project/:slug" element={<CaseStudyScreen />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
+      <div className="app-stack">
+        <div className="mara-noise" aria-hidden />
+        <MaraChrome />
+        <div className="mara-router">
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<MaraHomePage />} />
+              <Route path="/work" element={<WorkPage />} />
+              <Route path="/resume" element={<ResumeScreen />} />
+              <Route path="/project/:slug" element={<CaseStudyScreen />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
       </div>
-    </div>
     </MaraAppearanceProvider>
   );
 }
