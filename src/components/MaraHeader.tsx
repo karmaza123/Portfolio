@@ -82,6 +82,15 @@ export function MaraHeader({ active = "home" }: MaraHeaderProps) {
         </ul>
 
         <div className="mp-nav-end">
+          <a
+            href={CONTACT_MAILTO}
+            className="mp-nav-status mp-nav-status--action"
+            aria-label="Email Dimitri — available"
+          >
+            <span className="mp-status-dot" aria-hidden />
+            Available
+          </a>
+
           <details ref={appearanceDetailsRef} className="mp-nav-appearance">
             <summary className="mp-nav-appearance-summary" aria-label="Display preferences">
               <IconDisplay className="mp-nav-appearance-icon" />
@@ -105,15 +114,6 @@ export function MaraHeader({ active = "home" }: MaraHeaderProps) {
               <span />
             </span>
           </button>
-
-          <a
-            href={CONTACT_MAILTO}
-            className="mp-nav-status mp-nav-status--action"
-            aria-label="Email Dimitri — available"
-          >
-            <span className="mp-status-dot" aria-hidden />
-            Available
-          </a>
         </div>
       </nav>
 
