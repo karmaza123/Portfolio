@@ -1,6 +1,7 @@
 ﻿/* Mara-style home — ported from portfolio.html structure */
 
 .mp {
+  --mp-scroll-offset: 5.5rem;
   --mp-bg: #0b0b09;
   --mp-surface: #131310;
   --mp-surface2: #1c1c18;
@@ -423,6 +424,14 @@ a.mp-nav-status--action:focus-visible {
 }
 
 /* —— Sections —— */
+.mp-work,
+.mp-about,
+.mp-clients,
+.mp-process,
+.mp-contact {
+  scroll-margin-top: var(--mp-scroll-offset);
+}
+
 .mp-work,
 .mp-about,
 .mp-clients,
