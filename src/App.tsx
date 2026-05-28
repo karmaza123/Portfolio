@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { ScrollToHash } from "./components/ScrollToHash";
 import { MaraChrome } from "./components/MaraChrome";
 import { MaraAppearanceProvider } from "./context/MaraAppearance";
 import { CaseStudyScreen } from "./screens/CaseStudyScreen";
@@ -14,6 +15,7 @@ function App() {
         <MaraChrome />
         <div className="mara-router">
           <BrowserRouter>
+            <ScrollToHash />
             <Routes>
               <Route path="/" element={<MaraHomePage />} />
               <Route path="/work" element={<WorkPage />} />

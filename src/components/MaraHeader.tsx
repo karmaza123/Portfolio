@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AppearanceToggles, IconDisplay } from "./AppearanceToggles";
 import { BrandMark } from "./BrandMark";
 import { CONTACT_MAILTO } from "../constants/contact";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 import { useIsMobileLayout } from "../hooks/useIsMobileLayout";
 
 export type MaraHeaderActive = "home" | "resume" | "work";
@@ -15,7 +16,12 @@ export function MaraHeader({ active = "home" }: MaraHeaderProps) {
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobileLayout();
   const drawerId = useId();
+  const burgerRef = useRef<HTMLButtonElement>(null);
+  const drawerPanelRef = useRef<HTMLDivElement>(null);
   const appearanceDetailsRef = useRef<HTMLDetailsElement>(null);
+  const appearanceSummaryRef = useRef<HTMLElement>(null);
+  const appearancePanelRef = useRef<HTMLDivElement>(null);
+  const [appearanceOpen, setAppearanceOpen] = useState(false);
 
   useEffect(() => {
     if (!isMobile) setOpen(false);
@@ -31,11 +37,38 @@ export function MaraHeader({ active = "home" }: MaraHeaderProps) {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key !== "Escape") return;
+      if (appearanceDetailsRef.current?.open) {
+        appearanceDetailsRef.current.open = false;
+        setAppearanceOpen(false);
+        appearanceSummaryRef.current?.focus();
+        return;
+      }
+      if (open) {
+        setOpen(false);
+        burgerRef.current?.focus();
+      }
     };
-    if (open) window.addEventListener("keydown", onKey);
+    window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
+
+  useEffect(() => {
+    const el = appearanceDetailsRef.current;
+    if (!el) return;
+    const onToggle = () => setAppearanceOpen(el.open);
+    el.addEventListener("toggle", onToggle);
+    return () => el.removeEventListener("toggle", onToggle);
+  }, []);
+
+  useFocusTrap(drawerPanelRef, open && isMobile);
+  useFocusTrap(appearanceDetailsRef, appearanceOpen, { focusFirst: false });
+
+  useEffect(() => {
+    if (!appearanceOpen || !appearancePanelRef.current) return;
+    const first = appearancePanelRef.current.querySelector<HTMLElement>("button, input, [href]");
+    first?.focus();
+  }, [appearanceOpen]);
 
   useEffect(() => {
     const el = appearanceDetailsRef.current;
@@ -50,7 +83,10 @@ export function MaraHeader({ active = "home" }: MaraHeaderProps) {
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, []);
 
-  const close = () => setOpen(false);
+  const close = () => {
+    setOpen(false);
+    burgerRef.current?.focus();
+  };
 
   return (
     <>
@@ -92,21 +128,32 @@ export function MaraHeader({ active = "home" }: MaraHeaderProps) {
           </a>
 
           <details ref={appearanceDetailsRef} className="mp-nav-appearance">
-            <summary className="mp-nav-appearance-summary" aria-label="Display preferences">
+            <summary
+              ref={appearanceSummaryRef}
+              className="mp-nav-appearance-summary"
+              aria-label="Display preferences"
+              aria-expanded={appearanceOpen}
+            >
               <IconDisplay className="mp-nav-appearance-icon" />
             </summary>
-            <div className="mp-nav-appearance-panel">
+            <div ref={appearancePanelRef} className="mp-nav-appearance-panel" role="dialog" aria-label="Display preferences">
               <AppearanceToggles />
             </div>
           </details>
 
           <button
+            ref={burgerRef}
             type="button"
             className="mp-nav-burger"
             aria-expanded={open}
             aria-controls={drawerId}
             aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => {
+              setOpen((v) => {
+                if (v) burgerRef.current?.focus();
+                return !v;
+              });
+            }}
           >
             <span className="mp-nav-burger-lines" aria-hidden>
               <span />
@@ -124,7 +171,13 @@ export function MaraHeader({ active = "home" }: MaraHeaderProps) {
         inert={!open}
       >
         <button type="button" className="mp-nav-drawer-scrim" aria-label="Close menu" onClick={close} />
-        <div className="mp-nav-drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
+        <div
+          ref={drawerPanelRef}
+          className="mp-nav-drawer-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+        >
           <div className="mp-nav-drawer-head">
             <span className="mp-section-label">Menu</span>
             <button type="button" className="mp-nav-drawer-close" onClick={close} aria-label="Close menu">

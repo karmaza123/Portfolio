@@ -106,8 +106,10 @@ export function MaraHomePage() {
               <span className="mp-stat-label">Curiosity</span>
             </div>
           </div>
-          <a href="#work" className="mp-hero-cta">
-            View selected work <span className="mp-hero-cta-arrow">↗</span>
+          <a href="#work" className="mp-hero-cta" aria-describedby="work-heading">
+            View selected work <span className="mp-hero-cta-arrow" aria-hidden>
+              ↗
+            </span>
           </a>
         </div>
       </section>
@@ -133,11 +135,13 @@ export function MaraHomePage() {
         </div>
       </div>
 
-      <section id="work" className="mp-work">
+      <section id="work" className="mp-work" aria-labelledby="work-heading">
         <Reveal className="mp-section-header-wrap">
           <div className="mp-section-header">
             <span className="mp-section-label">[ 01 — Selected Work ]</span>
-            <h2 className="mp-section-title">Projects</h2>
+            <h2 id="work-heading" className="mp-section-title">
+              Projects
+            </h2>
           </div>
         </Reveal>
         <ProjectsGrid projects={previewProjects} />
