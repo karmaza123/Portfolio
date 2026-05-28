@@ -1,9 +1,14 @@
+import type { ProjectFilterCategory } from "../constants/projectFilters";
+
 /** Home list — matches case study slugs */
 export type HomeProject = {
   num: string;
   title: string;
   slug: string;
+  /** Shown on the project row */
   tags: string[];
+  /** Used by the category filter only */
+  categories: ProjectFilterCategory[];
   year: string;
   award?: string;
 };
@@ -14,6 +19,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     title: "Artemis museum, UI Design",
     slug: "artemis-museum-ui-design",
     tags: ["UI/UX Design", "Museum"],
+    categories: ["UI/UX"],
     year: "2024",
   },
   {
@@ -21,6 +27,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     title: "Artemis museum, Brand Identity Guidelines",
     slug: "artemis-museum-brand-identity",
     tags: ["Brand", "Guidelines"],
+    categories: ["Branding"],
     year: "2024",
     award: "Identity",
   },
@@ -29,6 +36,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     title: "Rkali Brand Design",
     slug: "rkali-brand-design",
     tags: ["Brand", "Packaging"],
+    categories: ["Branding"],
     year: "2023",
   },
   {
@@ -36,6 +44,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     title: "Sportsbook, Quick bet concept",
     slug: "sportsbook-quick-bet-concept",
     tags: ["Product", "Gaming"],
+    categories: ["Product"],
     year: "2023",
   },
   {
@@ -43,6 +52,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     title: "Sportsbook, Ticket History",
     slug: "sportsbook-ticket-history",
     tags: ["UI/UX", "Fintech"],
+    categories: ["UI/UX"],
     year: "2023",
   },
   {
@@ -50,6 +60,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     title: "ArcoHouse, Warehouse Management System",
     slug: "arcohouse-warehouse-management-system",
     tags: ["SaaS", "B2B"],
+    categories: ["B2B / SaaS"],
     year: "2022",
   },
   {
@@ -57,6 +68,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     title: "Igaming UI design",
     slug: "igaming-ui-design",
     tags: ["UI Kit", "Gaming"],
+    categories: ["UI/UX"],
     year: "2022",
   },
   {
@@ -64,6 +76,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     title: "Hotel Management System",
     slug: "hotel-management-system",
     tags: ["SaaS", "Hospitality"],
+    categories: ["B2B / SaaS"],
     year: "2022",
   },
   {
@@ -71,6 +84,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     title: "Bank UI concept",
     slug: "bank-ui-concept",
     tags: ["Mobile", "Fintech"],
+    categories: ["Mobile"],
     year: "2021",
   },
   {
@@ -78,6 +92,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     title: "Valo Trust, Banking Application",
     slug: "valo-trust-banking-application",
     tags: ["Product", "Banking"],
+    categories: ["Product"],
     year: "2021",
   },
 ];

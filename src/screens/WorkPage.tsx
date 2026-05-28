@@ -1,11 +1,24 @@
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { MaraHeader } from "../components/MaraHeader";
+import { ProjectTagFilter } from "../components/ProjectTagFilter";
 import { ProjectsGrid } from "../components/ProjectsGrid";
 import { Reveal } from "../components/Reveal";
 import { HOME_PROJECTS } from "../data/homeProjects";
+import {
+  PROJECT_FILTER_CATEGORIES,
+  filterProjectsByCategory,
+  type ProjectFilterCategory,
+} from "../utils/projectTags";
 import "./MaraHomePage.css";
 
 export function WorkPage() {
+  const [activeCategory, setActiveCategory] = useState<ProjectFilterCategory | null>(null);
+  const filteredProjects = useMemo(
+    () => filterProjectsByCategory(HOME_PROJECTS, activeCategory),
+    [activeCategory],
+  );
+
   return (
     <div className="mp">
       <MaraHeader active="work" />
@@ -20,7 +33,16 @@ export function WorkPage() {
               </h1>
             </div>
           </Reveal>
-          <ProjectsGrid projects={HOME_PROJECTS} />
+          <ProjectTagFilter
+            categories={PROJECT_FILTER_CATEGORIES}
+            activeCategory={activeCategory}
+            onChange={setActiveCategory}
+          />
+          {filteredProjects.length > 0 ? (
+            <ProjectsGrid projects={filteredProjects} />
+          ) : (
+            <p className="mp-project-filter-empty">No projects match this category.</p>
+          )}
           <p className="mp-work-back-wrap">
             <Link to="/" className="mp-work-back-link">
               ← Back to home

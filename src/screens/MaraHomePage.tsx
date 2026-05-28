@@ -1,11 +1,18 @@
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { CONTACT_EMAIL, CONTACT_MAILTO } from "../constants/contact";
 import { HeroCanvas } from "../components/HeroCanvas";
 import { MaraHeader } from "../components/MaraHeader";
+import { ProjectTagFilter } from "../components/ProjectTagFilter";
 import { ProjectsGrid } from "../components/ProjectsGrid";
 import { Reveal } from "../components/Reveal";
 import { useIsMobileLayout } from "../hooks/useIsMobileLayout";
 import { HOME_PROJECTS } from "../data/homeProjects";
+import {
+  PROJECT_FILTER_CATEGORIES,
+  filterProjectsByCategory,
+  type ProjectFilterCategory,
+} from "../utils/projectTags";
 import "./MaraHomePage.css";
 
 const MARQUEE_ITEMS = [
@@ -64,11 +71,16 @@ const MOBILE_PROJECT_LIMIT = 4;
 
 export function MaraHomePage() {
   const isMobile = useIsMobileLayout();
+  const [activeCategory, setActiveCategory] = useState<ProjectFilterCategory | null>(null);
+  const filteredProjects = useMemo(
+    () => filterProjectsByCategory(HOME_PROJECTS, activeCategory),
+    [activeCategory],
+  );
   const previewProjects =
-    isMobile && HOME_PROJECTS.length > MOBILE_PROJECT_LIMIT
-      ? HOME_PROJECTS.slice(0, MOBILE_PROJECT_LIMIT)
-      : HOME_PROJECTS;
-  const showViewMore = isMobile && HOME_PROJECTS.length > MOBILE_PROJECT_LIMIT;
+    isMobile && filteredProjects.length > MOBILE_PROJECT_LIMIT
+      ? filteredProjects.slice(0, MOBILE_PROJECT_LIMIT)
+      : filteredProjects;
+  const showViewMore = isMobile && filteredProjects.length > MOBILE_PROJECT_LIMIT;
 
   return (
     <div className="mp">
@@ -144,7 +156,16 @@ export function MaraHomePage() {
             </h2>
           </div>
         </Reveal>
-        <ProjectsGrid projects={previewProjects} />
+        <ProjectTagFilter
+          categories={PROJECT_FILTER_CATEGORIES}
+          activeCategory={activeCategory}
+          onChange={setActiveCategory}
+        />
+        {previewProjects.length > 0 ? (
+          <ProjectsGrid projects={previewProjects} />
+        ) : (
+          <p className="mp-project-filter-empty">No projects match this category.</p>
+        )}
         {showViewMore ? (
           <div className="mp-project-view-more">
             <Link to="/work" className="mp-view-more">

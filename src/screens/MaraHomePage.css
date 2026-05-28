@@ -498,6 +498,60 @@ a.mp-nav-status--action:focus-visible {
   line-height: 1;
 }
 
+/* —— Project filters —— */
+.mp-project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 40px;
+}
+
+.mp-project-filter-btn {
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mp-muted);
+  border: 1px solid var(--mp-border);
+  background: transparent;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.mp-project-filter-btn:hover {
+  color: var(--mp-text);
+  border-color: var(--mp-border2);
+}
+
+.mp-project-filter-btn:focus-visible {
+  outline: 2px solid var(--mp-accent);
+  outline-offset: 2px;
+}
+
+.mp-project-filter-btn--active {
+  color: var(--mp-bg);
+  background: var(--mp-accent);
+  border-color: var(--mp-accent);
+}
+
+.mp-project-filter-btn--active:hover {
+  color: var(--mp-bg);
+  border-color: var(--mp-accent2);
+  background: var(--mp-accent2);
+}
+
+.mp-project-filter-empty {
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--mp-muted);
+  margin: 0 0 48px;
+}
+
 /* —— Project list —— */
 .mp-projects-grid {
   display: grid;
@@ -570,7 +624,7 @@ a.mp-nav-status--action:focus-visible {
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1;
-  margin: 0 0 8px;
+  margin: 0 0 20px;
   transition: color 0.2s ease;
 }
 

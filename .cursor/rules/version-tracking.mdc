@@ -1,0 +1,22 @@
+---
+description: Label every change batch as a version and keep VERSIONS.md updated
+alwaysApply: true
+---
+
+# Version tracking
+
+When making or describing changes to this portfolio:
+
+1. **Assign a version** for each logical batch of work (e.g. `v1.3`). Increment the **minor** number per session or PR-sized change (`v1.2` → `v1.3`). Bump **major** only for large rewrites or launches (`v1.x` → `v2.0`).
+
+2. **Refer to versions in conversation** — say "in **v1.3**" when reporting fixes, reviews, or what to test. Do not only say "the latest commit."
+
+3. **Update `VERSIONS.md`** at the repo root after each version:
+   - Version id, date (YYYY-MM-DD)
+   - Short title
+   - Bullet summary of what changed
+   - Git commit hash when committed (e.g. `34eb0eb`)
+
+4. **Commit messages** may include the version in the subject when the user commits, e.g. `v1.3: Fix mobile menu focus trap`.
+
+5. Before starting new work, read `VERSIONS.md` to pick the next version number.
