@@ -1,7 +1,8 @@
-import type { CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { Reveal } from "../components/Reveal";
-import { getCaseStudy } from "../data/caseStudyContent";
+import { getCaseStudy, type GalleryImage } from "../data/caseStudyContent";
+import { RkaliCaseStudy } from "./RkaliCaseStudy";
 import "./CaseStudyScreen.css";
 
 const WORKFLOW_STEPS = [
@@ -43,15 +44,61 @@ function LogoMark({ className }: { className?: string }) {
 export function CaseStudyScreen() {
   const { slug } = useParams();
   const data = getCaseStudy(slug);
+  const [zoom, setZoom] = useState<GalleryImage | null>(null);
+
+  // Close the lightbox on Escape and lock body scroll while it's open.
+  useEffect(() => {
+    if (!zoom) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setZoom(null);
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [zoom]);
 
   if (!data) {
     return <Navigate to="/" replace />;
+  }
+
+  if (slug === "rkali-brand-design") {
+    return <RkaliCaseStudy />;
   }
 
   const themeStyle = {
     ...(data.accentGold ? { "--aa-gold": data.accentGold } : {}),
     ...(data.accentTeal ? { "--aa-teal": data.accentTeal } : {}),
   } as CSSProperties;
+
+  const renderGalleryImage = (img: GalleryImage, i: number) => (
+    <Reveal
+      key={img.src}
+      staggerIndex={i}
+      className={
+        img.span === "full" ? "aa-gallery-item aa-gallery-item--full" : "aa-gallery-item"
+      }
+    >
+      <button
+        type="button"
+        className="aa-gallery-btn"
+        onClick={() => setZoom(img)}
+        aria-label={`Enlarge image: ${img.alt}`}
+      >
+        <img
+          className="aa-gallery-image"
+          src={img.src}
+          alt={img.alt}
+          width={img.w}
+          height={img.h}
+          loading="lazy"
+        />
+      </button>
+    </Reveal>
+  );
 
   return (
     <div className="aa" style={themeStyle}>
@@ -71,59 +118,96 @@ export function CaseStudyScreen() {
       <Reveal blur className="aa-hero-reveal">
         <section className="aa-hero aa-section">
           <h1 className="aa-title">{data.heroTitle}</h1>
-          <div className="aa-collage" aria-hidden>
-            <div className="aa-collage-piece aa-collage-piece--1" />
-            <div className="aa-collage-piece aa-collage-piece--2" />
-            <div className="aa-collage-piece aa-collage-piece--3" />
-            <div className="aa-collage-piece aa-collage-piece--4" />
-          </div>
+          {data.heroImage ? (
+            <figure className="aa-hero-figure">
+              <img
+                className={
+                  data.heroCrop ? "aa-hero-image aa-hero-image--crop" : "aa-hero-image"
+                }
+                src={data.heroImage}
+                alt={data.heroImageAlt ?? ""}
+                loading="eager"
+              />
+            </figure>
+          ) : !data.gallery ? (
+            <div className="aa-collage" aria-hidden>
+              <div className="aa-collage-piece aa-collage-piece--1" />
+              <div className="aa-collage-piece aa-collage-piece--2" />
+              <div className="aa-collage-piece aa-collage-piece--3" />
+              <div className="aa-collage-piece aa-collage-piece--4" />
+            </div>
+          ) : null}
           <div className="aa-prose">
             <p>{data.intro}</p>
           </div>
-          <div className="aa-split">
-            <div>
-              <h2 className="aa-h2">{data.purposeHeading}</h2>
-              <ul className="aa-list">
-                {data.purposePoints.map((line) => (
-                  <li key={line}>{line}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="aa-stationery">
-              <div className="aa-envelope aa-envelope--front">
-                <span className="aa-envelope-logo">{data.envelopeWord}</span>
-                <span className="aa-envelope-meta">{data.envelopeMeta}</span>
+          {!data.hidePurpose && (
+            <div className="aa-split">
+              <div>
+                <h2 className="aa-h2">{data.purposeHeading}</h2>
+                <ul className="aa-list">
+                  {data.purposePoints.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
               </div>
-              <div className="aa-envelope aa-envelope--back">
-                <span className="aa-envelope-back-line" />
-                <span className="aa-envelope-back-line" />
+              <div className="aa-stationery">
+                <div className="aa-envelope aa-envelope--front">
+                  <span className="aa-envelope-logo">{data.envelopeWord}</span>
+                  <span className="aa-envelope-meta">{data.envelopeMeta}</span>
+                </div>
+                <div className="aa-envelope aa-envelope--back">
+                  <span className="aa-envelope-back-line" />
+                  <span className="aa-envelope-back-line" />
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </section>
       </Reveal>
 
-      <Reveal delayMs={60} className="aa-workflow-reveal">
-        <section className="aa-workflow aa-section">
-          <h2 className="aa-workflow-title">Workflow</h2>
-          <ol className="aa-steps">
-            {WORKFLOW_STEPS.map((label, i) => (
-              <li key={label} className="aa-step">
-                <Reveal staggerIndex={i} className="aa-step-reveal">
-                  <>
-                    <span className="aa-step-node">{i + 1}</span>
-                    <span className="aa-step-label">{label}</span>
-                  </>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
-        </section>
-      </Reveal>
+      {data.narrative?.map((sec, i) => (
+        <Reveal key={sec.heading} delayMs={i * 40} className="aa-narrative-reveal">
+          <section className="aa-section aa-narrative">
+            <h2 className="aa-h2">{sec.heading}</h2>
+            <p>{sec.body}</p>
+          </section>
+        </Reveal>
+      ))}
 
+      {!data.hideWorkflow && (
+        <Reveal delayMs={60} className="aa-workflow-reveal">
+          <section className="aa-workflow aa-section">
+            <h2 className="aa-workflow-title">Workflow</h2>
+            <ol className="aa-steps">
+              {(data.workflowSteps ?? WORKFLOW_STEPS).map((label, i) => (
+                <li key={label} className="aa-step">
+                  <Reveal staggerIndex={i} className="aa-step-reveal">
+                    <>
+                      <span className="aa-step-node">{i + 1}</span>
+                      <span className="aa-step-label">{label}</span>
+                    </>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
+          </section>
+        </Reveal>
+      )}
+
+      {!data.hideGuidelines && (
       <Reveal delayMs={40} className="aa-logo-block-reveal">
         <section className="aa-section aa-logo-block">
           <h2 className="aa-h2 aa-h2--light">{data.guidelinesHeading}</h2>
+          {data.guidelinesImage ? (
+            <figure className="aa-guidelines-figure">
+              <img
+                className="aa-guidelines-image"
+                src={data.guidelinesImage}
+                alt={data.guidelinesImageAlt ?? ""}
+                loading="lazy"
+              />
+            </figure>
+          ) : (
           <div className="aa-logo-grid">
             <Reveal staggerIndex={0} className="aa-logo-cell">
           <div className="aa-logo-panel aa-logo-panel--grid">
@@ -179,12 +263,38 @@ export function CaseStudyScreen() {
           </div>
             </Reveal>
         </div>
+          )}
         </section>
       </Reveal>
+      )}
 
       <Reveal className="aa-assets-reveal">
         <section className="aa-section aa-assets">
           <p className="aa-assets-lede">{data.assetLede}</p>
+          {data.gallery ? (
+            data.galleryColumns === 2 ? (
+              <div className="aa-gallery aa-gallery--cols2">
+                <div className="aa-col">
+                  {data.gallery
+                    .filter((g) => g.col === 1)
+                    .map(renderGalleryImage)}
+                </div>
+                <div className="aa-col">
+                  {data.gallery
+                    .filter((g) => g.col !== 1)
+                    .map(renderGalleryImage)}
+                </div>
+              </div>
+            ) : data.galleryLayout === "flow" ? (
+              <div className="aa-gallery aa-gallery--flow">
+                {data.gallery.map(renderGalleryImage)}
+              </div>
+            ) : (
+              <div className="aa-gallery">
+                {data.gallery.map(renderGalleryImage)}
+              </div>
+            )
+          ) : (
           <div className="aa-assets-grid">
             <Reveal staggerIndex={0} className="aa-asset-reveal aa-asset-reveal--mag">
               <article className="aa-asset aa-asset--mag">
@@ -232,6 +342,7 @@ export function CaseStudyScreen() {
               </article>
             </Reveal>
           </div>
+          )}
         </section>
       </Reveal>
 
@@ -242,6 +353,26 @@ export function CaseStudyScreen() {
           </Link>
         </footer>
       </Reveal>
+
+      {zoom && (
+        <div
+          className="aa-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={zoom.alt}
+          onClick={() => setZoom(null)}
+        >
+          <button
+            type="button"
+            className="aa-lightbox-close"
+            onClick={() => setZoom(null)}
+            aria-label="Close image viewer"
+          >
+            ×
+          </button>
+          <img className="aa-lightbox-img" src={zoom.src} alt={zoom.alt} />
+        </div>
+      )}
     </div>
   );
 }
