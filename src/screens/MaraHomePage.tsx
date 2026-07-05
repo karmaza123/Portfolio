@@ -86,6 +86,7 @@ export function MaraHomePage() {
     <div className="mp">
       <MaraHeader active="home" />
 
+      <main id="main-content" tabIndex={-1}>
       <section className="mp-hero" aria-label="Introduction">
         <HeroCanvas />
         <div className="mp-hero-bg-text" aria-hidden>
@@ -293,6 +294,7 @@ export function MaraHomePage() {
           </a>
         </div>
       </section>
+      </main>
 
       <footer className="mp-footer">
         <p className="mp-footer-left">© {new Date().getFullYear()} Dimitri Karmazanashvili</p>

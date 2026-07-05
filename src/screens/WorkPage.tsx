@@ -23,7 +23,7 @@ export function WorkPage() {
     <div className="mp">
       <MaraHeader active="work" />
 
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <section className="mp-work" aria-labelledby="mp-work-page-title">
           <Reveal className="mp-section-header-wrap">
             <div className="mp-section-header">

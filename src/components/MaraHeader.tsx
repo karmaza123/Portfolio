@@ -90,6 +90,20 @@ export function MaraHeader({ active = "home" }: MaraHeaderProps) {
 
   return (
     <>
+      <a
+        className="mp-skip-link"
+        href="#main-content"
+        onClick={(e) => {
+          const main = document.getElementById("main-content");
+          if (!main) return;
+          e.preventDefault();
+          main.focus({ preventScroll: true });
+          main.scrollIntoView({ block: "start" });
+        }}
+      >
+        Skip to content
+      </a>
+
       <nav className="mp-nav" aria-label="Primary">
         <Link to="/" className="mp-nav-brand" aria-label="Home" onClick={close}>
           <BrandMark className="mp-nav-brand-mark" />
