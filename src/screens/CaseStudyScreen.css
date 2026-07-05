@@ -825,8 +825,441 @@
   margin-top: 0.25rem;
 }
 
+/* Real exported imagery (projects that provide heroImage/guidelinesImage/gallery) */
+.aa-hero-figure {
+  margin: 0 auto var(--space-10, 2.5rem);
+  max-width: 52rem;
+}
+
+.aa-hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Tall UI screenshots: show as a cropped banner teasing the top of the screen. */
+.aa-hero-image--crop {
+  height: min(62vh, 30rem);
+  object-fit: cover;
+  object-position: top center;
+}
+
+.aa-guidelines-figure {
+  margin: 0;
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+.aa-guidelines-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0f0f0e;
+}
+
+.aa-gallery {
+  max-width: 68rem;
+  margin: 0 auto;
+  column-count: 3;
+  column-gap: var(--space-4, 1rem);
+}
+
+@media (max-width: 900px) {
+  .aa-gallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .aa-gallery {
+    column-count: 1;
+  }
+}
+
+.aa-gallery-item {
+  break-inside: avoid;
+  margin-bottom: var(--space-4, 1rem);
+}
+
+.aa-gallery-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0f0f0e;
+  transition:
+    transform 0.35s var(--motion-ease-out, ease),
+    box-shadow 0.35s var(--motion-ease-out, ease),
+    border-color 0.25s var(--motion-ease-soft, ease);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .aa-gallery-item:hover .aa-gallery-image {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+}
+
+/* Two-column gallery — mirrors Figma layouts built as a fixed 2-up grid */
+.aa-gallery--cols2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4, 1rem);
+  max-width: 68rem;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.aa-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 1rem);
+  min-width: 0;
+}
+
+.aa-gallery--cols2 .aa-gallery-item {
+  margin-bottom: 0;
+}
+
+@media (max-width: 640px) {
+  .aa-gallery--cols2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Flow gallery — a wrapping row of screens; "full" items break to full width */
+.aa-gallery--flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4, 1rem);
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 68rem;
+  margin: 0 auto;
+}
+
+.aa-gallery--flow .aa-gallery-item {
+  margin-bottom: 0;
+  flex: 1 1 170px;
+  max-width: 220px;
+}
+
+.aa-gallery--flow .aa-gallery-item--full {
+  flex: 1 1 100%;
+  max-width: 100%;
+}
+
+@media (max-width: 560px) {
+  /* Only cap the small (phone) items — full-width items must stay full width. */
+  .aa-gallery--flow .aa-gallery-item:not(.aa-gallery-item--full) {
+    max-width: 47%;
+  }
+}
+
+/* Each gallery image is a zoom trigger */
+.aa-gallery-btn {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  border-radius: 0.65rem;
+}
+
+.aa-gallery-btn:focus-visible {
+  outline: 2px solid var(--aa-gold);
+  outline-offset: 3px;
+}
+
+/* Lightbox / image zoom overlay */
+.aa-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(6, 6, 6, 0.92);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  overflow: auto;
+  cursor: zoom-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .aa-lightbox {
+    animation: aa-lightbox-fade 0.2s var(--motion-ease-out, ease);
+  }
+}
+
+@keyframes aa-lightbox-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.aa-lightbox-img {
+  display: block;
+  max-width: min(100%, 1200px);
+  height: auto;
+  margin: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+.aa-lightbox-close {
+  position: fixed;
+  top: max(1rem, env(safe-area-inset-top, 0px));
+  right: max(1rem, env(safe-area-inset-right, 0px));
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1001;
+  transition: background 0.2s var(--motion-ease-soft, ease);
+}
+
+.aa-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Narrative blocks (e.g. "The Challenge", "Research") */
+.aa-narrative {
+  max-width: 60rem;
+  padding-top: var(--space-6, 1.5rem);
+  padding-bottom: var(--space-6, 1.5rem);
+}
+
+.aa-narrative .aa-h2 {
+  margin-bottom: var(--space-3, 0.75rem);
+}
+
+.aa-narrative p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, #f5f0e8 82%, transparent);
+}
+
 .aa-foot {
   text-align: center;
   padding: var(--space-8, 2rem);
   border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ===== Rkali bespoke layout ===== */
+.rk-hero {
+  text-align: center;
+  padding-bottom: var(--space-4, 1rem);
+}
+
+.rk-handle {
+  margin: 0.5rem 0 0;
+  color: var(--aa-muted);
+  font-family: var(--aa-font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+.rk-top {
+  display: grid;
+  gap: var(--space-6, 1.5rem);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .rk-top {
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-8, 2rem);
+  }
+}
+
+.rk-intro {
+  margin: 0 0 var(--space-5, 1.25rem);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: color-mix(in srgb, #f5f0e8 85%, transparent);
+}
+
+.rk-intro strong {
+  color: #fdf8f2;
+  font-weight: 600;
+}
+
+.rk-lockups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4, 1rem);
+}
+
+.rk-lockups .rk-imgbtn {
+  width: auto;
+}
+
+.rk-lockups .rk-img {
+  height: clamp(88px, 20vw, 150px);
+  width: auto;
+  border-radius: 0.6rem;
+}
+
+.rk-construction .rk-img {
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* image zoom button (Rkali) */
+.rk-imgbtn {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  border-radius: 0.6rem;
+}
+
+.rk-imgbtn:focus-visible {
+  outline: 2px solid var(--aa-gold);
+  outline-offset: 3px;
+}
+
+.rk-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition:
+    transform 0.35s var(--motion-ease-out, ease),
+    box-shadow 0.35s var(--motion-ease-out, ease);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rk-imgbtn:hover .rk-img {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* green Challenge / Goal panel */
+.rk-panel {
+  background: var(--rk-green, #4f5448);
+  margin-top: var(--space-8, 2rem);
+}
+
+.rk-panel-inner {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: var(--space-10, 2.5rem) max(var(--space-6, 1.5rem), env(safe-area-inset-left, 0px));
+  display: grid;
+  gap: var(--space-6, 1.5rem);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .rk-panel-inner {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+.rk-cg {
+  display: grid;
+  gap: var(--space-6, 1.5rem);
+}
+
+@media (min-width: 700px) {
+  .rk-cg {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.rk-block .aa-h2 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.rk-block p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.rk-typeface {
+  justify-self: center;
+}
+
+.rk-typeface .rk-img {
+  width: min(300px, 70vw);
+  border-radius: 0.5rem;
+}
+
+/* project meta */
+.rk-meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5, 1.25rem);
+}
+
+@media (min-width: 700px) {
+  .rk-meta {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.rk-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.rk-meta-label {
+  font-family: var(--aa-font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--aa-muted);
+}
+
+.rk-meta-value {
+  color: #fdf8f2;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* packaging photos */
+.rk-pkg {
+  display: grid;
+  gap: var(--space-4, 1rem);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 700px) {
+  .rk-pkg {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+  }
+}
+
+.rk-pkg .rk-img {
+  border-radius: 0.6rem;
 }

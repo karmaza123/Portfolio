@@ -29,7 +29,6 @@ export const HOME_PROJECTS: HomeProject[] = [
     tags: ["Brand", "Guidelines"],
     categories: ["Branding"],
     year: "2024",
-    award: "Identity",
   },
   {
     num: "003",

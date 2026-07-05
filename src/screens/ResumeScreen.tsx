@@ -102,6 +102,7 @@ export function ResumeScreen() {
     <div className="mp mp-resume">
       <MaraHeader active="resume" />
 
+      <main id="main-content" tabIndex={-1}>
       <header className="mpr-hero">
         <Reveal>
           <Link to="/" className="mpr-back mpr-back--hero-top">
@@ -259,6 +260,7 @@ export function ResumeScreen() {
           </Reveal>
         </section>
       </div>
+      </main>
 
       <footer className="mp-footer">
         <p className="mp-footer-left">© {new Date().getFullYear()} Dimitri Karmazanashvili</p>
