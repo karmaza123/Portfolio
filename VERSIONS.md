@@ -13,6 +13,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 > **Versioning restarted at `v0.x` on 2026-07-05.** Earlier `v1.x` rows above are kept as history; new builds are numbered from `V0.02`.
 
-| V0.02   | 2026-07-05 | _pending_ | All 10 project case-study pages rebuilt from Figma with real, optimized imagery. Added gallery layouts to the case-study template — 3-column masonry, fixed 2-column, wrapping "flow" (phones + full-width desktops), full-width, per-project `narrative` blocks, and custom `workflowSteps`; image-zoom lightbox on every case-study image. Bespoke `RkaliCaseStudy` reconstructing the Rkali identity page (logos, construction, green Challenge/Goal panel, meta, packaging). Image optimization pipeline (~45 MB of raw exports → ~6 MB). |
+| V0.02   | 2026-07-05 | `9171f29` | All 10 project case-study pages rebuilt from Figma with real, optimized imagery. Added gallery layouts to the case-study template — 3-column masonry, fixed 2-column, wrapping "flow" (phones + full-width desktops), full-width, per-project `narrative` blocks, and custom `workflowSteps`; image-zoom lightbox on every case-study image. Bespoke `RkaliCaseStudy` reconstructing the Rkali identity page (logos, construction, green Challenge/Goal panel, meta, packaging). Image optimization pipeline (~45 MB of raw exports → ~6 MB). |
 
 **Next version:** `v0.03`
