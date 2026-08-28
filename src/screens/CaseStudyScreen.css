@@ -1,23 +1,55 @@
 /* Shared case study layout — serif display + per-project accent vars */
 
+/* Chrome (bg / text / borders / shadows) follows the mp-* appearance tokens so
+   case studies respond to the light + contrast toggles like the rest of the site.
+   The cream/ink tokens below are artwork — mock print collateral — and stay fixed. */
 .aa {
-  --aa-bg: var(--color-bg, #0b0b09);
-  --aa-panel: var(--color-surface-elevated, #181816);
+  --aa-bg: var(--mp-bg, #0b0b09);
+  --aa-panel: var(--mp-surface2, #181816);
+  --aa-text: var(--mp-text, #f0ede6);
   --aa-cream: #f3e9dc;
   --aa-cream-2: #e8dcc8;
   --aa-ink: #14110d;
-  --aa-muted: var(--color-muted, #7a7870);
-  --aa-gold: var(--color-lime, #c8f53f);
+  --aa-muted: var(--mp-muted, #7a7870);
+  --aa-gold: var(--mp-accent, #c8f53f);
   --aa-gold-soft: #c96f16;
   --aa-teal: #2d6d6f;
+  --aa-line: var(--mp-border, rgba(255, 255, 255, 0.07));
+  --aa-line-strong: var(--mp-border2, rgba(255, 255, 255, 0.14));
+  --aa-shadow: rgba(0, 0, 0, 0.5);
+  --aa-shadow-soft: rgba(0, 0, 0, 0.35);
+  /* Backdrop behind exported imagery. Deliberately NOT theme-aware: 23 of the
+     case-study PNGs are white line-art on a transparent background, drawn for
+     the dark theme, so a light backdrop makes them invisible. Opaque
+     screenshots cover this entirely, so a fixed dark stage is safe for both. */
+  --aa-media-bg: #0f0f0e;
+  --aa-grid: rgba(255, 255, 255, 0.04);
   --aa-font-display: var(--font-display, "Playfair Display", Georgia, serif);
   --aa-font-body: var(--font-sans, "Syne", system-ui, sans-serif);
   --aa-font-mono: var(--font-mono, "DM Mono", monospace);
 
   min-height: 100dvh;
   background: var(--aa-bg);
-  color: var(--color-fg, #f0ede6);
+  color: var(--aa-text);
   font-family: var(--aa-font-body);
+}
+
+html[data-mp-theme="light"] .aa {
+  --aa-shadow: rgba(17, 16, 14, 0.18);
+  --aa-shadow-soft: rgba(17, 16, 14, 0.12);
+  --aa-grid: rgba(17, 16, 14, 0.07);
+}
+
+/* Mock collateral tiles are fixed dark artwork (a printed magazine, poster,
+   ticket). Pin their local tokens so the labels stay legible in either theme. */
+.aa-asset--mag,
+.aa-asset--poster,
+.aa-asset--ticket,
+.aa-envelope--back {
+  --aa-text: #fdf8f2;
+  --aa-muted: #9b978c;
+  --aa-line: rgba(255, 255, 255, 0.08);
+  color: var(--aa-text);
 }
 
 .aa-top-reveal,
@@ -53,26 +85,30 @@
   .aa-logo-panel:hover,
   .aa-asset:hover {
     transform: translateY(-3px);
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
-    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 14px 40px var(--aa-shadow-soft);
+    border-color: var(--aa-line-strong);
   }
 }
 
+/* Project sub-header. MaraHeader is fixed on top of it, so this no longer
+   sticks — it just clears the nav the way .mp-hero / .mpr-hero do. */
 .aa-top {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: var(--space-4, 1rem);
-  padding-top: max(var(--space-5, 1.25rem), env(safe-area-inset-top, 0px));
+  padding-top: 120px;
   padding-bottom: var(--space-5, 1.25rem);
   padding-left: max(var(--space-6, 1.5rem), env(safe-area-inset-left, 0px));
   padding-right: max(var(--space-6, 1.5rem), env(safe-area-inset-right, 0px));
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: color-mix(in srgb, var(--aa-bg) 92%, transparent);
-  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--aa-line);
+  background: transparent;
+}
+
+@media (max-width: 1024px) {
+  .aa-top {
+    padding-top: 100px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -80,6 +116,7 @@
     grid-template-columns: 1fr;
     justify-items: stretch;
     gap: var(--space-3, 0.75rem);
+    padding-top: 96px;
   }
 
   .aa-top-spacer {
@@ -183,7 +220,7 @@
   line-height: 1.12;
   text-align: center;
   letter-spacing: -0.02em;
-  color: #fdf8f2;
+  color: var(--aa-text);
 }
 
 .aa-collage {
@@ -196,8 +233,8 @@
 .aa-collage-piece {
   position: absolute;
   border-radius: 0.35rem;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 50px var(--aa-shadow);
+  border: 1px solid var(--aa-line);
 }
 
 .aa-collage-piece--1 {
@@ -248,7 +285,7 @@
   margin: 0;
   font-size: 1rem;
   line-height: 1.75;
-  color: color-mix(in srgb, #f5f0e8 88%, transparent);
+  color: color-mix(in srgb, var(--aa-text) 88%, transparent);
 }
 
 .aa-h2 {
@@ -256,7 +293,7 @@
   font-family: var(--aa-font-display);
   font-size: 1.65rem;
   font-weight: 600;
-  color: #fdf8f2;
+  color: var(--aa-text);
 }
 
 .aa-h2--light {
@@ -304,7 +341,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--aa-line-strong);
 }
 
 .aa-envelope--front {
@@ -340,7 +377,7 @@
 /* Workflow */
 .aa-workflow {
   background: var(--aa-panel);
-  border-block: 1px solid rgba(255, 255, 255, 0.06);
+  border-block: 1px solid var(--aa-line);
   max-width: none;
   padding-top: var(--space-10, 2.5rem);
   padding-bottom: var(--space-12, 3rem);
@@ -354,7 +391,7 @@
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 600;
   text-align: center;
-  color: #fdf8f2;
+  color: var(--aa-text);
 }
 
 .aa-steps {
@@ -441,7 +478,7 @@
 
 .aa-logo-panel {
   background: var(--aa-panel);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--aa-line);
   border-radius: 0.75rem;
   padding: var(--space-5, 1.25rem);
 }
@@ -458,8 +495,8 @@
 .aa-logo-grid-bg {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-image: linear-gradient(var(--aa-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--aa-grid) 1px, transparent 1px);
   background-size: 14px 14px;
   opacity: 0.6;
 }
@@ -477,7 +514,7 @@
 }
 
 .aa-logo-lockup--light {
-  color: #fdf8f2;
+  color: var(--aa-text);
 }
 
 .aa-logo-lockup--stack span:last-child {
@@ -556,7 +593,7 @@
 
 .aa-clearspace-inner {
   position: relative;
-  color: #fdf8f2;
+  color: var(--aa-text);
 }
 
 .aa-mark-solo {
@@ -584,8 +621,10 @@
 }
 
 /* Assets masonry */
+/* Full-bleed, but no background of its own — it used to fade to a hardcoded
+   near-black, which in light mode ran cream → black and left the footer below
+   it looking like a stray empty band. */
 .aa-assets {
-  background: linear-gradient(180deg, var(--aa-bg) 0%, #0a0908 100%);
   max-width: none;
   padding-bottom: var(--space-12, 3rem);
 }
@@ -654,7 +693,7 @@
 
 .aa-asset {
   border-radius: 0.65rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--aa-line);
   padding: var(--space-5, 1.25rem);
   display: flex;
   flex-direction: column;
@@ -836,8 +875,10 @@
   width: 100%;
   height: auto;
   border-radius: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--aa-line);
+  /* Hero exports can be transparent line-art too — stage them like the rest. */
+  background: var(--aa-media-bg);
+  box-shadow: 0 24px 60px var(--aa-shadow);
 }
 
 /* Tall UI screenshots: show as a cropped banner teasing the top of the screen. */
@@ -858,8 +899,8 @@
   width: 100%;
   height: auto;
   border-radius: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #0f0f0e;
+  border: 1px solid var(--aa-line);
+  background: var(--aa-media-bg);
 }
 
 .aa-gallery {
@@ -891,8 +932,8 @@
   width: 100%;
   height: auto;
   border-radius: 0.65rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #0f0f0e;
+  border: 1px solid var(--aa-line);
+  background: var(--aa-media-bg);
   transition:
     transform 0.35s var(--motion-ease-out, ease),
     box-shadow 0.35s var(--motion-ease-out, ease),
@@ -902,8 +943,8 @@
 @media (prefers-reduced-motion: no-preference) {
   .aa-gallery-item:hover .aa-gallery-image {
     transform: translateY(-3px);
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
-    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 14px 40px var(--aa-shadow-soft);
+    border-color: var(--aa-line-strong);
   }
 }
 
@@ -1058,13 +1099,13 @@
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.75;
-  color: color-mix(in srgb, #f5f0e8 82%, transparent);
+  color: color-mix(in srgb, var(--aa-text) 82%, transparent);
 }
 
 .aa-foot {
   text-align: center;
   padding: var(--space-8, 2rem);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--aa-line);
 }
 
 /* ===== Rkali bespoke layout ===== */
@@ -1098,11 +1139,11 @@
   margin: 0 0 var(--space-5, 1.25rem);
   font-size: 0.95rem;
   line-height: 1.7;
-  color: color-mix(in srgb, #f5f0e8 85%, transparent);
+  color: color-mix(in srgb, var(--aa-text) 85%, transparent);
 }
 
 .rk-intro strong {
-  color: #fdf8f2;
+  color: var(--aa-text);
   font-weight: 600;
 }
 
@@ -1124,7 +1165,7 @@
 
 .rk-construction .rk-img {
   border-radius: 0.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--aa-line);
 }
 
 /* image zoom button (Rkali) */
@@ -1156,7 +1197,7 @@
 @media (prefers-reduced-motion: no-preference) {
   .rk-imgbtn:hover .rk-img {
     transform: translateY(-3px);
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 14px 40px var(--aa-shadow-soft);
   }
 }
 
@@ -1193,7 +1234,7 @@
 }
 
 .rk-block .aa-h2 {
-  color: #fff;
+  color: var(--aa-text);
   margin-bottom: 0.5rem;
 }
 
@@ -1201,7 +1242,7 @@
   margin: 0;
   font-size: 0.9rem;
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.85);
+  color: color-mix(in srgb, var(--aa-text) 85%, transparent);
 }
 
 .rk-typeface {
@@ -1241,7 +1282,7 @@
 }
 
 .rk-meta-value {
-  color: #fdf8f2;
+  color: var(--aa-text);
   font-size: 0.9rem;
   font-weight: 600;
 }
