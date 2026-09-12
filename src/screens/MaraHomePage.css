@@ -1,6 +1,9 @@
 ﻿/* Mara-style home — ported from portfolio.html structure */
 
-.mp {
+/* Appearance tokens live on :root, not .mp — case studies (.aa) and the fixed
+   nav read them without needing a .mp wrapper. Wrapping .aa in .mp used to drag
+   in overflow-x:hidden, which made that div a nested scroll container. */
+:root {
   --mp-scroll-offset: 5.5rem;
   --mp-bg: #0b0b09;
   --mp-surface: #131310;
@@ -11,7 +14,9 @@
   --mp-muted: #7a7870;
   --mp-accent: #c8f53f;
   --mp-accent2: #f5c842;
+}
 
+.mp {
   background: var(--mp-bg);
   color: var(--mp-text);
   font-family: var(--font-sans, "Syne", sans-serif);
@@ -163,7 +168,7 @@ html[data-mp-theme="light"] .mp-nav-brand-mark {
   color: var(--mp-text);
 }
 
-.mp .mp-nav-links a[aria-current="page"] {
+.mp-nav-links a[aria-current="page"] {
   color: var(--mp-accent);
 }
 
@@ -1541,7 +1546,7 @@ html[data-mp-theme="light"] .mp-hero-cta:hover {
   border-color: rgba(0, 0, 0, 0.16);
 }
 
-html[data-mp-theme="light"] .mp {
+html[data-mp-theme="light"] {
   --mp-bg: #f2f1ec;
   --mp-surface: #fafaf8;
   --mp-surface2: #e8e6e0;
@@ -1553,14 +1558,14 @@ html[data-mp-theme="light"] .mp {
   --mp-accent2: #7a5a10;
 }
 
-html[data-mp-contrast="high"] .mp {
+html[data-mp-contrast="high"] {
   --mp-text: #ffffff;
   --mp-muted: #d8d6ce;
   --mp-border: rgba(255, 255, 255, 0.32);
   --mp-border2: rgba(255, 255, 255, 0.5);
 }
 
-html[data-mp-theme="light"][data-mp-contrast="high"] .mp {
+html[data-mp-theme="light"][data-mp-contrast="high"] {
   --mp-bg: #ffffff;
   --mp-surface: #ffffff;
   --mp-surface2: #f0f0f0;

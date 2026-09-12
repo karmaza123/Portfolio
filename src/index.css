@@ -82,3 +82,11 @@ body {
 .mara-label {
   font-family: var(--font-mono);
 }
+
+/* Appearance switching: MaraAppearanceProvider sets this for one style recalc so
+   colour transitions don't animate (or stall) while the theme tokens flip. */
+html[data-mp-switching] *,
+html[data-mp-switching] *::before,
+html[data-mp-switching] *::after {
+  transition: none !important;
+}

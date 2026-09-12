@@ -34,10 +34,20 @@ function readContrast(): boolean {
 
 function syncDocument(theme: MaraTheme, highContrast: boolean) {
   const root = document.documentElement;
+
+  // Elements that transition a property fed by a custom property (e.g.
+  // `border-color: var(--aa-line)` on the case-study cards) can keep the old
+  // colour after the token flips. Suppress transitions, flush the recalc, then
+  // re-enable them so hover animations still work.
+  root.setAttribute("data-mp-switching", "");
+
   if (theme === "light") root.setAttribute("data-mp-theme", "light");
   else root.removeAttribute("data-mp-theme");
   if (highContrast) root.setAttribute("data-mp-contrast", "high");
   else root.removeAttribute("data-mp-contrast");
+
+  void root.offsetHeight;
+  root.removeAttribute("data-mp-switching");
 }
 
 export function MaraAppearanceProvider({ children }: { children: ReactNode }) {
