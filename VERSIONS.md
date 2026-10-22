@@ -19,4 +19,8 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.04   | 2026-09-12 | `03b9a21` | Deploy fix: added `vercel.json` with an SPA rewrite (`/(.*)` → `/index.html`). Without it Vercel resolved client-side routes against the filesystem, so `/work`, `/resume`, and every `/project/:slug` returned a 404 on direct load or refresh — only `/` worked, and internal links only worked because they never hit the server. Static assets are unaffected: Vercel matches real files before applying rewrites. |
 
-**Next version:** `v0.05`
+| V0.05   | 2026-10-22 | `94f0fd9` | Hero background: replaced the dot-grid canvas with a Shaders (WebGPU) stack — Swirl gradient, ChromaFlow cursor trail in a dim lime, FlutedGlass refraction — with separate dark and light palettes (screen-blended lime on near-black; multiplied pale olive on the paper tone). The dot-grid `HeroCanvas` stays as the fallback when the GPU cannot run the shader. Nav is now a 24% tint with an 18px backdrop blur so the hero shows through in every theme. Shader telemetry disabled. Merged as PR #8. |
+
+| V0.06   | 2026-10-22 | `ae8d866` | New project 001: **Mintly, Design System & Redesign** (`/project/mintly-design-system`) — bespoke `MintlyCaseStudy` page, English only: struck-through before/after hero, a five-step process flow (Measure → Diagnose → Map → Systemize → Apply) with a stat per step and a severity bar, a font-size distribution chart (palette validated in both themes, hover tooltips, screen-reader table) plus 12 inventory stats, three key findings, and the system drawn in code from its final values (type scale, buttons, spacing, radius, depth) instead of the Georgian sheets. Applied section shows the English Discover and Campaign screens. Space categories blurred at export. 4 WebP images (~208 KB). Project rows renumbered 001–011. |
+
+**Next version:** `v0.07`
