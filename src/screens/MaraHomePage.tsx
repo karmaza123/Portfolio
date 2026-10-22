@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { CONTACT_EMAIL, CONTACT_MAILTO } from "../constants/contact";
-import { HeroCanvas } from "../components/HeroCanvas";
+import { GlassBackground } from "../components/GlassBackground";
 import { MaraHeader } from "../components/MaraHeader";
 import { ProjectsGrid } from "../components/ProjectsGrid";
 import { Reveal } from "../components/Reveal";
@@ -75,7 +75,7 @@ export function MaraHomePage() {
       <MaraHeader active="home" />
 
       <section className="mp-hero" aria-label="Introduction">
-        <HeroCanvas />
+        <GlassBackground />
         <div className="mp-hero-bg-text" aria-hidden>
           DESIGN
         </div>
