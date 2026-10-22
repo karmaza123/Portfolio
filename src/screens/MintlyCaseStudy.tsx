@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { MaraHeader } from "../components/MaraHeader";
 import { Reveal } from "../components/Reveal";
@@ -18,16 +18,77 @@ const META = [
 
 const HEADLINE_COUNTS = [
   { before: "76", after: "12", label: "Button variants" },
-  { before: "21", after: "11", label: "Font sizes → text styles" },
+  { before: "21", after: "10", label: "Font sizes → text styles" },
   { before: "22", after: "9", label: "Paddings → 4-pt steps" },
   { before: "28", after: "3", label: "Shadows → depth levels" },
 ] as const;
 
-const MORE_COUNTS = [
-  { before: "6", after: "3", label: "Font weights" },
-  { before: "12", after: "4", label: "Corner radii, plus capsule" },
-  { before: "15", after: "2", label: "Text fields → single + multi-line" },
-  { before: "25", after: "3", label: "Icon sizes, one line weight" },
+const PROCESS = [
+  {
+    step: "01",
+    name: "Measure",
+    stat: "13",
+    unit: "screens",
+    body: "Every text, button, field, icon and container on the live product, desktop and phone.",
+  },
+  {
+    step: "02",
+    name: "Diagnose",
+    stat: "25",
+    unit: "findings",
+    body: "Logged with where each appears, how severe it is, and its fix.",
+    severity: true,
+  },
+  {
+    step: "03",
+    name: "Map",
+    stat: "16",
+    unit: "parts → components",
+    body: "Each one-off part matched to one standard counterpart.",
+  },
+  {
+    step: "04",
+    name: "Systemize",
+    stat: "27",
+    unit: "color tokens",
+    body: "Plus type, spacing, radius and depth — each named by role, not value.",
+  },
+  {
+    step: "05",
+    name: "Apply",
+    stat: "124",
+    unit: "screens rebuilt",
+    body: "From components only, at 1440, 834 and 390 — now shipping.",
+  },
+] as const;
+
+const SEVERITY = [
+  { label: "Major", count: 5, tone: "major" },
+  { label: "Minor", count: 16, tone: "minor" },
+  { label: "Cosmetic", count: 4, tone: "cosmetic" },
+] as const;
+
+/** Font sizes found across the 13 audited screens, with how often each appears. */
+const FONT_SIZES: readonly [number, number][] = [
+  [8.8, 57], [9, 47], [9.6, 35], [10, 76], [10.4, 28], [11, 81], [11.2, 15], [11.52, 33],
+  [12, 373], [12.48, 12], [13, 73], [14, 294], [15, 63], [16, 42], [18, 76], [20, 5],
+  [24, 30], [26.4, 4], [30, 9], [36, 8], [48, 3],
+];
+const FONT_MAX = Math.max(...FONT_SIZES.map(([, n]) => n));
+
+const INVENTORY = [
+  { value: "6", label: "Font weights", note: "900 to 400; 800 and 900 on headings only" },
+  { value: "34", label: "Size / line-height pairs", note: "13px text alone used three line heights" },
+  { value: "23", label: "Letter-spacing values", note: "From −0.66px to +2.4px" },
+  { value: "125", label: "Upper-case labels", note: "Forced capitals turn Georgian into Mtavruli" },
+  { value: "22", label: "Padding values", note: "5 of them off any 4-pt grid" },
+  { value: "14", label: "Gap values", note: "6, 10, 3 and 18 break the rhythm" },
+  { value: "12", label: "Corner radii", note: "Capsule written two different ways" },
+  { value: "28", label: "Depth styles", note: "22 shadows, 6 blur strengths" },
+  { value: "76", label: "Button variants", note: "16 to 70px tall, weights 400–700" },
+  { value: "15", label: "Text fields", note: "20 to 48px tall, 12–16px text" },
+  { value: "25", label: "Icon size / weight combos", note: "8 to 64px, filled and outlined mixed" },
+  { value: "18px", label: "Smallest tap target", note: "Below the 44 × 44 minimum" },
 ] as const;
 
 const FINDINGS = [
@@ -35,120 +96,122 @@ const FINDINGS = [
     code: "T1",
     severity: "Major",
     area: "Typography",
-    title: "Too many text sizes, many of them too small",
-    saw: "21 sizes in use. 8 of them sit below 12px and make up 27% of all text — card details, badges and stats run 8.8–11.5px.",
-    fix: "11 system text styles, Large Title to Caption 2. Nothing below 11px; body text 16–17px.",
-    img: "before-t1.webp",
-    where: "Discover card",
+    title: "Too many text sizes, many too small",
+    fix: "10 text styles, nothing below 12px, body at 17px.",
   },
   {
     code: "B1",
     severity: "Major",
     area: "Components",
     title: "76 kinds of button",
-    saw: "Buttons range from 16 to 70px high, with 0–16px or capsule corners, 9.6–16px text and weights 400–700. The same action looks different on different screens.",
-    fix: "Four styles — Filled, Tinted, Gray, Plain — in Small, Medium and Large. 12 buttons in total.",
-    img: "before-b1.webp",
-    where: "Create product",
-  },
-  {
-    code: "T5",
-    severity: "Minor",
-    area: "Typography",
-    title: "Tight line height on Georgian headings",
-    saw: "Large headings use a line height close to the font size (36/40px), so Georgian letters with tall ascenders and descenders almost touch between lines.",
-    fix: "Georgian line heights 10–15% taller than the defaults, defined once per style in the type scale.",
-    img: "before-t5.webp",
-    where: "Sign-up headline",
+    fix: "Filled, Tinted, Gray and Plain in three sizes — 12 buttons.",
   },
   {
     code: "L2",
     severity: "Minor",
     area: "Layout",
     title: "A three-column frame on every screen",
-    saw: "A 256px menu and a 288px notifications panel are always open, so content gets about half the width — and the notifications column is usually empty.",
-    fix: "Sidebar plus content. Notifications open as a popover or sheet from the toolbar.",
-    img: "before-l2.webp",
-    where: "Discover",
-  },
-  {
-    code: "R1",
-    severity: "Minor",
-    area: "Shape & depth",
-    title: "Twelve corner radii",
-    saw: "Capsule (defined two ways), 32, 24, 21.6, 16, 14, 12, 11, 8, 6 and 4px — neighbouring elements often have different corners.",
-    fix: "6 for small controls, 10 for buttons and fields, 16 for cards, 24 for sheets; capsule only for tags and switches.",
-    img: "before-r1.webp",
-    where: "Space dashboard",
-  },
-  {
-    code: "F1",
-    severity: "Minor",
-    area: "Components",
-    title: "Fifteen kinds of text field",
-    saw: "Fields are 20–48px high with 0, 8, 12 or 16px corners and 12–16px text. Sign-up uses 48px fields; settings drop to 38px with 13px text.",
-    fix: "One text field — 44–48px, 16–17px text, label above, hint below — and one multi-line version.",
-    img: "before-f1.webp",
-    where: "Settings · contact details",
+    fix: "Sidebar plus content; notifications open from the toolbar.",
   },
 ] as const;
 
-const shot = (file: string, alt: string, w: number, h: number): Shot => ({
-  src: `${IMG}/${file}`,
-  alt,
-  w,
-  h,
-});
-
-const FOUNDATIONS = [
-  {
-    title: "Color by role",
-    body: "Surfaces, labels, separators, fills, accent and status — each token has a dark and a light value. The accent is a single slot, so the brand colour can change in one place.",
-    img: shot("ds-colors.webp", "Semantic color tokens with dark and light values", 1758, 2400),
-  },
-  {
-    title: "Type scale",
-    body: "11 styles, three weights, with Georgian line heights set 10–15% taller so both scripts breathe.",
-    img: shot("ds-type.webp", "Type scale with Georgian and Latin specimens", 1920, 2314),
-  },
-  {
-    title: "4-pt spacing",
-    body: "Nine steps from 4 to 48, with fixed insets for screens, cards and lists.",
-    img: shot("ds-grid.webp", "Grid and spacing scale", 1920, 1777),
-  },
-  {
-    title: "Radius & depth",
-    body: "Four radii plus capsule, three depth levels — base, raised, overlay — and two blur materials.",
-    img: shot("ds-radius.webp", "Corner radii, depth levels and materials", 1920, 1798),
-  },
+const SYSTEM_STATS = [
+  { value: "27", label: "Color tokens, 2 themes" },
+  { value: "21", label: "Text styles" },
+  { value: "3", label: "Weights" },
+  { value: "9", label: "Spacing steps" },
+  { value: "10", label: "Radius tokens" },
+  { value: "18", label: "Component groups" },
+  { value: "5", label: "Scripts tested" },
 ] as const;
 
-const COMPONENTS = {
-  buttons: shot(
-    "ds-buttons.webp",
-    "Button matrix: four styles, three sizes, all states, with right-to-left mirrors",
-    2000,
-    1026,
-  ),
-  states: shot(
-    "ds-states.webp",
-    "Interaction states for every control, in the dark and light themes",
-    2000,
-    2131,
-  ),
-  fields: shot("ds-fields.webp", "Text, search, multi-line and password fields", 2000, 1008),
-  cards: shot("ds-cards.webp", "Campaign, space and product cards", 2000, 1473),
-  nav: shot("ds-nav.webp", "Sidebar, navigation bar and phone tab bar", 2000, 568),
-};
+const TYPE_SCALE = [
+  { name: "Large Title", size: 34, lh: 41, ka: 46, weight: 700 },
+  { name: "Title 1", size: 28, lh: 34, ka: 38, weight: 700 },
+  { name: "Title 2", size: 22, lh: 28, ka: 30, weight: 700 },
+  { name: "Title 3", size: 20, lh: 25, ka: 28, weight: 600 },
+  { name: "Headline", size: 17, lh: 22, ka: 24, weight: 600 },
+  { name: "Body", size: 17, lh: 22, ka: 26, weight: 400 },
+  { name: "Callout", size: 16, lh: 21, ka: 24, weight: 400 },
+  { name: "Subheadline", size: 15, lh: 20, ka: 22, weight: 400 },
+  { name: "Footnote", size: 13, lh: 18, ka: 20, weight: 400 },
+  { name: "Caption 1", size: 12, lh: 16, ka: 18, weight: 400 },
+] as const;
 
-const APPLIED = {
-  discoverDark: shot("discover-dark.webp", "Discover, rebuilt with the system — dark theme", 1440, 1597),
-  discoverLight: shot("discover-light.webp", "Discover, rebuilt with the system — light theme", 1440, 1597),
-  campaignDark: shot("campaign-dark.webp", "Campaign page — dark theme", 1440, 1295),
-  campaignLight: shot("campaign-light.webp", "Campaign page — light theme", 1440, 1295),
-  discoverEn: shot("discover-en.webp", "Discover in English", 1440, 1574),
-  devices: shot("devices.webp", "Discover and campaign page on tablet and phone", 2000, 1284),
-};
+const WEIGHT_NAME: Record<number, string> = { 400: "Regular", 600: "Semibold", 700: "Bold" };
+
+const SPACING = [4, 8, 12, 16, 20, 24, 32, 40, 48] as const;
+const RADII = [
+  { v: 8, name: "xs" },
+  { v: 12, name: "sm" },
+  { v: 14, name: "14" },
+  { v: 16, name: "16" },
+  { v: 18, name: "18" },
+  { v: 20, name: "control" },
+  { v: 22, name: "md" },
+  { v: 28, name: "lg" },
+  { v: 32, name: "xl" },
+  { v: 999, name: "full" },
+] as const;
+const BUTTON_STYLES = ["Filled", "Tinted", "Gray", "Plain"] as const;
+const BUTTON_SIZES = [
+  { name: "S", h: 32, font: 12 },
+  { name: "M", h: 40, font: 13 },
+  { name: "L", h: 50, font: 15 },
+] as const;
+const DEPTH = [
+  { name: "Base", note: "Screen background" },
+  { name: "Raised", note: "Cards, grouped sections" },
+  { name: "Overlay", note: "Sheets, menus, popovers" },
+] as const;
+
+const APPLIED: readonly Shot[] = [
+  { src: `${IMG}/discover-en.webp`, alt: "Discover, rebuilt from system components", w: 1440, h: 1574 },
+  { src: `${IMG}/campaign-en.webp`, alt: "Campaign page, rebuilt from system components", w: 1440, h: 1223 },
+];
+
+const APPLIED_STATS = [
+  { value: "124", label: "Screens and overlays" },
+  { value: "3", label: "Breakpoints: 1440 · 834 · 390" },
+  { value: "749", label: "Frames in total" },
+  { value: "2 × 2", label: "Themes × languages" },
+] as const;
+
+function Count({ before, after, label }: { before: string; after: string; label: string }) {
+  return (
+    <div className="mt-count">
+      <div className="mt-count-vals">
+        <span className="mt-count-before">{before}</span>
+        <span className="mt-count-arrow" aria-hidden>
+          →
+        </span>
+        <span className="mt-count-after">{after}</span>
+      </div>
+      <div className="mt-count-label">
+        <span className="mt-visually-hidden">
+          {before} before, {after} after:{" "}
+        </span>
+        {label}
+      </div>
+    </div>
+  );
+}
+
+function SectionHead({ id, label, title, children }: { id: string; label: string; title: string; children: React.ReactNode }) {
+  return (
+    <Reveal>
+      <header className="mt-head">
+        <div className="mt-head-title">
+          <span className="mt-label">{label}</span>
+          <h2 id={id} className="mt-h2">
+            {title}
+          </h2>
+        </div>
+        <p className="mt-head-body">{children}</p>
+      </header>
+    </Reveal>
+  );
+}
 
 /** Bespoke case study for the Mintly UI audit and design system. */
 export function MintlyCaseStudy() {
@@ -167,46 +230,6 @@ export function MintlyCaseStudy() {
       document.body.style.overflow = prev;
     };
   }, [zoom]);
-
-  const Figure = ({
-    img,
-    caption,
-    className,
-  }: {
-    img: Shot;
-    caption?: string;
-    className?: string;
-  }) => (
-    <figure className={`mt-figure${className ? ` ${className}` : ""}`}>
-      <button
-        type="button"
-        className="mt-imgbtn"
-        onClick={() => setZoom(img)}
-        aria-label={`Enlarge image: ${img.alt}`}
-      >
-        <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" />
-      </button>
-      {caption ? <figcaption className="mt-caption">{caption}</figcaption> : null}
-    </figure>
-  );
-
-  const Count = ({ before, after, label }: { before: string; after: string; label: string }) => (
-    <div className="mt-count">
-      <div className="mt-count-vals">
-        <span className="mt-count-before">{before}</span>
-        <span className="mt-count-arrow" aria-hidden>
-          →
-        </span>
-        <span className="mt-count-after">{after}</span>
-      </div>
-      <div className="mt-count-label">
-        <span className="mt-visually-hidden">
-          {before} before, {after} after:{" "}
-        </span>
-        {label}
-      </div>
-    </div>
-  );
 
   return (
     <div className="aa mt">
@@ -236,9 +259,8 @@ export function MintlyCaseStudy() {
               </h1>
               <p className="mt-lede">
                 A UI audit and design system for Mintly, a Georgian platform where businesses run
-                campaigns and creators earn from them. I measured 13 live screens, logged 25
-                findings, and replaced the sprawl with one small, fixed system — then rebuilt the
-                product on it in dark and light, Georgian and English.
+                campaigns and creators earn from them. I measured the live product, replaced the
+                sprawl with one small, fixed system, and rebuilt the product’s screens on it.
               </p>
               <dl className="mt-meta">
                 {META.map(([label, value]) => (
@@ -252,20 +274,18 @@ export function MintlyCaseStudy() {
 
             <Reveal staggerIndex={1} className="mt-stage-reveal">
               <div className="mt-stage" aria-hidden>
-                <div className="mt-shot mt-shot--light">
-                  <img src={`${IMG}/hero-light.webp`} alt="" width={1440} height={730} />
+                <div className="mt-shot mt-shot--back">
+                  <img src={`${IMG}/hero-discover.webp`} alt="" width={1440} height={730} />
                 </div>
-                <div className="mt-shot mt-shot--dark">
-                  <img src={`${IMG}/hero-dark.webp`} alt="" width={1440} height={730} />
+                <div className="mt-shot mt-shot--front">
+                  <img src={`${IMG}/hero-campaign.webp`} alt="" width={1440} height={730} />
                 </div>
-                <span className="mt-chip mt-chip--dark">Dark</span>
-                <span className="mt-chip mt-chip--light">Light</span>
               </div>
             </Reveal>
           </div>
 
           <Reveal delayMs={120}>
-            <div className="mt-counts mt-counts--hero">
+            <div className="mt-counts">
               {HEADLINE_COUNTS.map((c) => (
                 <Count key={c.label} {...c} />
               ))}
@@ -273,227 +293,271 @@ export function MintlyCaseStudy() {
           </Reveal>
         </section>
 
-        <section className="mt-section" aria-labelledby="mt-audit">
-          <Reveal>
-            <header className="mt-section-head">
-              <span className="mt-label">01 — Audit</span>
-              <h2 id="mt-audit" className="mt-h2">
-                Measured before anything was redrawn
-              </h2>
-              <p className="mt-body">
-                The product worked, but it was built from far more visual variants than it needed. I
-                measured every visible text, button, field, icon and container across 13 screens of
-                the live product — desktop layouts plus phone checks — and logged each problem with
-                where it appears, how severe it is, and its system counterpart. Colour was left out
-                on purpose: the palette wasn’t decided yet, so everything had to work with any of
-                them.
-              </p>
-            </header>
-          </Reveal>
+        <section className="mt-section" aria-labelledby="mt-process">
+          <SectionHead id="mt-process" label="01 — Process" title="From audit to shipped screens">
+            Five steps, each one feeding the next. Color was left out of the audit on purpose — the
+            palette wasn’t decided yet, so every decision had to work with any of them.
+          </SectionHead>
+
+          <ol className="mt-flow">
+            {PROCESS.map((p, i) => (
+              <li key={p.step} className="mt-flow-step">
+                <Reveal staggerIndex={i} className="mt-flow-reveal">
+                  <div className="mt-flow-top">
+                    <span className="mt-flow-num">{p.step}</span>
+                    <span className="mt-flow-name">{p.name}</span>
+                  </div>
+                  <div className="mt-flow-stat">
+                    <span className="mt-flow-value">{p.stat}</span>
+                    <span className="mt-flow-unit">{p.unit}</span>
+                  </div>
+                  {"severity" in p ? (
+                    <div className="mt-sevbar" role="img" aria-label="5 major, 16 minor, 4 cosmetic">
+                      <div className="mt-sevbar-track">
+                        {SEVERITY.map((s) => (
+                          <span
+                            key={s.label}
+                            className={`mt-sevbar-seg mt-sevbar-seg--${s.tone}`}
+                            style={{ flexGrow: s.count }}
+                          />
+                        ))}
+                      </div>
+                      <div className="mt-sevbar-legend" aria-hidden>
+                        {SEVERITY.map((s) => (
+                          <span key={s.label}>
+                            <i className={`mt-sevbar-dot mt-sevbar-seg--${s.tone}`} />
+                            {s.count} {s.label.toLowerCase()}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+                  <p className="mt-flow-body">{p.body}</p>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="mt-section" aria-labelledby="mt-numbers">
+          <SectionHead id="mt-numbers" label="02 — By the numbers" title="What the audit measured">
+            Counted across 13 screens of the live product. The product worked — it was just built
+            from far more visual variants than it needed.
+          </SectionHead>
 
           <Reveal>
-            <div className="mt-audit-stats">
-              <div>
-                <span className="mt-stat-num">13</span>
-                <span className="mt-stat-label">Screens measured</span>
-              </div>
-              <div>
-                <span className="mt-stat-num">25</span>
-                <span className="mt-stat-label">Findings</span>
-              </div>
-              <div>
-                <span className="mt-stat-num">6</span>
-                <span className="mt-stat-label">
-                  Areas: type, layout, shape, components, navigation, icons
+            <figure className="mt-chart">
+              <figcaption className="mt-chart-head">
+                <span className="mt-chart-title">Font sizes in use, by how often they appear</span>
+                <span className="mt-chart-legend" aria-hidden>
+                  <span>
+                    <i className="mt-chart-key mt-chart-key--small" />
+                    Below 12px
+                  </span>
+                  <span>
+                    <i className="mt-chart-key" />
+                    12px and up
+                  </span>
                 </span>
+              </figcaption>
+              <div className="mt-chart-plot" aria-hidden>
+                {FONT_SIZES.map(([size, n]) => (
+                  <div
+                    key={size}
+                    className={`mt-bar${size < 12 ? " mt-bar--small" : ""}`}
+                    data-tip={`${size}px · ${n} uses`}
+                    tabIndex={0}
+                  >
+                    {n >= 290 ? <span className="mt-bar-value">{n}</span> : null}
+                    <span className="mt-bar-fill" style={{ "--h": `${(n / FONT_MAX) * 100}%` } as CSSProperties} />
+                    <span className="mt-bar-label">{size}</span>
+                  </div>
+                ))}
               </div>
-            </div>
+              <p className="mt-chart-foot">
+                <strong>21 sizes</strong> in use. The 8 below 12px appear 372 times — <strong>27% of all text</strong>.
+                7 are fractional values like 8.8, 11.52 and 26.4.
+              </p>
+              <table className="mt-visually-hidden">
+                <caption>Font sizes in use and how often each appears</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Size (px)</th>
+                    <th scope="col">Uses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {FONT_SIZES.map(([size, n]) => (
+                    <tr key={size}>
+                      <td>{size}</td>
+                      <td>{n}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </figure>
           </Reveal>
 
+          <div className="mt-tiles">
+            {INVENTORY.map((t, i) => (
+              <Reveal key={t.label} staggerIndex={i % 4} className="mt-tile">
+                <span className="mt-tile-value">{t.value}</span>
+                <span className="mt-tile-label">{t.label}</span>
+                <span className="mt-tile-note">{t.note}</span>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-findings">
+            {FINDINGS.map((f, i) => (
+              <Reveal key={f.code} staggerIndex={i} className="mt-finding">
+                <div className="mt-finding-tags">
+                  <span className="mt-finding-code">{f.code}</span>
+                  <span className={`mt-sev${f.severity === "Major" ? " mt-sev--major" : ""}`}>{f.severity}</span>
+                  <span className="mt-finding-area">{f.area}</span>
+                </div>
+                <h3 className="mt-finding-title">{f.title}</h3>
+                <p className="mt-finding-fix">
+                  <span>Fix</span>
+                  {f.fix}
+                </p>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-section" aria-labelledby="mt-system">
+          <SectionHead id="mt-system" label="03 — The system" title="One small, fixed set">
+            Every value is named by role, not by what it looks like, so the brand color can still
+            change in one place. Drawn here from the system’s own values.
+          </SectionHead>
+
           <Reveal>
-            <div className="mt-counts">
-              {MORE_COUNTS.map((c) => (
-                <Count key={c.label} {...c} />
+            <div className="mt-sysstats">
+              {SYSTEM_STATS.map((s) => (
+                <div key={s.label}>
+                  <span className="mt-sysstats-value">{s.value}</span>
+                  <span className="mt-sysstats-label">{s.label}</span>
+                </div>
               ))}
             </div>
           </Reveal>
 
-          <div className="mt-findings">
-            {FINDINGS.map((f, i) => (
-              <Reveal key={f.code} staggerIndex={i % 2} className="mt-finding-reveal">
-                <article className="mt-finding">
-                  <button
-                    type="button"
-                    className="mt-imgbtn mt-finding-img"
-                    onClick={() =>
-                      setZoom({
-                        src: `${IMG}/${f.img}`,
-                        alt: `Before: ${f.where}`,
-                        w: 546,
-                        h: 348,
-                      })
-                    }
-                    aria-label={`Enlarge before screenshot: ${f.where}`}
-                  >
-                    <img
-                      src={`${IMG}/${f.img}`}
-                      alt={`Before: ${f.where}`}
-                      width={546}
-                      height={348}
-                      loading="lazy"
-                    />
-                    <span className="mt-finding-where">Before · {f.where}</span>
-                  </button>
-                  <div className="mt-finding-body">
-                    <div className="mt-finding-tags">
-                      <span className="mt-finding-code">{f.code}</span>
-                      <span
-                        className={`mt-sev${f.severity === "Major" ? " mt-sev--major" : ""}`}
-                      >
-                        {f.severity}
-                      </span>
-                      <span className="mt-finding-area">{f.area}</span>
+          <div className="mt-spec">
+            <Reveal className="mt-panel mt-panel--type">
+              <h3 className="mt-panel-title">Type scale</h3>
+              <p className="mt-panel-note">Latin line height · Georgian set 10–15% taller</p>
+              <ul className="mt-type">
+                {TYPE_SCALE.map((t) => (
+                  <li key={t.name}>
+                    <span
+                      className="mt-type-sample"
+                      style={{ fontSize: t.size, lineHeight: `${t.lh}px`, fontWeight: t.weight }}
+                    >
+                      {t.name}
+                    </span>
+                    <span className="mt-type-spec">
+                      {t.size} / {t.lh} · KA {t.ka} · {WEIGHT_NAME[t.weight]}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+
+            <div className="mt-spec-side">
+              <Reveal staggerIndex={1} className="mt-panel">
+                <h3 className="mt-panel-title">Buttons</h3>
+                <p className="mt-panel-note">4 styles × 3 sizes · 32 / 40 / 50px</p>
+                <div className="mt-buttons">
+                  {BUTTON_STYLES.map((style) => (
+                    <div key={style} className="mt-buttons-row">
+                      <span className="mt-buttons-name">{style}</span>
+                      {BUTTON_SIZES.map((s) => (
+                        <span
+                          key={s.name}
+                          className={`mt-btn mt-btn--${style.toLowerCase()}`}
+                          style={{ height: s.h, fontSize: s.font }}
+                        >
+                          Join
+                        </span>
+                      ))}
                     </div>
-                    <h3 className="mt-finding-title">{f.title}</h3>
-                    <p className="mt-finding-k">What I saw</p>
-                    <p className="mt-finding-p">{f.saw}</p>
-                    <p className="mt-finding-k mt-finding-k--fix">In the system</p>
-                    <p className="mt-finding-p mt-finding-p--fix">{f.fix}</p>
-                  </div>
-                </article>
+                  ))}
+                </div>
               </Reveal>
-            ))}
-          </div>
-          <p className="mt-note">Private details — balances, user names and space categories — are blurred.</p>
-        </section>
 
-        <section className="mt-section" aria-labelledby="mt-foundations">
-          <Reveal>
-            <header className="mt-section-head">
-              <span className="mt-label">02 — Foundations</span>
-              <h2 id="mt-foundations" className="mt-h2">
-                Tokens that work with any palette
-              </h2>
-              <p className="mt-body">
-                The foundations were shown in neutral grey on purpose, so colour could be decided
-                separately and slot into them without changes. Every value is named by what it does,
-                not what it looks like.
-              </p>
-            </header>
-          </Reveal>
-          <div className="mt-foundations">
-            {FOUNDATIONS.map((f, i) => (
-              <Reveal key={f.title} staggerIndex={i % 2} className="mt-foundation">
-                <Figure img={f.img} />
-                <h3 className="mt-h3">{f.title}</h3>
-                <p className="mt-small">{f.body}</p>
+              <Reveal staggerIndex={2} className="mt-panel">
+                <h3 className="mt-panel-title">Spacing</h3>
+                <p className="mt-panel-note">4px base · 9 steps · 4 / 8 / 12-column grids</p>
+                <div className="mt-spacing">
+                  {SPACING.map((v) => (
+                    <span key={v}>
+                      <i style={{ height: v * 1.5 }} />
+                      {v}
+                    </span>
+                  ))}
+                </div>
               </Reveal>
-            ))}
+            </div>
           </div>
-        </section>
 
-        <section className="mt-section" aria-labelledby="mt-components">
-          <Reveal>
-            <header className="mt-section-head">
-              <span className="mt-label">03 — Components</span>
-              <h2 id="mt-components" className="mt-h2">
-                From one-offs to a fixed set
-              </h2>
-              <p className="mt-body">
-                Every part of the old interface was mapped to one standard counterpart, and the
-                library was built from those: buttons, fields, selection controls, cards, lists,
-                navigation, overlays, feedback, tables and notifications. Each component is specified
-                for every state in both themes, and buttons ship with right-to-left mirrors.
-              </p>
-            </header>
-          </Reveal>
-          <Reveal>
-            <Figure
-              img={COMPONENTS.buttons}
-              caption="Buttons — 4 styles × 3 sizes × every state, plus right-to-left mirrors"
-            />
-          </Reveal>
-          <div className="mt-pair">
-            <Reveal className="mt-pair-item">
-              <Figure img={COMPONENTS.fields} caption="Fields — one text field, one multi-line" />
-            </Reveal>
-            <Reveal staggerIndex={1} className="mt-pair-item">
-              <Figure img={COMPONENTS.cards} caption="Cards — campaign, space, product" />
-            </Reveal>
-          </div>
-          <Reveal>
-            <Figure
-              img={COMPONENTS.states}
-              caption="Interaction states — default, hover, pressed, focus, disabled, error, success, loading, selected"
-            />
-          </Reveal>
-          <Reveal>
-            <Figure img={COMPONENTS.nav} caption="Navigation — desktop sidebar, navigation bar, phone tab bar" />
+          <Reveal className="mt-panel mt-panel--shape">
+            <h3 className="mt-panel-title">Radius &amp; depth</h3>
+            <p className="mt-panel-note">10 tokens · 3 levels plus 2 blur materials</p>
+            <div className="mt-shape">
+              <div className="mt-radii">
+                {RADII.map((r) => (
+                  <span key={r.name}>
+                    <i style={{ borderTopLeftRadius: Math.min(r.v, 40) }} />
+                    {r.v === 999 ? "full" : r.v}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-depth">
+                {DEPTH.map((d, i) => (
+                  <span key={d.name} className={`mt-depth-${i}`}>
+                    <b>{d.name}</b>
+                    {d.note}
+                  </span>
+                ))}
+              </div>
+            </div>
           </Reveal>
         </section>
 
         <section className="mt-section" aria-labelledby="mt-applied">
-          <Reveal>
-            <header className="mt-section-head">
-              <span className="mt-label">04 — Applied</span>
-              <h2 id="mt-applied" className="mt-h2">
-                One system, two themes, two scripts
-              </h2>
-              <p className="mt-body">
-                The screens were rebuilt entirely from system components. Structure, copy and
-                components are identical in both themes — only the colour mode changes, so switching
-                a frame from dark to light is a single setting.
-              </p>
-            </header>
-          </Reveal>
-          <div className="mt-pair">
-            <Reveal className="mt-pair-item">
-              <Figure img={APPLIED.discoverDark} caption="Discover · dark" />
-            </Reveal>
-            <Reveal staggerIndex={1} className="mt-pair-item">
-              <Figure img={APPLIED.discoverLight} caption="Discover · light" />
-            </Reveal>
-          </div>
-          <div className="mt-pair">
-            <Reveal className="mt-pair-item">
-              <Figure img={APPLIED.campaignDark} caption="Campaign page · dark" />
-            </Reveal>
-            <Reveal staggerIndex={1} className="mt-pair-item">
-              <Figure img={APPLIED.campaignLight} caption="Campaign page · light" />
-            </Reveal>
-          </div>
-          <div className="mt-pair mt-pair--offset">
-            <Reveal className="mt-pair-item">
-              <h3 className="mt-h3">Georgian first, Latin alongside</h3>
-              <p className="mt-small">
-                The type scale was tuned for Georgian — taller line heights, no wide capital-letter
-                labels — and the same screens carry English without any layout changes.
-              </p>
-              <Figure img={APPLIED.discoverEn} caption="Discover · English" />
-            </Reveal>
-            <Reveal staggerIndex={1} className="mt-pair-item">
-              <h3 className="mt-h3">Down to tablet and phone</h3>
-              <p className="mt-small">
-                The same components reflow to a 834px tablet and a 390px phone, with the sidebar
-                becoming a tab bar.
-              </p>
-              <Figure img={APPLIED.devices} caption="Tablet and phone" />
-            </Reveal>
-          </div>
-        </section>
+          <SectionHead id="mt-applied" label="04 — Applied" title="Every screen, rebuilt from parts">
+            Structure, copy and components are identical in both themes, so a frame switches from
+            dark to light with a single setting. The same screens carry Georgian and English, and the
+            redesign is rolling out into the live product now.
+          </SectionHead>
 
-        <section className="mt-section mt-close" aria-labelledby="mt-close">
           <Reveal>
-            <span className="mt-label">Where it stands</span>
-            <h2 id="mt-close" className="mt-h2">
-              Shipping now, screen by screen
-            </h2>
-            <p className="mt-body">
-              The redesign is rolling out into the live product. Because every screen is assembled
-              from the same tokens and components, the remaining decisions — like the final brand
-              colour — land in one place instead of across dozens of screens.
-            </p>
+            <div className="mt-sysstats mt-sysstats--4">
+              {APPLIED_STATS.map((s) => (
+                <div key={s.label}>
+                  <span className="mt-sysstats-value">{s.value}</span>
+                  <span className="mt-sysstats-label">{s.label}</span>
+                </div>
+              ))}
+            </div>
           </Reveal>
+
+          <div className="mt-pair">
+            {APPLIED.map((img, i) => (
+              <Reveal key={img.src} staggerIndex={i} className="mt-pair-item">
+                <button
+                  type="button"
+                  className="mt-imgbtn"
+                  onClick={() => setZoom(img)}
+                  aria-label={`Enlarge image: ${img.alt}`}
+                >
+                  <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" />
+                </button>
+              </Reveal>
+            ))}
+          </div>
+          <p className="mt-note">Private details — space categories and account data — are blurred.</p>
         </section>
 
         {/* Not wrapped in Reveal: as the last element it never clears Reveal's -12% bottom margin. */}
