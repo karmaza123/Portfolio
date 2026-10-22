@@ -82,8 +82,9 @@
   padding-left: max(48px, env(safe-area-inset-left, 0px));
   padding-right: max(48px, env(safe-area-inset-right, 0px));
   mix-blend-mode: normal;
-  background: color-mix(in srgb, var(--mp-bg) 88%, transparent);
-  backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--mp-bg) 24%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
 }
 
 .mp-nav::after {
@@ -278,6 +279,15 @@ a.mp-nav-status--action:focus-visible {
   pointer-events: none;
   z-index: 0;
   opacity: 0.85;
+}
+
+.mp-hero-shader {
+  opacity: 1;
+}
+
+.mp-hero-shader-veil {
+  opacity: 1;
+  background: linear-gradient(to bottom, transparent 55%, var(--mp-bg, #0b0b09) 100%);
 }
 
 .mp-hero > *:not(.mp-hero-canvas) {
