@@ -1,13 +1,13 @@
-import { useEffect, useState, type CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { MaraHeader } from "../components/MaraHeader";
 import { Reveal } from "../components/Reveal";
+import { MintlyHeroStage } from "./MintlyHeroStage";
+import { MintlyShowcase } from "./MintlyShowcase";
 import "./CaseStudyScreen.css";
 import "./MintlyCaseStudy.css";
 
-const IMG = "/case-studies/mintly";
 
-type Shot = { src: string; alt: string; w: number; h: number };
 
 const META = [
   ["Role", "Product designer"],
@@ -165,11 +165,6 @@ const DEPTH = [
   { name: "Overlay", note: "Sheets, menus, popovers" },
 ] as const;
 
-const APPLIED: readonly Shot[] = [
-  { src: `${IMG}/discover-en.webp`, alt: "Discover, rebuilt from system components", w: 1440, h: 1574 },
-  { src: `${IMG}/campaign-en.webp`, alt: "Campaign page, rebuilt from system components", w: 1440, h: 1223 },
-];
-
 const APPLIED_STATS = [
   { value: "124", label: "Screens and overlays" },
   { value: "3", label: "Breakpoints: 1440 · 834 · 390" },
@@ -197,7 +192,7 @@ function Count({ before, after, label }: { before: string; after: string; label:
   );
 }
 
-function SectionHead({ id, label, title, children }: { id: string; label: string; title: string; children: React.ReactNode }) {
+function SectionHead({ id, label, title, children }: { id: string; label: string; title: string; children: ReactNode }) {
   return (
     <Reveal>
       <header className="mt-head">
@@ -215,22 +210,6 @@ function SectionHead({ id, label, title, children }: { id: string; label: string
 
 /** Bespoke case study for the Mintly UI audit and design system. */
 export function MintlyCaseStudy() {
-  const [zoom, setZoom] = useState<Shot | null>(null);
-
-  useEffect(() => {
-    if (!zoom) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setZoom(null);
-    };
-    document.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [zoom]);
-
   return (
     <div className="aa mt">
       <MaraHeader active="work" />
@@ -272,16 +251,8 @@ export function MintlyCaseStudy() {
               </dl>
             </Reveal>
 
-            <Reveal staggerIndex={1} className="mt-stage-reveal">
-              <div className="mt-stage" aria-hidden>
-                <div className="mt-shot mt-shot--back">
-                  <img src={`${IMG}/hero-discover.webp`} alt="" width={1440} height={730} />
-                </div>
-                <div className="mt-shot mt-shot--front">
-                  <img src={`${IMG}/hero-campaign.webp`} alt="" width={1440} height={730} />
-                </div>
-              </div>
-            </Reveal>
+            {/* The stage runs its own entry sequence, so it is not wrapped in Reveal. */}
+            <MintlyHeroStage />
           </div>
 
           <Reveal delayMs={120}>
@@ -529,7 +500,7 @@ export function MintlyCaseStudy() {
           <SectionHead id="mt-applied" label="04 — Applied" title="Every screen, rebuilt from parts">
             Structure, copy and components are identical in both themes, so a frame switches from
             dark to light with a single setting. The same screens carry Georgian and English, and the
-            redesign is rolling out into the live product now.
+            redesign is rolling out now — the finished screens follow below, live.
           </SectionHead>
 
           <Reveal>
@@ -543,22 +514,9 @@ export function MintlyCaseStudy() {
             </div>
           </Reveal>
 
-          <div className="mt-pair">
-            {APPLIED.map((img, i) => (
-              <Reveal key={img.src} staggerIndex={i} className="mt-pair-item">
-                <button
-                  type="button"
-                  className="mt-imgbtn"
-                  onClick={() => setZoom(img)}
-                  aria-label={`Enlarge image: ${img.alt}`}
-                >
-                  <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" />
-                </button>
-              </Reveal>
-            ))}
-          </div>
-          <p className="mt-note">Private details — space categories and account data — are blurred.</p>
         </section>
+
+        <MintlyShowcase />
 
         {/* Not wrapped in Reveal: as the last element it never clears Reveal's -12% bottom margin. */}
         <footer className="aa-foot">
@@ -568,25 +526,6 @@ export function MintlyCaseStudy() {
         </footer>
       </main>
 
-      {zoom && (
-        <div
-          className="aa-lightbox"
-          role="dialog"
-          aria-modal="true"
-          aria-label={zoom.alt}
-          onClick={() => setZoom(null)}
-        >
-          <button
-            type="button"
-            className="aa-lightbox-close"
-            onClick={() => setZoom(null)}
-            aria-label="Close image viewer"
-          >
-            ×
-          </button>
-          <img className="aa-lightbox-img" src={zoom.src} alt={zoom.alt} />
-        </div>
-      )}
     </div>
   );
 }
