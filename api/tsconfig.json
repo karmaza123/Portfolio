@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"],
+    "noEmit": false,
+    "allowImportingTsExtensions": false,
+    "outDir": "../.api-typecheck"
+  },
+  "include": ["./**/*.ts", "../src/portal/types.ts"]
+}

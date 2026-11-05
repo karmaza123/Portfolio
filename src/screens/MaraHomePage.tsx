@@ -13,6 +13,7 @@ import {
   filterProjectsByCategory,
   type ProjectFilterCategory,
 } from "../utils/projectTags";
+import { SiteFooter } from "../components/SiteFooter";
 import "./MaraHomePage.css";
 
 const MARQUEE_ITEMS = [
@@ -296,10 +297,7 @@ export function MaraHomePage() {
       </section>
       </main>
 
-      <footer className="mp-footer">
-        <p className="mp-footer-left">© {new Date().getFullYear()} Dimitri Karmazanashvili</p>
-        <p className="mp-footer-right">Tbilisi — Working globally</p>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
