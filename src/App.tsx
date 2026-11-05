@@ -16,6 +16,10 @@ const PortalDashboardScreen = lazy(() =>
   import("./screens/portal/PortalDashboardScreen").then((m) => ({ default: m.PortalDashboardScreen })),
 );
 
+const PortalAdminScreen = lazy(() =>
+  import("./screens/portal/PortalAdminScreen").then((m) => ({ default: m.PortalAdminScreen })),
+);
+
 function App() {
   return (
     <MaraAppearanceProvider>
@@ -34,6 +38,7 @@ function App() {
                 <Route path="/portal" element={<Navigate to="/portal/login" replace />} />
                 <Route path="/portal/login" element={<PortalLoginScreen />} />
                 <Route path="/portal/dashboard" element={<PortalDashboardScreen />} />
+                <Route path="/portal/admin" element={<PortalAdminScreen />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
