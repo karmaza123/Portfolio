@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { MaraHeader } from "../components/MaraHeader";
 import { CONTACT_EMAIL, CONTACT_MAILTO } from "../constants/contact";
 import { Reveal } from "../components/Reveal";
+import { SiteFooter } from "../components/SiteFooter";
 import "./MaraHomePage.css";
 import "./ResumeScreen.css";
 
@@ -262,10 +263,7 @@ export function ResumeScreen() {
       </div>
       </main>
 
-      <footer className="mp-footer">
-        <p className="mp-footer-left">© {new Date().getFullYear()} Dimitri Karmazanashvili</p>
-        <p className="mp-footer-right">Tbilisi — Working globally</p>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
