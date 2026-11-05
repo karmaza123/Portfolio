@@ -8,7 +8,7 @@ import { PortalShell } from "./PortalShell";
 type LoadState =
   | { kind: "loading" }
   | { kind: "signed-out" }
-  | { kind: "error"; message: string }
+  | { kind: "error"; message: string; signedIn: boolean }
   | { kind: "ready"; data: AdminOverview };
 
 type Filter = "open" | "all" | RequestStatus;
@@ -36,7 +36,11 @@ export function PortalAdminScreen() {
       setState({ kind: "ready", data: await adminApi.overview() });
     } catch (err) {
       if (err instanceof ApiError && err.status === 401) return setState({ kind: "signed-out" });
-      setState({ kind: "error", message: err instanceof ApiError ? err.message : "Couldn't load the overview." });
+      setState({
+        kind: "error",
+        message: err instanceof ApiError ? err.message : "Couldn't load the overview.",
+        signedIn: err instanceof ApiError && err.code === "not_configured",
+      });
     }
   }, []);
 
@@ -63,7 +67,7 @@ export function PortalAdminScreen() {
 
   if (state.kind === "error") {
     return (
-      <PortalShell title="Admin">
+      <PortalShell title="Admin" account={state.signedIn ? { label: "Owner", onSignOut: () => void signOut() } : undefined}>
         <div className="pt-status" role="alert">
           <p>{state.message}</p>
           <button type="button" className="pt-btn pt-btn--ghost" onClick={() => void load()}>

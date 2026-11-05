@@ -50,7 +50,8 @@ export type ApiErrorCode =
   | "no_edits_on_plan"
   | "billing_inactive"
   | "validation"
-  | "no_billing";
+  | "no_billing"
+  | "not_configured";
 
 /** Owner dashboard (`/portal/admin`): every client and every request. */
 export type AdminClient = PortalClient & { id: string; createdAt: string };
