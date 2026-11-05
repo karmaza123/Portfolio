@@ -4,9 +4,10 @@ import { CONTACT_EMAIL } from "../../constants/contact";
 import { ApiError, portalApi } from "../../portal/api";
 import { PortalShell } from "./PortalShell";
 
-/** /portal/login — the password from the onboarding email is all a client needs. */
+/** /portal/login — business domain + password, as given during onboarding. */
 export function PortalLoginScreen() {
   const navigate = useNavigate();
+  const [domain, setDomain] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -31,7 +32,7 @@ export function PortalLoginScreen() {
     setBusy(true);
     setError(null);
     try {
-      await portalApi.login(password);
+      await portalApi.login(domain, password);
       navigate("/portal/dashboard", { replace: true });
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Something went wrong. Try again.");
@@ -48,10 +49,28 @@ export function PortalLoginScreen() {
           Sign in to manage your site
         </h1>
         <p className="pt-lede">
-          Enter the password from your onboarding email.
+          Use the domain name of your website and the password from your onboarding email.
         </p>
 
         <form className="pt-form" onSubmit={onSubmit} noValidate>
+          <label className="pt-field">
+            <span>Domain name</span>
+            <input
+              type="text"
+              name="domain"
+              value={domain}
+              onChange={(e) => setDomain(e.target.value)}
+              placeholder="yourcompany.com"
+              autoComplete="username"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              inputMode="url"
+              required
+              autoFocus
+            />
+          </label>
+
           <label className="pt-field">
             <span>Password</span>
             <input
@@ -61,7 +80,6 @@ export function PortalLoginScreen() {
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
               required
-              autoFocus
             />
           </label>
 
@@ -69,14 +87,14 @@ export function PortalLoginScreen() {
             {error ? <p className="pt-error">{error}</p> : null}
           </div>
 
-          <button type="submit" className="pt-btn pt-btn--primary" disabled={busy || !password}>
+          <button type="submit" className="pt-btn pt-btn--primary" disabled={busy || !domain.trim() || !password}>
             {busy ? "Signing in…" : "Sign in"}
           </button>
         </form>
 
         {import.meta.env.DEV ? (
           <p className="pt-hint pt-hint--dev">
-            Local mock API — password <code>demo-password</code>
+            Local mock API — sign in with <code>acmeplumbing.com</code> / <code>demo-password</code>
           </p>
         ) : null}
 

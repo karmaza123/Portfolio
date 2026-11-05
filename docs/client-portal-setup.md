@@ -60,11 +60,8 @@ Add every variable from `.env.example` (Project → Settings → Environment Var
 npm run portal:hash
 ```
 
-It prints a password to send, plus the `password_hash` and `password_lookup` to store. Insert the row it
-suggests, with the client's real domain and plan. Clients sign in with **the password only**, so every client
-must have their own generated password (the lookup column is unique). Run
-`supabase/migrations/0002_password_only_login.sql` once before adding clients; anyone added before it needs
-a new password via the `update` the script prints.
+It prints a password to send and a hash to store. Insert the row it suggests, with the client's real
+domain and plan:
 
 | Plan | `plan_type` | `monthly_edit_limit` |
 | --- | --- | --- |

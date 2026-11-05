@@ -29,5 +29,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 | V0.09   | 2026-11-05 | — | Owner dashboard at `/portal/admin` (own password + signed cookie, service-role API in `api/admin/`): headline stats, request list with status picker and filters, project list. Needs `ADMIN_PASSWORD_HASH` and `ADMIN_SESSION_SECRET`. Local mock password `admin-password`. |
 | V0.10   | 2026-11-05 | — | Admin redesign: sidebar (Overview, Projects, Requests, Billing with counts), search + bell top bar, project cards with live site screenshots (WordPress mShots), per-client detail page. |
 | V0.11   | 2026-11-05 | — | Client sign-in is password only: the API finds the client by a SHA-256 `password_lookup` (migration 0002), then checks bcrypt; throttled per IP. `portal:hash` prints the lookup and insert/update SQL. |
+| V0.12   | 2026-11-05 | — | Client sign-in back to domain + password (reverts V0.11). |
 
 **Next version:** `v0.09`

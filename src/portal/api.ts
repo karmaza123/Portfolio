@@ -44,7 +44,7 @@ export const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024;
 export const ATTACHMENT_TYPES = ["image/png", "image/jpeg", "image/webp", "image/gif", "application/pdf"];
 
 export const portalApi = {
-  login: (password: string) => post<{ ok: true }>("/api/portal/login", { password }),
+  login: (domain: string, password: string) => post<{ ok: true }>("/api/portal/login", { domain, password }),
   logout: () => post<{ ok: true }>("/api/portal/logout"),
   me: () => call<PortalMe>("/api/portal/me"),
   openBilling: () => post<{ url: string }>("/api/portal/billing"),
