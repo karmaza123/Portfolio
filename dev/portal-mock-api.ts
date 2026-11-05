@@ -8,12 +8,33 @@ import type { Plugin } from "vite";
  *
  *   domain:   acmeplumbing.com
  *   password: demo-password
+ *   admin:    /portal/admin with admin-password
  *
  * Switch what the dashboard shows by visiting /__mock/scenario?s=full|warn|diy|batch|pastdue|empty|reset
  */
 
 export const DEMO_DOMAIN = "acmeplumbing.com";
 export const DEMO_PASSWORD = "demo-password";
+export const ADMIN_PASSWORD = "admin-password";
+
+const day = 86_400_000;
+const ago = (days: number) => new Date(Date.now() - days * day).toISOString();
+
+// Other clients, so the owner dashboard has something to count. Acme comes from the live state.
+const otherClients = () => [
+  { id: "bloom", companyName: "Bloom Florist", domainName: "bloomflorist.ge", planType: "pay_as_you_go", billingStatus: "active", currentPeriodEnd: null, monthlyEditLimit: 5, editsUsed: 3, hasBilling: true, createdAt: ago(120) },
+  { id: "kartuli", companyName: "Kartuli Table", domainName: "kartulitable.com", planType: "subscription", billingStatus: "past_due", currentPeriodEnd: ago(-3), monthlyEditLimit: 10, editsUsed: 9, hasBilling: true, createdAt: ago(200) },
+  { id: "nord", companyName: "Nord Studio", domainName: "nordstudio.io", planType: "cms_handover", billingStatus: "active", currentPeriodEnd: null, monthlyEditLimit: 0, editsUsed: 0, hasBilling: false, createdAt: ago(60) },
+  { id: "vake", companyName: "Vake Dental", domainName: "vakedental.ge", planType: "subscription", billingStatus: "active", currentPeriodEnd: ago(-18), monthlyEditLimit: 10, editsUsed: 2, hasBilling: true, createdAt: ago(40) },
+];
+
+const otherRequests = () => [
+  { id: "b1", clientId: "bloom", title: "Add Valentine's bouquets page", description: "New page with the six bouquets from the attached PDF, prices included.", pageUrl: null, attachmentUrl: "#", attachmentName: "bouquets.pdf", status: "pending", createdAt: ago(1), completedAt: null },
+  { id: "k1", clientId: "kartuli", title: "Update winter menu", description: "Swap the menu PDF and the three dish photos on the home page.", pageUrl: "https://kartulitable.com/menu", attachmentUrl: null, attachmentName: null, status: "in_progress", createdAt: ago(4), completedAt: null },
+  { id: "k2", clientId: "kartuli", title: "Booking button colour", description: "Make the Book a table button match the logo red.", pageUrl: null, attachmentUrl: null, attachmentName: null, status: "completed", createdAt: ago(12), completedAt: ago(11) },
+  { id: "v1", clientId: "vake", title: "Add Dr. Beridze to the team", description: "Photo and bio attached.", pageUrl: "https://vakedental.ge/team", attachmentUrl: null, attachmentName: null, status: "pending", createdAt: ago(0), completedAt: null },
+  { id: "b0", clientId: "bloom", title: "Fix delivery area map", description: "Map should include Saburtalo.", pageUrl: null, attachmentUrl: null, attachmentName: null, status: "completed", createdAt: ago(45), completedAt: ago(44) },
+];
 
 type Req = {
   id: string;
@@ -86,6 +107,7 @@ const normalize = (input: string) =>
 
 export function portalMockApi(): Plugin {
   let state = seed();
+  let others = { clients: otherClients(), requests: otherRequests() };
 
   return {
     name: "portal-mock-api",
@@ -100,11 +122,49 @@ export function portalMockApi(): Plugin {
       server.middlewares.use(async (req, res, next) => {
         const url = new URL(req.url ?? "/", "http://localhost");
         const path = url.pathname;
-        if (!path.startsWith("/api/portal/") && !path.startsWith("/__mock/")) return next();
+        if (!path.startsWith("/api/portal/") && !path.startsWith("/api/admin/") && !path.startsWith("/__mock/")) return next();
+
+        if (path.startsWith("/api/admin/")) {
+          if (path === "/api/admin/login" && req.method === "POST") {
+            const body = await readJson(req);
+            if (body.password !== ADMIN_PASSWORD) return send(res, 401, { error: "Wrong password.", code: "invalid_credentials" });
+            return send(res, 200, { ok: true }, { "Set-Cookie": "portal_mock_admin=1; Path=/; HttpOnly; SameSite=Strict" });
+          }
+          if (path === "/api/admin/logout") {
+            return send(res, 200, { ok: true }, { "Set-Cookie": "portal_mock_admin=; Path=/; Max-Age=0" });
+          }
+          if (!(req.headers.cookie ?? "").includes("portal_mock_admin=1")) {
+            return send(res, 401, { error: "Not signed in", code: "unauthenticated" });
+          }
+          if (path === "/api/admin/overview") {
+            const acme = { id: "acme", ...state.client, createdAt: ago(300) };
+            return send(res, 200, {
+              clients: [acme, ...others.clients].sort((a, b) => a.companyName.localeCompare(b.companyName)),
+              requests: [...state.requests.map((r) => ({ ...r, clientId: "acme" })), ...others.requests].sort((a, b) =>
+                b.createdAt.localeCompare(a.createdAt),
+              ),
+            });
+          }
+          if (path === "/api/admin/request-status" && req.method === "POST") {
+            const body = await readJson(req);
+            const status = String(body.status) as Req["status"];
+            const target = [...state.requests, ...others.requests].find((r) => r.id === body.id);
+            if (!target) return send(res, 404, { error: "That request no longer exists." });
+            if (state.requests.includes(target as Req)) {
+              if (status === "declined" && target.status !== "declined") state.client.editsUsed = Math.max(0, state.client.editsUsed - 1);
+              if (target.status === "declined" && status !== "declined") state.client.editsUsed += 1;
+            }
+            target.status = status;
+            target.completedAt = status === "completed" || status === "declined" ? (target.completedAt ?? new Date().toISOString()) : null;
+            return send(res, 200, { request: { id: target.id, status } });
+          }
+          return send(res, 404, { error: "Not found" });
+        }
 
         if (path === "/__mock/scenario") {
           const name = url.searchParams.get("s") ?? "reset";
           state = scenario(name);
+          others = { clients: otherClients(), requests: otherRequests() };
           return send(res, 200, { ok: true, scenario: name });
         }
         if (path === "/__mock/put") {

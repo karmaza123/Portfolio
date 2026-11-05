@@ -1,4 +1,4 @@
-import type { ApiErrorCode, NewRequestInput, PortalMe, UploadTicket } from "./types";
+import type { AdminOverview, ApiErrorCode, NewRequestInput, PortalMe, RequestStatus, UploadTicket } from "./types";
 
 export class ApiError extends Error {
   constructor(
@@ -32,6 +32,13 @@ async function call<T>(path: string, init: RequestInit = {}): Promise<T> {
 
 const post = <T>(path: string, body?: unknown) =>
   call<T>(path, { method: "POST", body: body === undefined ? undefined : JSON.stringify(body) });
+
+export const adminApi = {
+  login: (password: string) => post<{ ok: true }>("/api/admin/login", { password }),
+  logout: () => post<{ ok: true }>("/api/admin/logout"),
+  overview: () => call<AdminOverview>("/api/admin/overview"),
+  setStatus: (id: string, status: RequestStatus) => post<{ request: unknown }>("/api/admin/request-status", { id, status }),
+};
 
 export const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024;
 export const ATTACHMENT_TYPES = ["image/png", "image/jpeg", "image/webp", "image/gif", "application/pdf"];

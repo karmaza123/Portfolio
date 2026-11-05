@@ -74,7 +74,12 @@ Linking Stripe: either put their `stripe_customer_id` on the row, or let the fir
 
 ## Handling requests
 
-Requests arrive in `change_requests` (Supabase → Table editor). Change `status` to
+Open **`/portal/admin`** and sign in with your admin password (set `ADMIN_PASSWORD_HASH` and
+`ADMIN_SESSION_SECRET` in Vercel first; see `.env.example`). It shows the headline numbers (projects by
+plan, open requests, completions in the last 30 days, edits used, monthly recurring revenue, billing
+issues), every request with a status picker, and every project with its quota.
+
+You can also edit `change_requests` directly in Supabase → Table editor. Either way, when `status` moves to
 `in_progress`, `completed` or `declined`:
 
 - `completed_at` is stamped for you.

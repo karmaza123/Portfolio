@@ -51,3 +51,8 @@ export type ApiErrorCode =
   | "billing_inactive"
   | "validation"
   | "no_billing";
+
+/** Owner dashboard (`/portal/admin`): every client and every request. */
+export type AdminClient = PortalClient & { id: string; createdAt: string };
+export type AdminRequest = PortalRequest & { clientId: string };
+export type AdminOverview = { clients: AdminClient[]; requests: AdminRequest[] };
