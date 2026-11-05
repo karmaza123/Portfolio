@@ -12,6 +12,10 @@ export async function GET(request: Request): Promise<Response> {
   const denied = await requireAdmin(request);
   if (denied) return denied;
 
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return fail(503, "Supabase isn't connected yet. Add the Supabase keys in Vercel to see clients and requests.", "not_configured");
+  }
+
   const db = adminClient();
   const [clientsRes, requestsRes] = await Promise.all([
     db.from("clients").select(`${CLIENT_COLUMNS}, stripe_customer_id`).order("company_name"),
