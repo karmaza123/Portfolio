@@ -6,6 +6,7 @@ import type { Plugin } from "vite";
  * Stripe or the Vercel CLI. It is a Vite dev-server plugin (`apply: "serve"`), so it is never part
  * of a production build, and under `vercel dev` Vercel answers /api before Vite sees it.
  *
+ *   domain:   acmeplumbing.com
  *   password: demo-password
  *   admin:    /portal/admin with admin-password
  *
@@ -101,6 +102,9 @@ const readJson = (req: IncomingMessage) =>
     });
   });
 
+const normalize = (input: string) =>
+  input.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/[/?#].*$/, "");
+
 export function portalMockApi(): Plugin {
   let state = seed();
   let others = { clients: otherClients(), requests: otherRequests() };
@@ -111,7 +115,7 @@ export function portalMockApi(): Plugin {
     configureServer(server) {
       server.httpServer?.once("listening", () => {
         server.config.logger.info(
-          `\n  Client portal (mock API): sign in at /portal/login with password ${DEMO_PASSWORD}\n`,
+          `\n  Client portal (mock API): sign in at /portal/login with ${DEMO_DOMAIN} / ${DEMO_PASSWORD}\n`,
         );
       });
 
@@ -170,8 +174,8 @@ export function portalMockApi(): Plugin {
 
         if (path === "/api/portal/login" && req.method === "POST") {
           const body = await readJson(req);
-          const ok = body.password === DEMO_PASSWORD;
-          if (!ok) return send(res, 401, { error: "That password didn't work.", code: "invalid_credentials" });
+          const ok = normalize(String(body.domain ?? "")) === DEMO_DOMAIN && body.password === DEMO_PASSWORD;
+          if (!ok) return send(res, 401, { error: "Invalid domain or password.", code: "invalid_credentials" });
           return send(res, 200, { ok: true }, { "Set-Cookie": "portal_mock=1; Path=/; HttpOnly; SameSite=Lax" });
         }
         if (path === "/api/portal/logout") {
