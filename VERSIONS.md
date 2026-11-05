@@ -27,5 +27,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.08   | 2026-11-05 | — | Client Portal: `/portal/login` signs clients in with domain + password, `/portal/dashboard` shows the plan card, edit quota bar, change-request form (with optional file) and a status timeline. Footer "Client Portal" link via a new shared `SiteFooter` on home/work/resume. Vercel functions in `api/` (login, logout, me, requests, upload-url, billing, Stripe webhook), Supabase schema with row level security and an atomic quota function, login throttling, onboarding script `npm run portal:hash`. `vercel.json` now keeps `/api` out of the SPA rewrite and marks `/portal/*` noindex. Setup guide: `docs/client-portal-setup.md`. Needs Supabase + Stripe keys before it works end to end. |
 | V0.09   | 2026-11-05 | — | Owner dashboard at `/portal/admin` (own password + signed cookie, service-role API in `api/admin/`): headline stats, request list with status picker and filters, project list. Needs `ADMIN_PASSWORD_HASH` and `ADMIN_SESSION_SECRET`. Local mock password `admin-password`. |
+| V0.10   | 2026-11-05 | — | Admin redesign: sidebar (Overview, Projects, Requests, Billing with counts), search + bell top bar, project cards with live site screenshots (WordPress mShots), per-client detail page. |
 
 **Next version:** `v0.09`
