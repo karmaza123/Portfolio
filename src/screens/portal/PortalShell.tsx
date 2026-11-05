@@ -10,8 +10,8 @@ type PortalShellProps = {
   account?: { label: string; onSignOut: () => void };
 };
 
-/** Shared frame for the portal pages: minimal header, noindex, no site navigation. */
-export function PortalShell({ title, children, account }: PortalShellProps) {
+/** Page title plus noindex: the portal is private. */
+export function usePortalHead(title: string) {
   useEffect(() => {
     const previousTitle = document.title;
     document.title = `${title} — Client Portal`;
@@ -27,6 +27,11 @@ export function PortalShell({ title, children, account }: PortalShellProps) {
       meta.remove();
     };
   }, [title]);
+}
+
+/** Shared frame for the portal pages: minimal header, noindex, no site navigation. */
+export function PortalShell({ title, children, account }: PortalShellProps) {
+  usePortalHead(title);
 
   return (
     <div className="pt">
