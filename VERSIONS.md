@@ -31,4 +31,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 | V0.11   | 2026-11-05 | — | Client sign-in is password only: the API finds the client by a SHA-256 `password_lookup` (migration 0002), then checks bcrypt; throttled per IP. `portal:hash` prints the lookup and insert/update SQL. |
 | V0.12   | 2026-11-05 | — | Client sign-in back to domain + password (reverts V0.11). |
 
+| V0.13   | 2026-11-17 | — | Link previews: the page had no Open Graph, Twitter Card, or meta description tags, so every share of karmaza.design (LinkedIn, Slack, WhatsApp, X) rendered as a bare grey box with a URL and LinkedIn's crawler failed its first preview fetch. Added description, canonical, theme-color, full og:* set (type, site_name, url, title, description, image + type/width/height/alt, locale) and twitter:card summary_large_image. New 1200x630 share card at public/og-image.png, built in the site's own palette and type (near-black #0b0b09, lime #c8f53f, Playfair Display / Syne / DM Mono). |
+
 **Next version:** `v0.09`
