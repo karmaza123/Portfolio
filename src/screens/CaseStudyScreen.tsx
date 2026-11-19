@@ -4,6 +4,7 @@ import { MaraHeader } from "../components/MaraHeader";
 import { Reveal } from "../components/Reveal";
 import { getCaseStudy, type GalleryImage } from "../data/caseStudyContent";
 import { RkaliCaseStudy } from "./RkaliCaseStudy";
+import { PowerPayStory } from "./PowerPayStory";
 import "./CaseStudyScreen.css";
 
 const WORKFLOW_STEPS = [
@@ -102,7 +103,7 @@ export function CaseStudyScreen() {
   );
 
   return (
-    <div className="aa" style={themeStyle}>
+    <div className={slug?.startsWith("powerpay-") ? "aa aa--pp" : "aa"} style={themeStyle}>
       <MaraHeader active="work" />
 
       <Reveal className="aa-top-reveal">
@@ -169,7 +170,18 @@ export function CaseStudyScreen() {
           </section>
         </Reveal>
 
-        {data.narrative?.map((sec, i) => (
+        {data.galleryLayout === "grid" && data.narrative && !slug?.startsWith("powerpay-") ? (
+          <Reveal className="aa-narrative-reveal">
+            <section className="aa-section aa-story">
+              {data.narrative.map((sec) => (
+                <div key={sec.heading} className="aa-story-block">
+                  <h2 className="aa-story-h">{sec.heading}</h2>
+                  <p>{sec.body}</p>
+                </div>
+              ))}
+            </section>
+          </Reveal>
+        ) : data.narrative?.map((sec, i) => (
           <Reveal key={sec.heading} delayMs={i * 40} className="aa-narrative-reveal">
             <section className="aa-section aa-narrative">
               <h2 className="aa-h2">{sec.heading}</h2>
@@ -288,6 +300,28 @@ export function CaseStudyScreen() {
                       .filter((g) => g.col !== 1)
                       .map(renderGalleryImage)}
                   </div>
+                </div>
+              ) : slug?.startsWith("powerpay-") ? (
+                <PowerPayStory slug={slug} gallery={data.gallery} onZoom={setZoom} title={data.heroTitle} />
+              ) : data.galleryLayout === "grid" ? (
+                <div className="aa-gallery aa-gallery--grid">
+                  {data.gallery.map((img, i) => (
+                    <Reveal key={img.src} staggerIndex={i} className="aa-grid-item">
+                      <button
+                        type="button"
+                        className="aa-grid-card"
+                        onClick={() => setZoom(img)}
+                        aria-label={`Open full screen: ${img.alt}`}
+                      >
+                        <span className="aa-grid-frame">
+                          <img src={img.src} alt="" width={img.w} height={img.h} loading="lazy" />
+                        </span>
+                        <span className="aa-grid-caption">
+                          {img.alt}
+                        </span>
+                      </button>
+                    </Reveal>
+                  ))}
                 </div>
               ) : data.galleryLayout === "flow" ? (
                 <div className="aa-gallery aa-gallery--flow">
