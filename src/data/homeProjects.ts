@@ -102,4 +102,28 @@ export const HOME_PROJECTS: HomeProject[] = [
     categories: ["Product"],
     year: "2021",
   },
+  {
+    num: "012",
+    title: "PowerPay, Mobile Application",
+    slug: "powerpay-application",
+    tags: ["Mobile", "Energy"],
+    categories: ["Mobile"],
+    year: "2025",
+  },
+  {
+    num: "013",
+    title: "PowerPay, UI Design",
+    slug: "powerpay-ui-design",
+    tags: ["UI Design", "Dashboard"],
+    categories: ["UI/UX", "B2B / SaaS"],
+    year: "2025",
+  },
+  {
+    num: "014",
+    title: "PowerPay, UX Design",
+    slug: "powerpay-ux-design",
+    tags: ["UX Design", "User flows"],
+    categories: ["UI/UX"],
+    year: "2025",
+  },
 ];

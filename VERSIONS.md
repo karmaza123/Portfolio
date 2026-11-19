@@ -33,4 +33,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.13   | 2026-11-17 | — | Link previews: the page had no Open Graph, Twitter Card, or meta description tags, so every share of karmaza.design (LinkedIn, Slack, WhatsApp, X) rendered as a bare grey box with a URL and LinkedIn's crawler failed its first preview fetch. Added description, canonical, theme-color, full og:* set (type, site_name, url, title, description, image + type/width/height/alt, locale) and twitter:card summary_large_image. New 1200x630 share card at public/og-image.png, built in the site's own palette and type (near-black #0b0b09, lime #c8f53f, Playfair Display / Syne / DM Mono). |
 
-**Next version:** `v0.09`
+| V0.14   | 2026-11-19 | `69c38ac` | PowerPay case studies: three new pages (Application, UI design, UX design), listed on the home page as 012–014. Built as chapter storylines in a shared `PowerPayStory` layout: dark theme, bracket labels, numbered chapter index, live hero visuals (a coded app launch rebuilt from the real Figma frames, an auto-playing role-dashboard browser window, an auto-playing supplier-switch application), stepper-and-panel flows taken from the PowerPay design pattern, individual app screens cut at phone height, and research from the DeepDive board (flow map, consumer entry flows, sign-up "what if" study). Persona, client, roadmap and pricing material from that board was left out as sensitive. The build commit subject says "V0.05": it was numbered before main had moved on to V0.13. |
+
+**Next version:** `v0.15`
