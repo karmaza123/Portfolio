@@ -19,4 +19,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.04   | 2026-09-12 | `03b9a21` | Deploy fix: added `vercel.json` with an SPA rewrite (`/(.*)` → `/index.html`). Without it Vercel resolved client-side routes against the filesystem, so `/work`, `/resume`, and every `/project/:slug` returned a 404 on direct load or refresh — only `/` worked, and internal links only worked because they never hit the server. Static assets are unaffected: Vercel matches real files before applying rewrites. |
 
-**Next version:** `v0.05`
+| V0.05   | 2026-11-19 | `69c38ac` | PowerPay case studies: three new pages (Application, UI design, UX design), listed on the home page as 011–013. Built as chapter storylines in a shared `PowerPayStory` layout: dark theme, bracket labels, numbered chapter index, live hero visuals (a coded app launch rebuilt from the real Figma frames, an auto-playing role-dashboard browser window, an auto-playing supplier-switch application), stepper-and-panel flows taken from the PowerPay design pattern, individual app screens cut at phone height, and research from the DeepDive board (flow map, consumer entry flows, sign-up "what if" study). Persona, client, roadmap and pricing material from that board was left out as sensitive. |
+
+**Next version:** `v0.06`
