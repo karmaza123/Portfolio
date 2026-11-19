@@ -16,6 +16,14 @@ export type HomeProject = {
 export const HOME_PROJECTS: HomeProject[] = [
   {
     num: "001",
+    title: "Mintly, Design System & Redesign",
+    slug: "mintly-design-system",
+    tags: ["Design System", "Product"],
+    categories: ["Product", "UI/UX"],
+    year: "2026",
+  },
+  {
+    num: "002",
     title: "Artemis museum, UI Design",
     slug: "artemis-museum-ui-design",
     tags: ["UI/UX Design", "Museum"],
@@ -23,7 +31,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     year: "2024",
   },
   {
-    num: "002",
+    num: "003",
     title: "Artemis museum, Brand Identity Guidelines",
     slug: "artemis-museum-brand-identity",
     tags: ["Brand", "Guidelines"],
@@ -31,7 +39,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     year: "2024",
   },
   {
-    num: "003",
+    num: "004",
     title: "Rkali Brand Design",
     slug: "rkali-brand-design",
     tags: ["Brand", "Packaging"],
@@ -39,7 +47,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     year: "2023",
   },
   {
-    num: "004",
+    num: "005",
     title: "Sportsbook, Quick bet concept",
     slug: "sportsbook-quick-bet-concept",
     tags: ["Product", "Gaming"],
@@ -47,7 +55,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     year: "2023",
   },
   {
-    num: "005",
+    num: "006",
     title: "Sportsbook, Ticket History",
     slug: "sportsbook-ticket-history",
     tags: ["UI/UX", "Fintech"],
@@ -55,7 +63,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     year: "2023",
   },
   {
-    num: "006",
+    num: "007",
     title: "ArcoHouse, Warehouse Management System",
     slug: "arcohouse-warehouse-management-system",
     tags: ["SaaS", "B2B"],
@@ -63,7 +71,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     year: "2022",
   },
   {
-    num: "007",
+    num: "008",
     title: "Igaming UI design",
     slug: "igaming-ui-design",
     tags: ["UI Kit", "Gaming"],
@@ -71,7 +79,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     year: "2022",
   },
   {
-    num: "008",
+    num: "009",
     title: "Hotel Management System",
     slug: "hotel-management-system",
     tags: ["SaaS", "Hospitality"],
@@ -79,7 +87,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     year: "2022",
   },
   {
-    num: "009",
+    num: "010",
     title: "Bank UI concept",
     slug: "bank-ui-concept",
     tags: ["Mobile", "Fintech"],
@@ -87,7 +95,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     year: "2021",
   },
   {
-    num: "010",
+    num: "011",
     title: "Valo Trust, Banking Application",
     slug: "valo-trust-banking-application",
     tags: ["Product", "Banking"],
@@ -95,7 +103,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     year: "2021",
   },
   {
-    num: "011",
+    num: "012",
     title: "PowerPay, Mobile Application",
     slug: "powerpay-application",
     tags: ["Mobile", "Energy"],
@@ -103,7 +111,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     year: "2025",
   },
   {
-    num: "012",
+    num: "013",
     title: "PowerPay, UI Design",
     slug: "powerpay-ui-design",
     tags: ["UI Design", "Dashboard"],
@@ -111,7 +119,7 @@ export const HOME_PROJECTS: HomeProject[] = [
     year: "2025",
   },
   {
-    num: "013",
+    num: "014",
     title: "PowerPay, UX Design",
     slug: "powerpay-ux-design",
     tags: ["UX Design", "User flows"],

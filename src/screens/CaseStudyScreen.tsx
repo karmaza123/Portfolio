@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { MaraHeader } from "../components/MaraHeader";
 import { Reveal } from "../components/Reveal";
 import { getCaseStudy, type GalleryImage } from "../data/caseStudyContent";
+import { MintlyCaseStudy } from "./MintlyCaseStudy";
 import { RkaliCaseStudy } from "./RkaliCaseStudy";
 import { PowerPayStory } from "./PowerPayStory";
 import "./CaseStudyScreen.css";
@@ -62,6 +63,11 @@ export function CaseStudyScreen() {
       document.body.style.overflow = prevOverflow;
     };
   }, [zoom]);
+
+  // Fully bespoke page with no template content, so it skips the CASE_STUDIES lookup.
+  if (slug === "mintly-design-system") {
+    return <MintlyCaseStudy />;
+  }
 
   if (!data) {
     return <Navigate to="/" replace />;

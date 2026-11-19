@@ -82,8 +82,9 @@
   padding-left: max(48px, env(safe-area-inset-left, 0px));
   padding-right: max(48px, env(safe-area-inset-right, 0px));
   mix-blend-mode: normal;
-  background: color-mix(in srgb, var(--mp-bg) 88%, transparent);
-  backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--mp-bg) 24%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
 }
 
 .mp-nav::after {
@@ -278,6 +279,15 @@ a.mp-nav-status--action:focus-visible {
   pointer-events: none;
   z-index: 0;
   opacity: 0.85;
+}
+
+.mp-hero-shader {
+  opacity: 1;
+}
+
+.mp-hero-shader-veil {
+  opacity: 1;
+  background: linear-gradient(to bottom, transparent 55%, var(--mp-bg, #0b0b09) 100%);
 }
 
 .mp-hero > *:not(.mp-hero-canvas) {
@@ -1174,11 +1184,15 @@ html[data-mp-theme="light"] .mp-about-portrait-inner {
   padding-bottom: max(28px, env(safe-area-inset-bottom, 0px));
   padding-left: max(48px, env(safe-area-inset-left, 0px));
   padding-right: max(48px, env(safe-area-inset-right, 0px));
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  flex-wrap: wrap;
   gap: 16px;
+}
+
+.mp-footer-right {
+  justify-self: end;
+  text-align: right;
 }
 
 @media (max-width: 720px) {
@@ -1187,7 +1201,36 @@ html[data-mp-theme="light"] .mp-about-portrait-inner {
     padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
     padding-left: max(20px, env(safe-area-inset-left, 0px));
     padding-right: max(20px, env(safe-area-inset-right, 0px));
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 12px;
   }
+
+  .mp-footer-right {
+    justify-self: center;
+    text-align: center;
+  }
+}
+
+.mp-footer-portal {
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mp-muted);
+  text-decoration: underline;
+  text-decoration-color: var(--mp-border2);
+  text-underline-offset: 4px;
+  transition:
+    color 160ms ease,
+    text-decoration-color 160ms ease;
+}
+
+.mp-footer-portal:hover,
+.mp-footer-portal:focus-visible {
+  color: var(--mp-accent);
+  text-decoration-color: currentColor;
 }
 
 .mp-footer-left,
