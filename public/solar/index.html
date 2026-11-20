@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Sunfield-1: an interactive 3D scale-model dashboard of a demo solar park with a site weather forecast, simulated plant data, CCTV feeds and day/night and site modes.">
-<meta property="og:title" content="Sunfield-1 Solar Park">
+<meta name="description" content="Sunfield: an interactive 3D scale-model dashboard of a demo solar park with a site weather forecast, simulated plant data, CCTV feeds and day/night and site modes.">
+<meta property="og:title" content="Sunfield Solar Parks">
 <meta property="og:description" content="Interactive 3D solar park dashboard — a karmaza.design portfolio piece.">
 <meta property="og:url" content="https://solar.karmaza.design/">
 <meta property="og:type" content="website">
@@ -13,7 +13,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f5d48'/%3E%3Ccircle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.4'/%3E%3Cpath d='M16 4v4M16 24v4M4 16h4M24 16h4M7.5 7.5l2.8 2.8M21.7 21.7l2.8 2.8M7.5 24.5l2.8-2.8M21.7 10.3l2.8-2.8' stroke='white' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js" crossorigin>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>Sunfield-1 Solar Park</title>
+<title>Sunfield Solar Park</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -370,6 +370,32 @@ body.night .wx-pill:hover,body.night .wx-pill[aria-expanded="true"]{background:r
 .wc-d b{font-size:12px;color:var(--label);font-weight:600}
 .wc-d i{font-style:normal;font-size:10.5px;color:var(--label3)}
 .wc-demo{font-size:12.5px;color:var(--label2);margin:0}
+/* farm switcher and profile */
+.farm-btn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;width:calc(100% + 12px);margin:-6px -6px 0;padding:6px;border-radius:12px}
+.farm-btn:hover,.farm-btn[aria-expanded="true"]{background:var(--fill)}
+.farm-btn:focus-visible{outline:2px solid var(--blue)}
+.fb-t{display:flex;flex-direction:column;flex:1;min-width:0}
+.fb-t b{font-family:var(--f-display);font-size:16px;font-weight:600;letter-spacing:-.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fb-t small{font-size:11.5px;color:var(--label2)}
+.chev-d{width:16px;height:16px;color:var(--label2);flex:none}
+.farm-pop{position:fixed;z-index:8;top:calc(env(safe-area-inset-top,0px) + 70px);left:max(16px,env(safe-area-inset-left,0px));width:318px;border-radius:18px;padding:10px}
+.prof-pop{position:fixed;z-index:8;top:calc(env(safe-area-inset-top,0px) + 64px);left:50%;transform:translateX(calc(-50% + 160px));width:320px;border-radius:18px;padding:14px 16px 12px}
+.fp-in,.pp-in{position:relative;z-index:2;display:flex;flex-direction:column;gap:4px}
+.fp-head{display:flex;justify-content:space-between;align-items:baseline;padding:2px 6px 6px}.fp-head b{font-size:14px}.fp-head span{font-size:12px;color:var(--label2)}
+.farm-row{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 6px;border-radius:12px}
+.farm-row:hover{background:var(--fill)}.farm-row:focus-visible{outline:2px solid var(--blue)}
+.farm-row[aria-pressed="true"]{background:var(--fill)}
+.fr-t{display:flex;flex-direction:column;min-width:0}.fr-t b{font-size:13.5px;font-weight:600}.fr-t small{font-size:11.5px;color:var(--label2)}
+.fr-open{font-size:12px;color:var(--blue)}
+.fp-foot{margin:6px 6px 0;font-size:11.5px;color:var(--label3)}
+.av-btn{all:unset;cursor:pointer;display:grid;place-items:center;width:30px;height:30px;border-radius:50%}
+.av-btn:focus-visible{outline:2px solid var(--blue)}
+.av{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;font-size:11px;font-weight:700;letter-spacing:.02em;color:#fff;
+  background:linear-gradient(140deg,#7a6cf0,#3d5bd9);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55)}
+.av-lg{width:44px;height:44px;font-size:16px}
+.pp-id{display:flex;align-items:center;gap:12px;margin-bottom:8px}.pp-id>span:last-child{display:flex;flex-direction:column}
+.pp-id b{font-size:15px}.pp-id small{font-size:12px;color:var(--label2)}.pp-id .pp-mail{color:var(--label3)}
+.pp-in .rows{margin-bottom:6px}.pp-sec{display:flex;flex-direction:column}.pp-sec>b{font-size:12px;color:var(--label2);text-transform:uppercase;letter-spacing:.03em;font-weight:600;margin:6px 0 2px}
 /* callouts */
 .overlay{position:fixed;inset:0;pointer-events:none;z-index:3;overflow:hidden}
 .co{position:absolute;left:0;top:0;will-change:transform}
@@ -409,6 +435,9 @@ body.night .wx-pill:hover,body.night .wx-pill[aria-expanded="true"]{background:r
 .nogl{position:fixed;inset:0;display:grid;place-items:center;padding:24px;text-align:center;z-index:20;background:var(--ground-a)}
 
 @media (max-width:860px){
+  .farm-pop,.prof-pop{left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));width:auto;transform:none;top:calc(env(safe-area-inset-top,0px) + 130px)}
+  .toolbar .av-btn.mob-only{display:grid}
+  .toolbar .av{width:22px;height:22px;font-size:9.5px}
   .wx-pop{left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));width:auto;transform:none;top:calc(env(safe-area-inset-top,0px) + 130px);max-height:calc(100% - 150px)}
   .wp-grid{grid-template-columns:repeat(2,1fr)}
   #wxMob .wx-ic{width:18px;height:18px}
@@ -446,7 +475,7 @@ body.night .wx-pill:hover,body.night .wx-pill[aria-expanded="true"]{background:r
 @media (prefers-reduced-motion: reduce){.co-card,.co-card:hover{transition:none}}
 </style>
 
-<canvas id="scene" tabindex="0" aria-label="3D diorama of Sunfield-1 solar park. Drag to pan, scroll to zoom, click a structure to inspect it."></canvas>
+<canvas id="scene" tabindex="0" aria-label="3D diorama of a Sunfield solar park. Drag to pan, scroll to zoom, click a structure to inspect it."></canvas>
 <div class="tilt top" aria-hidden="true"></div><div class="tilt bot" aria-hidden="true"></div>
 <div class="overlay" id="overlay"></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="lg" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
@@ -457,10 +486,10 @@ body.night .wx-pill:hover,body.night .wx-pill[aria-expanded="true"]{background:r
 
 <aside class="left" aria-label="Park overview">
   <section class="material card briefing">
-    <div class="c-head">
-      <span class="appicon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg></span>
-      <h2>Operations briefing</h2>
-    </div>
+    <button class="farm-btn" id="farmBtn" aria-expanded="false" aria-controls="farmPop">
+      <span class="appicon" id="farmIcon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg></span>
+      <span class="fb-t"><b id="farmName">Sunfield</b><small>Operations briefing</small></span><svg class="chev-d" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"/></svg>
+    </button>
     <div class="brief"><b id="briefHead"></b><span id="brief"></span></div>
     <div class="bstats" id="bstats"></div>
     <div class="sub-h"><h3>Needs attention</h3><button class="link" data-goto="park" data-scroll="alarms" id="attAll">All alarms</button></div>
@@ -497,10 +526,23 @@ body.night .wx-pill:hover,body.night .wx-pill[aria-expanded="true"]{background:r
   <div class="det-body" id="detBody"></div>
 </aside>
 
-<nav class="material biome" aria-label="Site look"><button class="wx-pill" id="wxPill" aria-expanded="false" aria-controls="wxPop" aria-label="Weather report"><span class="wx-ic" id="wxIc"></span><b id="wxT">–</b><span id="wxWhere"></span></button><span class="tsep"></span><span>Site</span><div class="seg" role="group"><button data-biome="meadow">Meadow</button><button data-biome="alpine">Alpine</button><button data-biome="desert">Desert</button></div><span class="tsep"></span><div class="seg" role="group" aria-label="Time of day"><button data-mode="day" title="Demo day, 11:42">Day</button><button data-mode="night" title="Demo night, 22:16">Night</button></div></nav>
+<nav class="material biome" aria-label="Site look"><button class="wx-pill" id="wxPill" aria-expanded="false" aria-controls="wxPop" aria-label="Weather report"><span class="wx-ic" id="wxIc"></span><b id="wxT">–</b><span id="wxWhere"></span></button><span class="tsep"></span><div class="seg" role="group" aria-label="Time of day"><button data-mode="day" title="Demo day, 11:42">Day</button><button data-mode="night" title="Demo night, 22:16">Night</button></div><span class="tsep"></span><button class="av-btn" id="profBtn" aria-expanded="false" aria-controls="profPop" aria-label="Your profile"><span class="av">NK</span></button></nav>
+<div class="material farm-pop" id="farmPop" hidden role="dialog" aria-label="Switch farm"><div class="fp-in">
+  <div class="fp-head"><b>Your farms</b><span>3 sites · 34.7 MWp</span></div><button class="farm-row" data-biome="meadow"><span class="appicon" style="background:#4a8f6a"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg></span><span class="fr-t"><b>Sunfield Kakheti</b><small>Alazani Valley, Kakheti · 11.58 MWp</small></span><span class="fr-s" data-farmstat="meadow"></span></button><button class="farm-row" data-biome="alpine"><span class="appicon" style="background:#4f7fb0"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg></span><span class="fr-t"><b>Sunfield Gudauri</b><small>Gudauri, 2,196 m · 11.58 MWp</small></span><span class="fr-s" data-farmstat="alpine"></span></button><button class="farm-row" data-biome="desert"><span class="appicon" style="background:#c08a3e"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg></span><span class="fr-t"><b>Sunfield Udabno</b><small>Udabno, Kvemo Kartli · 11.58 MWp</small></span><span class="fr-s" data-farmstat="desert"></span></button>
+  <p class="fp-foot">Each farm opens with its own weather, faults and cameras.</p></div></div>
+<div class="material prof-pop" id="profPop" hidden role="dialog" aria-label="Your profile"><div class="pp-in">
+  <div class="pp-id"><span class="av av-lg">NK</span><span><b>Nino Kalandadze</b><small>O&amp;M lead · Sunfield Energy</small><small class="pp-mail">nino.k@sunfield.example</small></span></div>
+  <dl class="rows"><div><dt>Shift</dt><dd id="ppShift"></dd></div><div><dt>Assigned to you</dt><dd id="ppWork"></dd></div><div><dt>Farms you manage</dt><dd>3 · 34.7 MWp</dd></div><div><dt>Last sign-in</dt><dd>Today 07:58 · Tbilisi</dd></div></dl>
+  <div class="pp-sec"><b>Notifications</b>
+    <label class="sw"><span>Critical alarms<small>Push and SMS, day and night</small></span><input type="checkbox" id="pp-crit" checked><i></i></label>
+    <label class="sw"><span>Daily report<small>Email at 07:00 with yesterday's yield</small></span><input type="checkbox" id="pp-daily" checked><i></i></label>
+    <label class="sw"><span>On duty<small>Receive escalations for open faults</small></span><input type="checkbox" id="pp-duty" checked><i></i></label>
+  </div>
+  <p class="fp-foot">Demo account · all people and data are fictional.</p></div></div>
 <div class="material wx-pop" id="wxPop" hidden role="dialog" aria-label="Weather report"><div id="wxBody"></div></div>
 <div class="hint">Drag to pan · right-drag to rotate · scroll to zoom · click to inspect</div>
 <nav class="material toolbar" aria-label="Map controls">
+  <button class="mob-only av-btn" id="profMob" aria-label="Your profile"><span class="av">NK</span></button>
   <button class="mob-only" id="wxMob" aria-label="Weather report"><span class="wx-ic" id="wxIcM"></span></button>
   <button class="mob-only" id="camMob" aria-label="Open live cameras"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="4" width="9" height="8" rx="1.5"/><path d="m10.5 7 4-2.2v6.4l-4-2.2"/></svg></button>
   <button class="icn" id="zOut" aria-label="Zoom out">−</button>
@@ -535,7 +577,7 @@ body.night .wx-pill:hover,body.night .wx-pill[aria-expanded="true"]{background:r
   <label class="sw"><span>Block labels<small>A–F with live output</small></span><input type="checkbox" id="ly-chips"><i></i></label>
   <label class="sw"><span>Fault outlines<small>Pulsing frames on the ground</small></span><input type="checkbox" id="ly-frames"><i></i></label>
   <label class="sw"><span>Energy flow<small>Pulses to the substation</small></span><input type="checkbox" id="ly-flow"><i></i></label>
-  <div class="mob-only lp-site"><b>Site</b><div class="seg" role="group" aria-label="Site look"><button data-biome="meadow">Meadow</button><button data-biome="alpine">Alpine</button><button data-biome="desert">Desert</button></div>
+  <div class="mob-only lp-site"><b>Farm</b><div class="seg" role="group" aria-label="Farm"><button data-biome="meadow">Kakheti</button><button data-biome="alpine">Gudauri</button><button data-biome="desert">Udabno</button></div>
     <b>Time</b><div class="seg" role="group" aria-label="Time of day"><button data-mode="day" title="Demo day, 11:42">Day</button><button data-mode="night" title="Demo night, 22:16">Night</button></div></div>
   <p class="lp-foot">Press <kbd>H</kbd> to hide or show everything</p>
 </div>
@@ -555,7 +597,12 @@ const V3=new THREE.Vector3();
 /* ---------------- site look (biome) — chosen by #meadow / #alpine / #desert ---------------- */
 let NIGHT=false;
 const NIGHT_OBJS=[],TURB_LIGHTS=[];let PULSE=null;
+const FARMS={   // three farms of a fictional operator; the site look follows each farm's location
+  meadow:{name:'Sunfield Kakheti',short:'KAKHETI',where:'Alazani Valley, Kakheti',since:'May 2024',hue:'#4a8f6a'},
+  alpine:{name:'Sunfield Gudauri',short:'GUDAURI',where:'Gudauri, 2,196 m',since:'Oct 2025',hue:'#4f7fb0'},
+  desert:{name:'Sunfield Udabno',short:'UDABNO',where:'Udabno, Kvemo Kartli',since:'Mar 2025',hue:'#c08a3e'}};
 const BIOME=['alpine','desert'].includes(location.hash.slice(1))?location.hash.slice(1):'meadow';
+const FARM=FARMS[BIOME];document.title=FARM.name+' · Solar Park';
 const BIO={
   meadow:{G:842,T:24.2,hemi:['#fff8ec','#b3ac90',0.75],sun:['#ffeed6',3.5],exp:1.05,bg:['#f6f2ea','#e6e1d6','#cfc9bc'],road:'#dad9d4',lane:'#c4c3be'},
   alpine:{G:760,T:-3.5,hemi:['#eaf2ff','#9fb2c8',0.85],sun:['#ffffff',3.1],exp:0.86,bg:['#f3f7fb','#dfe8f1','#c4d1df'],road:'#80858e',lane:'#6c717a'},
@@ -1532,7 +1579,7 @@ function renderPark(){
   const lossList=keys.filter(k=>day.loss[k]*DAYP.price>=0.5).sort((a,b)=>day.loss[b]-day.loss[a]).map(k=>`<div><dt>${SHORT[k]}</dt><dd>${euro(day.loss[k]*DAYP.price)}</dd></div>`).join('');
   const blk=blocks.map(b=>{const v=r.blocks[b.letter];const st=statusOf('block:'+b.letter);
     return `<button class="item blk ${st}" data-goto="block:${b.letter}"><span class="letter">${b.letter}</span><span class="bar"><i style="width:${(v.ac/INV_P*100).toFixed(1)}%"></i></span><span class="v">${fmt(v.ac/1000,2)} MW</span><span class="sdot"></span></button>`}).join('');
-  return {title:'Sunfield-1',status:statusOf('park'),body:
+  return {title:FARM.name,status:statusOf('park'),body:
     `<div class="kpis">${kpi(night?'Standby':'Export now',night?'0.00':fmt(exp,2),'MW',night?'':`expected ${fmt(x,2)}`)}${kpi('Today',fmt(day.E,1),'MWh',`${fmt(day.E/toDate*100,0)}% of forecast`)}${kpi('Performance ratio',fmt(pr,1),'%')}${kpi('Availability',fmt(avE,1),'%')}</div>`+
     sec('Today',dayChart())+
     sec('Money today',`<dl class="rows money"><div><dt>Earned</dt><dd><b>${euro(day.E*DAYP.price)}</b></dd></div><div><dt>Lost</dt><dd><b class="neg">${euro(lost*DAYP.price)}</b></dd></div>${lossList}</dl>`,`€${DAYP.price}/MWh`)+
@@ -1783,6 +1830,19 @@ $('#zOut').onclick=()=>flyTo(controls.target,camera.zoom/1.7);
 let topDown=false;
 function setView(td){topDown=td;$('#v2d').setAttribute('aria-pressed',td);$('#v3d').setAttribute('aria-pressed',!td);flyTo(controls.target,camera.zoom,td?0.001:HOME.phi)}
 $('#v3d').onclick=()=>setView(false);
+$('#farmName').textContent=FARM.name;$('#farmIcon').style.background=FARM.hue;
+function popover(btnSel,popSel,onOpen){   // shared open/close for the small menus
+  const pop=$(popSel),btns=[...document.querySelectorAll(btnSel)],open=o=>{pop.hidden=!o;btns.forEach(b=>b.setAttribute('aria-expanded',o));if(o&&onOpen)onOpen()};
+  btns.forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();open(pop.hidden)}));
+  document.addEventListener('pointerdown',e=>{if(!pop.hidden&&!pop.contains(e.target)&&!btns.some(b=>b.contains(e.target)))open(false)});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&!pop.hidden)open(false)});return open}
+popover('#farmBtn','#farmPop',()=>{for(const [k,f] of Object.entries(FARMS)){const el=document.querySelector(`[data-farmstat="${k}"]`);
+  el.innerHTML=k===BIOME?`<span class="pill ${statusOf('park')}">${fmt(Math.max(0,sim.export)/1000,1)} MW</span>`:'<span class="fr-open">Open</span>'}});
+popover('#profBtn,#profMob','#profPop',()=>{const crit=FAULTS.filter(f=>f.sev==='crit').length;
+  $('#ppShift').textContent=$('#pp-duty').checked?(NIGHT?'Off duty · back 08:00':'On duty · until 20:00'):'Off duty';
+  $('#ppWork').textContent=`${crit} open work orders`});
+for(const id of ['pp-crit','pp-daily','pp-duty']){const c=document.getElementById(id);try{const v=localStorage.getItem('sunfield-'+id);if(v!=null)c.checked=v==='1'}catch(e){}
+  c.onchange=()=>{try{localStorage.setItem('sunfield-'+id,c.checked?'1':'0')}catch(e){}if(id==='pp-duty')$('#ppShift').textContent=c.checked?(NIGHT?'Off duty · back 08:00':'On duty · until 20:00'):'Off duty'}}
 document.querySelectorAll('[data-biome]').forEach(b=>{b.setAttribute('aria-pressed',b.dataset.biome===BIOME);
   b.onclick=()=>{if(b.dataset.biome===BIOME)return;location.hash=b.dataset.biome;location.reload()}});
 addEventListener('hashchange',()=>{const h=location.hash.slice(1)||'meadow';if(['meadow','alpine','desert'].includes(h)&&h!==BIOME)location.reload()});
@@ -2056,7 +2116,7 @@ function drawFeed(c,el,t,bg){
   renderer.setViewport(x,y,r.width,r.height);renderer.setScissor(x,y,r.width,r.height);renderer.setScissorTest(true);
   GLOW.uniforms.uH.value=r.height*renderer.getPixelRatio();renderer.render(scene,c.cam);renderer.setScissorTest(false);renderer.setViewport(0,0,innerWidth,innerHeight);
 }
-function stamp(){const ss=siteSec();return `${pad2(Math.floor(ss/3600)%24)}:${pad2(Math.floor(ss/60)%60)}:${pad2(Math.floor(ss)%60)} · SUNFIELD-1`}
+function stamp(){const ss=siteSec();return `${pad2(Math.floor(ss/3600)%24)}:${pad2(Math.floor(ss/60)%60)}:${pad2(Math.floor(ss)%60)} · ${FARM.short}`}
 setInterval(()=>{const s=stamp();$('#camTime').textContent=s;cwGrid.querySelectorAll('[data-ct]').forEach(e=>e.textContent=s)},1000);
 // hide frames, pins' 3D helpers and pulses from CCTV? keep them: operators like overlays. Only selection/hover frames are hidden.
 let ftAcc=0,ftN=0,lastDraw=0;

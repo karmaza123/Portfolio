@@ -43,4 +43,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.18   | 2026-11-20 | — | Solar dashboard: live weather replaced by a **fictional site forecast** generated in the page, consistent with the simulated plant day, so the page makes **no network requests after load** (6 at load: page, font, four three.js modules; the unused line-rendering modules are no longer loaded). The Live mode is gone (Day / Night demo modes remain). Weather is now always visible: a **weather card** in the right column (now, today and the next 3 days with expected MWh) opens the full report. Energy flow is drawn as **neon light lines** along each cable route, with light streaks running to the substation (blue and reversed at night, orange for derated Inverter D), replacing the travelling dots. |
 
-**Next version:** `v0.19`
+| V0.19   | 2026-11-20 | — | Solar dashboard: **farm switcher and operator profile**. The three site looks are now three farms of a fictional operator (Sunfield Kakheti, Sunfield Gudauri, Sunfield Udabno; 3 sites, 34.7 MWp). The Operations briefing header is a switcher listing all farms, with live output on the current one; the farm name carries through the detail panel, page title and camera stamps. An avatar at the end of the top bar opens the operator profile (fictional O&M lead): shift, assigned work orders, farms managed, last sign-in, and notification switches remembered per browser. On mobile both live in the toolbar and the Layers panel. |
+
+**Next version:** `v0.20`
