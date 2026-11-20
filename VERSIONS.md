@@ -39,6 +39,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.16   | 2026-11-20 | `c686d05` | Solar quick concept (002): bespoke project page with intro, link to the live concept, panning desktop screen, floating detail crops, and animated mobile phones; screens captured from solar.karmaza.design. Projects renumbered 003â€“015. About skills: percentage bars replaced by short described capabilities. |
 
-| V0.17   | 2026-11-20 | `PENDING` | Sunfield solar concept reworked: covers all three parks (Kakheti, Gudauri, Udabno) with a park switcher that crossfades screens and recolours the page; split scroll tour where steps scroll beside a pinned dashboard and a spotlight highlights each card; one phone per park. Project renamed "Sunfield, Solar parks concept". |
+| V0.17   | 2026-11-20 | `066c6b1` | Sunfield solar concept reworked: covers all three parks (Kakheti, Gudauri, Udabno) with a park switcher that crossfades screens and recolours the page; split scroll tour where steps scroll beside a pinned dashboard and a spotlight highlights each card; one phone per park. Project renamed "Sunfield, Solar parks concept". |
 
 **Next version:** `v0.18`
