@@ -43,7 +43,7 @@
 
 .mpr-hero-kicker {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--mp-accent);
@@ -90,7 +90,7 @@
   text-decoration: none;
   color: var(--mp-text);
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   transition:
@@ -121,7 +121,7 @@
   align-items: center;
   gap: 8px;
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--mp-muted);
@@ -258,7 +258,7 @@
 
 .mpr-exp-num {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--mp-muted);
   letter-spacing: 0.1em;
   padding-top: 4px;
@@ -288,7 +288,7 @@
 
 .mpr-exp-period {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   color: var(--mp-muted);
   white-space: nowrap;
@@ -430,7 +430,7 @@
 .mpr-edu-meta {
   margin: 0;
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--mp-muted);
@@ -464,7 +464,7 @@
 
 @media (max-width: 480px) {
   .mpr-hero-kicker {
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.14em;
   }
 

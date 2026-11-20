@@ -110,6 +110,7 @@ export function CaseStudyScreen() {
           loading="lazy"
         />
       </button>
+      {img.caption ? <p className="aa-gallery-caption">{img.caption}</p> : null}
     </Reveal>
   );
 
@@ -154,7 +155,9 @@ export function CaseStudyScreen() {
               </div>
             ) : null}
             <div className="aa-prose">
-              <p>{data.intro}</p>
+              {data.intro.split("\n\n").map((para) => (
+                <p key={para.slice(0, 24)}>{para}</p>
+              ))}
             </div>
             {!data.hidePurpose && (
               <div className="aa-split">

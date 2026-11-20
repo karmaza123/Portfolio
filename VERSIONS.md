@@ -52,4 +52,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.22   | 2026-11-20 | `066c6b1` | (committed locally as V0.17, renumbered on merge.) Sunfield case study covers all three parks (Kakheti, Gudauri, Udabno) with a park switcher; split scroll tour with a pinned dashboard and a spotlight on each card; one phone per park. Project renamed "Sunfield, Solar parks concept". |
 
-**Next version:** `v0.23`
+| V0.23   | 2026-11-20 | `PENDING` | Design critique fixes: career facts aligned (Senior Product Designer, 8+ years, project count from the list); muted text lightened to ~7:1 contrast and 10–11px labels raised to 12px; Artemis UI intro split into paragraphs and gallery captions added (optional `caption` on gallery images). |
+
+**Next version:** `v0.24`

@@ -1,4 +1,4 @@
-﻿/* Mara-style home — ported from portfolio.html structure */
+/* Mara-style home — ported from portfolio.html structure */
 
 /* Appearance tokens live on :root, not .mp — case studies (.aa) and the fixed
    nav read them without needing a .mp wrapper. Wrapping .aa in .mp used to drag
@@ -11,7 +11,7 @@
   --mp-border: rgba(255, 255, 255, 0.07);
   --mp-border2: rgba(255, 255, 255, 0.14);
   --mp-text: #f0ede6;
-  --mp-muted: #7a7870;
+  --mp-muted: #a3a097;
   --mp-accent: #c8f53f;
   --mp-accent2: #f5c842;
 }
@@ -157,7 +157,7 @@ html[data-mp-theme="light"] .mp-nav-brand-mark {
 
 .mp-nav-links a {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--mp-muted);
@@ -179,7 +179,7 @@ html[data-mp-theme="light"] .mp-nav-brand-mark {
   gap: 8px;
   flex-shrink: 0;
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--mp-muted);
   letter-spacing: 0.08em;
 }
@@ -316,7 +316,7 @@ a.mp-nav-status--action:focus-visible {
 
 .mp-hero-tag {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--mp-accent);
@@ -372,7 +372,7 @@ a.mp-nav-status--action:focus-visible {
 
 .mp-stat-label {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--mp-muted);
@@ -451,7 +451,7 @@ a.mp-nav-status--action:focus-visible {
 
 .mp-marquee-item {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--mp-muted);
@@ -460,7 +460,7 @@ a.mp-nav-status--action:focus-visible {
 .mp-marquee-dot {
   color: var(--mp-accent);
   letter-spacing: 0;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 @keyframes mp-marquee {
@@ -538,7 +538,7 @@ a.mp-nav-status--action:focus-visible {
 
 .mp-section-label {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--mp-muted);
@@ -563,7 +563,7 @@ a.mp-nav-status--action:focus-visible {
 
 .mp-project-filter-btn {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--mp-muted);
@@ -680,7 +680,7 @@ a.mp-nav-status--action:focus-visible {
 
 .mp-project-num {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--mp-muted);
   letter-spacing: 0.1em;
 }
@@ -707,7 +707,7 @@ a.mp-nav-status--action:focus-visible {
 
 .mp-tag {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--mp-muted);
@@ -731,7 +731,7 @@ a.mp-nav-status--action:focus-visible {
 
 .mp-project-year {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--mp-muted);
   letter-spacing: 0.1em;
   text-align: right;
@@ -739,7 +739,7 @@ a.mp-nav-status--action:focus-visible {
 
 .mp-project-award {
   color: var(--mp-accent);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .mp-project-arrow {
@@ -855,7 +855,7 @@ html[data-mp-theme="light"] .mp-about-portrait-inner {
   bottom: 16px;
   left: 16px;
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--mp-muted);
@@ -1001,7 +1001,7 @@ html[data-mp-theme="light"] .mp-about-portrait-inner {
 
 .mp-step-num {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--mp-accent);
   letter-spacing: 0.12em;
   margin: 0 0 24px;
@@ -1052,7 +1052,7 @@ html[data-mp-theme="light"] .mp-about-portrait-inner {
 
 .mp-award-year {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 10px;
+  font-size: 12px;
   color: var(--mp-muted);
   letter-spacing: 0.12em;
   margin: 0;
@@ -1155,7 +1155,7 @@ html[data-mp-theme="light"] .mp-about-portrait-inner {
 
 .mp-contact-link {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--mp-muted);
@@ -1217,7 +1217,7 @@ html[data-mp-theme="light"] .mp-about-portrait-inner {
 
 .mp-footer-portal {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--mp-muted);
@@ -1238,7 +1238,7 @@ html[data-mp-theme="light"] .mp-about-portrait-inner {
 .mp-footer-left,
 .mp-footer-right {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   color: var(--mp-muted);
   margin: 0;
@@ -1251,7 +1251,7 @@ html[data-mp-theme="light"] .mp-about-portrait-inner {
   }
 
   .mp-nav-links a {
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.1em;
   }
 
@@ -1532,7 +1532,7 @@ html[data-mp-theme="light"] .mp-about-portrait-inner {
   text-decoration: none;
   color: var(--mp-text);
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   transition:
@@ -1555,7 +1555,7 @@ html[data-mp-theme="light"] .mp-about-portrait-inner {
 
 .mp-work-back-link {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--mp-muted);
@@ -1749,7 +1749,7 @@ html[data-mp-theme="light"] .mp-nav-appearance-panel {
 
 .mp-appearance-card-title {
   font-family: var(--font-mono, "DM Mono", monospace);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--mp-text);

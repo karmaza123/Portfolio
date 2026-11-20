@@ -99,7 +99,7 @@ export function MaraHomePage() {
         <div className="mp-hero-bg-text" aria-hidden>
           DESIGN
         </div>
-        <p className="mp-hero-tag">Product Designer — Tbilisi</p>
+        <p className="mp-hero-tag">Senior Product Designer — Tbilisi</p>
         <h1 className="mp-hero-title">
           Crafting <em>digital</em>
           <br />
@@ -118,7 +118,7 @@ export function MaraHomePage() {
               <span className="mp-stat-label">Years</span>
             </div>
             <div>
-              <span className="mp-stat-num">10+</span>
+              <span className="mp-stat-num">{HOME_PROJECTS.length}</span>
               <span className="mp-stat-label">Projects</span>
             </div>
             <div>

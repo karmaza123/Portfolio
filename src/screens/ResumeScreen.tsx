@@ -7,7 +7,7 @@ import "./MaraHomePage.css";
 import "./ResumeScreen.css";
 
 const SUMMARY_PARAS = [
-  "10+ years as a product designer, creating user-focused designs for digital and physical products. Skilled in concept development, prototyping, and user testing.",
+  "8+ years as a product designer, creating user-focused designs for digital and physical products. Skilled in concept development, prototyping, and user testing.",
   "Expert at collaborating with cross-functional teams to deliver functional and visually appealing products.",
   "Passionate about innovation and enhancing user experience through design.",
 ] as const;

@@ -10,7 +10,7 @@
   --aa-cream: #f3e9dc;
   --aa-cream-2: #e8dcc8;
   --aa-ink: #14110d;
-  --aa-muted: var(--mp-muted, #7a7870);
+  --aa-muted: var(--mp-muted, #a3a097);
   --aa-gold: var(--mp-accent, #c8f53f);
   --aa-gold-soft: #c96f16;
   --aa-teal: #2d6d6f;
@@ -357,7 +357,7 @@ html[data-mp-theme="light"] .aa {
 }
 
 .aa-envelope-meta {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   opacity: 0.75;
 }
 
@@ -550,7 +550,7 @@ html[data-mp-theme="light"] .aa {
 .aa-caption {
   margin: 0 0 0.35rem;
   font-family: var(--aa-font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -703,7 +703,7 @@ html[data-mp-theme="light"] .aa {
 }
 
 .aa-asset-tag {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--aa-gold);
@@ -743,7 +743,7 @@ html[data-mp-theme="light"] .aa {
 }
 
 .aa-asset-small {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--aa-muted);
 }
 
@@ -808,7 +808,7 @@ html[data-mp-theme="light"] .aa {
 }
 
 .aa-poster-kicker {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--aa-gold);
@@ -858,7 +858,7 @@ html[data-mp-theme="light"] .aa {
 
 .aa-ticket-code {
   font-family: ui-monospace, monospace;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
   color: rgba(255, 255, 255, 0.35);
   margin-top: 0.25rem;
@@ -1275,7 +1275,7 @@ html[data-mp-theme="light"] .aa {
 
 .rk-meta-label {
   font-family: var(--aa-font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--aa-muted);
@@ -1413,3 +1413,15 @@ html[data-mp-theme="light"] .aa {
   line-height: 1.7;
   color: color-mix(in srgb, var(--aa-text) 82%, transparent);
 }
+
+.aa-gallery-caption {
+  margin: 10px 2px 0;
+  font-size: 0.8125rem;
+  color: var(--aa-muted);
+}
+
+
+.aa-prose p + p {
+  margin-top: 1em;
+}
+

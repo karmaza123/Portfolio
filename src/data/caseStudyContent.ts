@@ -5,6 +5,8 @@ export type GalleryImage = {
   /** Intrinsic pixel size — reserves layout space so lazy images don't collapse the masonry. */
   w: number;
   h: number;
+  /** Short visible label under the image (flow gallery). */
+  caption?: string;
   /** Which column this image sits in when the gallery uses a fixed 2-column layout (mirrors Figma). */
   col?: 1 | 2;
   /** In a "flow" gallery, "full" makes the image span the whole row (e.g. desktop screens). */
@@ -74,7 +76,7 @@ export const CASE_STUDIES: Record<string, CaseStudyContent> = {
     envelopeMeta: "Museum digital · Tbilisi",
     heroTitle: "UI Design for Artemis Art Museum",
     intro:
-      "Designing the UI for Artemis Art Museum is about crafting a digital space that mirrors the museum’s elegance, storytelling, and immersive experience. I translate the museum’s physical atmosphere into a minimalist yet classical interface, using neutral tones, elegant serif fonts, and spacious layouts to create a refined and immersive journey. Navigation is effortless, like wandering through a well-curated exhibition, with clear access to Exhibitions, Events, Collections, and Ticketing, ensuring visitors feel guided but never rushed. The homepage acts as a cinematic invitation, featuring graceful motion effects and striking visuals that immediately draw users into the world of art and history.",
+      "Designing the UI for Artemis Art Museum is about crafting a digital space that mirrors the museum’s elegance, storytelling, and immersive experience.\n\nI translate the museum’s physical atmosphere into a minimalist yet classical interface, using neutral tones, elegant serif fonts, and spacious layouts to create a refined and immersive journey.\n\nNavigation is effortless, like wandering through a well-curated exhibition, with clear access to Exhibitions, Events, Collections, and Ticketing, ensuring visitors feel guided but never rushed. The homepage acts as a cinematic invitation, featuring graceful motion effects and striking visuals that immediately draw users into the world of art and history.",
     purposeHeading: "Product purpose & vision",
     purposePoints: P(
       "Guide visitors from curiosity to ticket purchase without visual noise.",
@@ -108,6 +110,7 @@ export const CASE_STUDIES: Record<string, CaseStudyContent> = {
       // Left column (Figma x=30)
       {
         src: "/case-studies/artemis-ui/home.png",
+        caption: "Homepage",
         alt: "Artemis museum homepage — cinematic classical hero and sections",
         w: 1661,
         h: 4096,
@@ -115,6 +118,7 @@ export const CASE_STUDIES: Record<string, CaseStudyContent> = {
       },
       {
         src: "/case-studies/artemis-ui/user-login.png",
+        caption: "Sign in",
         alt: "User login screen",
         w: 1920,
         h: 963,
@@ -122,6 +126,7 @@ export const CASE_STUDIES: Record<string, CaseStudyContent> = {
       },
       {
         src: "/case-studies/artemis-ui/museum-history.png",
+        caption: "Museum history",
         alt: "Museum history / about page",
         w: 1920,
         h: 2788,
@@ -129,6 +134,7 @@ export const CASE_STUDIES: Record<string, CaseStudyContent> = {
       },
       {
         src: "/case-studies/artemis-ui/search.png",
+        caption: "Search results",
         alt: "Search results screen",
         w: 1920,
         h: 2023,
@@ -137,6 +143,7 @@ export const CASE_STUDIES: Record<string, CaseStudyContent> = {
       // Right column (Figma x=975)
       {
         src: "/case-studies/artemis-ui/events-calendar.png",
+        caption: "Events calendar",
         alt: "Events calendar screen",
         w: 1920,
         h: 1427,
@@ -144,6 +151,7 @@ export const CASE_STUDIES: Record<string, CaseStudyContent> = {
       },
       {
         src: "/case-studies/artemis-ui/museum-shop-details.png",
+        caption: "Shop, product details",
         alt: "Museum shop product details screen",
         w: 1920,
         h: 2066,
@@ -151,6 +159,7 @@ export const CASE_STUDIES: Record<string, CaseStudyContent> = {
       },
       {
         src: "/case-studies/artemis-ui/museum-shop-details-2.png",
+        caption: "Checkout",
         alt: "Museum shop checkout / cart screen",
         w: 1920,
         h: 1189,
@@ -158,6 +167,7 @@ export const CASE_STUDIES: Record<string, CaseStudyContent> = {
       },
       {
         src: "/case-studies/artemis-ui/events-details.png",
+        caption: "Event details",
         alt: "Event details screen",
         w: 1920,
         h: 2412,
@@ -165,6 +175,7 @@ export const CASE_STUDIES: Record<string, CaseStudyContent> = {
       },
       {
         src: "/case-studies/artemis-ui/events.png",
+        caption: "Events",
         alt: "Events listing screen",
         w: 1920,
         h: 1331,
