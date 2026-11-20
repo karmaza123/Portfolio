@@ -52,13 +52,19 @@ const PROCESS = [
   },
 ] as const;
 
-const SKILLS = [
-  { name: "UI/UX Design", width: "94%" },
-  { name: "Design Systems", width: "88%" },
-  { name: "Product Strategy", width: "82%" },
-  { name: "Prototyping", width: "90%" },
-  { name: "Brand & Visual", width: "85%" },
-  { name: "Collaboration", width: "96%" },
+/**
+ * Capabilities are described, not scored. The previous version rendered each of
+ * these as a percentage bar (94%, 88%, ...), which had no scale or source behind
+ * it — there is no way to measure "Collaboration 96%". A short concrete
+ * qualifier says more to a reader and can be backed up by the work itself.
+ */
+const CAPABILITIES = [
+  { name: "UI/UX Design", detail: "Web & mobile, research-led" },
+  { name: "Design Systems", detail: "UI kits, tokens, developer handoff" },
+  { name: "Product Strategy", detail: "Discovery, journeys, and briefs" },
+  { name: "Prototyping", detail: "Wireframes to tested, polished screens" },
+  { name: "Brand & Visual", detail: "Identity, packaging, and editorial" },
+  { name: "Collaboration", detail: "Senior IC with product & engineering" },
 ] as const;
 
 const AWARDS = [
@@ -210,12 +216,10 @@ export function MaraHomePage() {
               I work as a senior IC with product and engineering teams, focusing on systems that scale.
             </p>
             <div className="mp-skills-grid">
-              {SKILLS.map((s) => (
-                <div key={s.name} className="mp-skill-item">
-                  <div className="mp-skill-name">{s.name}</div>
-                  <div className="mp-skill-bar">
-                    <div className="mp-skill-bar-fill" style={{ width: s.width }} />
-                  </div>
+              {CAPABILITIES.map((c) => (
+                <div key={c.name} className="mp-skill-item">
+                  <div className="mp-skill-name">{c.name}</div>
+                  <p className="mp-skill-detail">{c.detail}</p>
                 </div>
               ))}
             </div>

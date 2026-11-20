@@ -27,6 +27,30 @@ function thumbFor(p: HomeProject): string | undefined {
   return cs?.heroImage ?? cs?.gallery?.[0]?.src;
 }
 
+/** External projects open in a new tab; the rest route to their case study. */
+function ProjectLink({
+  p,
+  className,
+  children,
+}: {
+  p: HomeProject;
+  className: string;
+  children: React.ReactNode;
+}) {
+  if (p.href) {
+    return (
+      <a href={p.href} target="_blank" rel="noopener noreferrer" className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link to={`/project/${p.slug}`} className={className}>
+      {children}
+    </Link>
+  );
+}
+
 export function ProjectsGrid({ projects }: ProjectsGridProps) {
   const [layout, setLayout] = useState<Layout>(readLayout);
 
@@ -75,7 +99,7 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
             const thumb = thumbFor(p);
             return (
               <Reveal key={p.slug} staggerIndex={i % 6}>
-                <Link to={`/project/${p.slug}`} className="mp-card">
+                <ProjectLink p={p} className="mp-card">
                   <span className="mp-card-media">
                     {thumb ? (
                       <img src={thumb} alt="" loading="lazy" />
@@ -99,7 +123,7 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
                       ))}
                     </span>
                   </span>
-                </Link>
+                </ProjectLink>
               </Reveal>
             );
           })}
@@ -108,7 +132,7 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
         <div className="mp-projects-grid">
           {projects.map((p, i) => (
             <Reveal key={p.slug} staggerIndex={i % 5}>
-              <Link to={`/project/${p.slug}`} className="mp-project-item">
+              <ProjectLink p={p} className="mp-project-item">
                 <span className="mp-project-num">{p.num}</span>
                 <div className="mp-project-info">
                   <h3>{p.title}</h3>
@@ -134,7 +158,7 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
                     ↗
                   </span>
                 </div>
-              </Link>
+              </ProjectLink>
             </Reveal>
           ))}
         </div>

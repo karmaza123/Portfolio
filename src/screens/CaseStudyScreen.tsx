@@ -5,6 +5,7 @@ import { Reveal } from "../components/Reveal";
 import { getCaseStudy, type GalleryImage } from "../data/caseStudyContent";
 import { MintlyCaseStudy } from "./MintlyCaseStudy";
 import { RkaliCaseStudy } from "./RkaliCaseStudy";
+import { SolarCaseStudy } from "./SolarCaseStudy";
 import { PowerPayStory } from "./PowerPayStory";
 import "./CaseStudyScreen.css";
 
@@ -67,6 +68,10 @@ export function CaseStudyScreen() {
   // Fully bespoke page with no template content, so it skips the CASE_STUDIES lookup.
   if (slug === "mintly-design-system") {
     return <MintlyCaseStudy />;
+  }
+
+  if (slug === "solar-concept") {
+    return <SolarCaseStudy />;
   }
 
   if (!data) {

@@ -774,8 +774,10 @@ a.mp-nav-status--action:focus-visible {
 
 .mp-about-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 8vw, 80px);
+  /* Portrait takes a third of the grid, copy takes two thirds. Using fr rather
+     than a pixel cap keeps that ratio at every width. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: clamp(40px, 6vw, 72px);
   align-items: start;
 }
 
@@ -783,11 +785,18 @@ a.mp-nav-status--action:focus-visible {
   .mp-about-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Stacked, the column goes full-bleed and the 1/3 ratio no longer applies —
+     without a cap the card scales back up to the oversized block this replaced
+     (689px square at tablet width). */
+  .mp-about-portrait {
+    max-width: 360px;
+  }
 }
 
 .mp-about-portrait {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   background:
     radial-gradient(
       120% 90% at 28% 12%,
@@ -803,7 +812,7 @@ a.mp-nav-status--action:focus-visible {
 .mp-about-portrait::before {
   content: "";
   position: absolute;
-  inset: 14px;
+  inset: 10px;
   border: 1px solid var(--mp-border2);
   pointer-events: none;
   z-index: 1;
@@ -816,18 +825,18 @@ a.mp-nav-status--action:focus-visible {
   align-items: center;
   justify-content: center;
   font-family: var(--font-display, "Playfair Display", serif);
-  font-size: clamp(72px, 18vw, 120px);
+  font-size: clamp(56px, 11vw, 96px);
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.05);
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.16);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.26);
   letter-spacing: -0.05em;
   font-style: italic;
   transition: transform 0.5s var(--motion-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
 html[data-mp-theme="light"] .mp-about-portrait-inner {
-  color: rgba(17, 16, 14, 0.05);
-  -webkit-text-stroke: 1px rgba(17, 16, 14, 0.1);
+  color: rgba(17, 16, 14, 0.16);
+  -webkit-text-stroke: 1px rgba(17, 16, 14, 0.26);
 }
 
 .mp-about-portrait:hover .mp-about-portrait-inner {
@@ -906,21 +915,14 @@ html[data-mp-theme="light"] .mp-about-portrait-inner {
   margin-bottom: 4px;
 }
 
-.mp-skill-bar {
-  height: 2px;
-  background: var(--mp-border2);
-  margin-top: 10px;
-  position: relative;
-  overflow: hidden;
-}
-
-.mp-skill-bar-fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  background: var(--mp-accent);
-  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+/* Scoped to the item so it outranks `.mp-about-right p`, which would
+   otherwise impose 16px/1.8 and a 24px margin — making the qualifier larger
+   than the capability name it belongs to. */
+.mp-skill-item .mp-skill-detail {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--mp-muted);
 }
 
 /* —— Clients —— */

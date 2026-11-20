@@ -4,15 +4,110 @@
     {
       "name": "portfolio-vite",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 5173
     },
     {
       "name": "voyix-next",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "C:/Users/infor/OneDrive/Desktop/travel", "run", "dev"],
+      "runtimeArgs": [
+        "--prefix",
+        "C:/Users/infor/OneDrive/Desktop/travel",
+        "run",
+        "dev"
+      ],
       "port": 3000,
       "autoPort": true
+    },
+    {
+      "name": "powerchart",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "-y",
+        "serve",
+        "C:/Users/infor/pc-serve",
+        "-l",
+        "5055"
+      ],
+      "port": 5055
+    },
+    {
+      "name": "chronicle",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "-y",
+        "serve",
+        "C:/Users/infor/OneDrive/Desktop/chronicle",
+        "-l",
+        "5056"
+      ],
+      "port": 5056
+    },
+    {
+      "name": "sena",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "-y",
+        "serve",
+        "C:/Users/infor/OneDrive/Desktop/sena/site",
+        "-l",
+        "5057"
+      ],
+      "port": 5057
+    },
+    {
+      "name": "mintly-discover",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "-y",
+        "serve",
+        "C:/Users/infor/OneDrive/Desktop/mintly/07-discover",
+        "-l",
+        "5058"
+      ],
+      "port": 5058
+    },
+    {
+      "name": "sena-landing-next",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:/Users/infor/OneDrive/Desktop/sena/landing-next",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "3210"
+      ],
+      "port": 3210
+    },
+    {
+      "name": "mintly-nav-handoff",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:/Users/infor/OneDrive/Desktop/mintly/11-nav-handoff",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5174"
+      ],
+      "port": 5174
+    },
+    {
+      "name": "voyix-cloudflare",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:/Users/infor/OneDrive/Desktop/travel",
+        "run",
+        "preview:worker"
+      ],
+      "port": 8787
     }
   ]
 }
