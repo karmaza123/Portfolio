@@ -45,4 +45,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.19   | 2026-11-20 | — | Solar dashboard: **farm switcher and operator profile**. The three site looks are now three farms of a fictional operator (Sunfield Kakheti, Sunfield Gudauri, Sunfield Udabno; 3 sites, 34.7 MWp). The Operations briefing header is a switcher listing all farms, with live output on the current one; the farm name carries through the detail panel, page title and camera stamps. An avatar at the end of the top bar opens the operator profile (fictional O&M lead): shift, assigned work orders, farms managed, last sign-in, and notification switches remembered per browser. On mobile both live in the toolbar and the Layers panel. |
 
-**Next version:** `v0.20`
+| V0.20   | 2026-11-20 | — | Solar dashboard card polish: one corner radius (22px, `--r-card`) and one gap (12px, `--gap`) for every floating card. The weather card was 20px, the camera header 16px and its video 6px; the left column was spaced 14px and the camera header and video 6px apart. The camera block is now a single card: glass header on top, live feed below with matching bottom corners and one shared shadow. |
+
+**Next version:** `v0.21`
