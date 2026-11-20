@@ -3,14 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Sunfield-1: an interactive 3D scale-model dashboard of a demo solar park with live simulated plant data, CCTV feeds and day/night and site modes.">
+<meta name="description" content="Sunfield-1: an interactive 3D scale-model dashboard of a demo solar park with live weather, simulated plant data, CCTV feeds and day/night and site modes.">
 <meta property="og:title" content="Sunfield-1 Solar Park">
-<meta property="og:description" content="Interactive 3D solar park dashboard — a karmaza.design portfolio piece.">
+<meta property="og:description" content="Interactive 3D solar park dashboard with live weather — a karmaza.design portfolio piece.">
 <meta property="og:url" content="https://solar.karmaza.design/">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://solar.karmaza.design/">
 <meta name="theme-color" content="#e6e1d6">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f5d48'/%3E%3Ccircle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.4'/%3E%3Cpath d='M16 4v4M16 24v4M4 16h4M24 16h4M7.5 7.5l2.8 2.8M21.7 21.7l2.8 2.8M7.5 24.5l2.8-2.8M21.7 10.3l2.8-2.8' stroke='white' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://api.open-meteo.com" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js" crossorigin>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Sunfield-1 Solar Park</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -321,6 +323,37 @@ kbd{font:inherit;font-weight:600;padding:0 5px;border-radius:4px;background:var(
 .det-head .title-row h2{font-size:24px}
 .sheet-handle{display:none}
 .mob-only,.toolbar .mob-only{display:none}
+/* weather pill and report */
+.wx-pill{all:unset;cursor:pointer;display:flex;align-items:center;gap:6px;height:28px;padding:0 10px 0 7px;border-radius:99px;font-size:12.5px;color:var(--label)}
+.wx-pill:hover,.wx-pill[aria-expanded="true"]{background:rgba(60,60,67,.08)}
+body.night .wx-pill:hover,body.night .wx-pill[aria-expanded="true"]{background:rgba(255,255,255,.1)}
+.wx-pill:focus-visible{outline:2px solid var(--blue)}
+.wx-pill b{font-weight:600;font-variant-numeric:tabular-nums}
+.wx-pill span:last-child{color:var(--label2)}
+.wx-ic{display:inline-grid;place-items:center;width:18px;height:18px}
+.wx-ic svg,.wp-now svg,.wh svg,.wd svg{width:100%;height:100%}
+.wx-pop{position:fixed;z-index:7;top:calc(env(safe-area-inset-top,0px) + 64px);left:50%;transform:translateX(-50%);width:370px;max-height:calc(100% - 150px);overflow-y:auto;border-radius:20px;padding:14px 16px 12px;scrollbar-width:thin}
+#wxBody{position:relative;z-index:2;display:flex;flex-direction:column;gap:12px}
+.wp-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.wp-head b{font-size:15px}.wp-head span{font-size:12px;color:var(--label2);text-align:right}
+.wp-now{display:flex;align-items:center;gap:12px}
+.wp-now>svg{width:46px;height:46px;flex:none;color:var(--label)}
+.wp-now b{display:block;font-family:var(--f-display);font-size:34px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.wp-now span{font-size:13px;color:var(--label2)}
+.wp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.wp-grid div{background:var(--fill);border-radius:12px;padding:8px 9px;display:flex;flex-direction:column;min-width:0}
+.wp-grid span{font-size:11px;color:var(--label2)}.wp-grid b{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.wp-grid b small{font-size:10.5px;font-weight:400;color:var(--label2);margin-left:2px}.wp-grid .g{font-size:10.5px;color:var(--label3)}
+.wp-hours{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;align-items:end;background:var(--fill);border-radius:14px;padding:8px 8px 6px}
+.wh{display:grid;grid-template-rows:auto 16px auto 30px;justify-items:center;gap:3px;font-size:10.5px;color:var(--label2)}
+.wh svg{width:16px;height:16px;color:var(--label)}.wh b{font-size:11.5px;color:var(--label);font-weight:600}
+.wh i{align-self:end;width:7px;min-height:2px;border-radius:3px;background:linear-gradient(to top,#ffcc4d,#ff9f0a)}
+.wp-days{display:flex;flex-direction:column;background:var(--fill);border-radius:14px;padding:2px 12px}
+.wd{display:grid;grid-template-columns:36px 20px 1fr 40px auto;align-items:center;gap:8px;padding:7px 0;border-top:.5px solid var(--sep);font-size:13px}
+.wd:first-child{border-top:0}.wd svg{width:18px;height:18px}.wd-t{color:var(--label2)}.wd-t b{color:var(--label);font-weight:600}
+.wd-p{font-size:11.5px;color:var(--blue)}.wd-e{font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.wp-notes{margin:0;padding:0 0 0 18px;font-size:13px;display:flex;flex-direction:column;gap:4px}
+.wp-src{margin:0;font-size:11px;color:var(--label3)}
 /* callouts */
 .overlay{position:fixed;inset:0;pointer-events:none;z-index:3;overflow:hidden}
 .co{position:absolute;left:0;top:0;will-change:transform}
@@ -360,6 +393,9 @@ kbd{font:inherit;font-weight:600;padding:0 5px;border-radius:4px;background:var(
 .nogl{position:fixed;inset:0;display:grid;place-items:center;padding:24px;text-align:center;z-index:20;background:var(--ground-a)}
 
 @media (max-width:860px){
+  .wx-pop{left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));width:auto;transform:none;top:calc(env(safe-area-inset-top,0px) + 130px);max-height:calc(100% - 150px)}
+  .wp-grid{grid-template-columns:repeat(2,1fr)}
+  #wxMob .wx-ic{width:18px;height:18px}
   .camcard,.biome,.hint,.co-card,.co .stem,.left .briefing,.left .health-wrap,.left .trio,.live-card .c-head,
   #zIn,#zOut,.toolbar .legend,.toolbar .tsep,.toolbar .seg[aria-label="Rendering quality"],#layersBtn span{display:none}
   .lp-site.mob-only{display:grid}
@@ -445,9 +481,11 @@ kbd{font:inherit;font-weight:600;padding:0 5px;border-radius:4px;background:var(
   <div class="det-body" id="detBody"></div>
 </aside>
 
-<nav class="material biome" aria-label="Site look"><span>Site</span><div class="seg" role="group"><button data-biome="meadow">Meadow</button><button data-biome="alpine">Alpine</button><button data-biome="desert">Desert</button></div><span class="tsep"></span><div class="seg" role="group" aria-label="Time of day"><button data-tod="day">Day</button><button data-tod="night">Night</button></div></nav>
+<nav class="material biome" aria-label="Site look"><button class="wx-pill" id="wxPill" aria-expanded="false" aria-controls="wxPop" aria-label="Weather report"><span class="wx-ic" id="wxIc"></span><b id="wxT">–</b><span id="wxWhere"></span></button><span class="tsep"></span><span>Site</span><div class="seg" role="group"><button data-biome="meadow">Meadow</button><button data-biome="alpine">Alpine</button><button data-biome="desert">Desert</button></div><span class="tsep"></span><div class="seg" role="group" aria-label="Time of day"><button data-mode="live" title="Real weather and time at the site">Live</button><button data-mode="day" title="Demo day, 11:42">Day</button><button data-mode="night" title="Demo night, 22:16">Night</button></div></nav>
+<div class="material wx-pop" id="wxPop" hidden role="dialog" aria-label="Weather report"><div id="wxBody"></div></div>
 <div class="hint">Drag to pan · right-drag to rotate · scroll to zoom · click to inspect</div>
 <nav class="material toolbar" aria-label="Map controls">
+  <button class="mob-only" id="wxMob" aria-label="Weather report"><span class="wx-ic" id="wxIcM"></span></button>
   <button class="mob-only" id="camMob" aria-label="Open live cameras"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="4" width="9" height="8" rx="1.5"/><path d="m10.5 7 4-2.2v6.4l-4-2.2"/></svg></button>
   <button class="icn" id="zOut" aria-label="Zoom out">−</button>
   <button class="icn" id="zIn" aria-label="Zoom in">+</button>
@@ -481,18 +519,19 @@ kbd{font:inherit;font-weight:600;padding:0 5px;border-radius:4px;background:var(
   <label class="sw"><span>Fault outlines<small>Pulsing frames on the ground</small></span><input type="checkbox" id="ly-frames"><i></i></label>
   <label class="sw"><span>Energy flow<small>Pulses to the substation</small></span><input type="checkbox" id="ly-flow"><i></i></label>
   <div class="mob-only lp-site"><b>Site</b><div class="seg" role="group" aria-label="Site look"><button data-biome="meadow">Meadow</button><button data-biome="alpine">Alpine</button><button data-biome="desert">Desert</button></div>
-    <b>Time</b><div class="seg" role="group" aria-label="Time of day"><button data-tod="day">Day</button><button data-tod="night">Night</button></div></div>
+    <b>Time</b><div class="seg" role="group" aria-label="Time of day"><button data-mode="live" title="Real weather and time at the site">Live</button><button data-mode="day" title="Demo day, 11:42">Day</button><button data-mode="night" title="Demo night, 22:16">Night</button></div></div>
   <p class="lp-foot">Press <kbd>H</kbd> to hide or show everything</p>
 </div>
 <div class="tip" id="tip" hidden></div>
 <div class="nogl" id="nogl" hidden><div><h2>3D view unavailable</h2><p class="note">This page needs WebGL. Turn on hardware acceleration in your browser and reload.</p></div></div>
 
 <script type="importmap">
-{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
 </script>
 <script type="module">
 import * as THREE from 'three';
 import { MapControls } from 'three/addons/controls/MapControls.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
@@ -500,7 +539,7 @@ import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 const $ = s => document.querySelector(s);
 const V3=new THREE.Vector3();
 /* ---------------- site look (biome) — chosen by #meadow / #alpine / #desert ---------------- */
-let NIGHT=false;try{NIGHT=localStorage.getItem('sunfield-night')==='1'}catch(e){}
+let NIGHT=false;
 const NIGHT_OBJS=[],TURB_LIGHTS=[];let PULSE=null;
 const BIOME=['alpine','desert'].includes(location.hash.slice(1))?location.hash.slice(1):'meadow';
 const BIO={
@@ -532,7 +571,7 @@ const H=0.8+(D/2)*Math.sin(TILT);
 const EAST=ARR_W/2;
 const FENCE={x0:-ARR_W/2-18,x1:EAST+100,z0:-ARR_D/2-18,z1:ARR_D/2+18};
 const SX=EAST+62;                      // east utility zone centre x
-const SUB={x:SX,z:-82}, OM={x:SX,z:78}, WX={x:EAST+22,z:-12};
+const SUB={x:SX,z:-82}, OM={x:SX,z:78}, WXS={x:EAST+22,z:-12};
 const LETTERS='ABCDEF';
 const MOD_WP=580, STR_KW=NMOD*MOD_WP/1000, TPB=ROWS*PER_SIDE*2;
 const TOTAL_TABLES=6*TPB, TOTAL_STRINGS=TOTAL_TABLES*2, TOTAL_MODULES=TOTAL_STRINGS*NMOD;
@@ -672,7 +711,7 @@ const INK_ON=false;
 const C=h=>new THREE.Color(h);
 /* ---------------- ink outlines (inverted hull, constant width in screen pixels) ---------------- */
 const INK=new THREE.Color('#2d3229');
-const LIFE={time:{value:0},cloud:{value:null},water:null};
+const LIFE={time:{value:0},cloud:{value:null},water:null,cloudK:{value:1},windK:{value:1}};
 const OUT={res:{value:new THREE.Vector2(innerWidth,innerHeight)}};
 function inkMat(px,wind=0,color=INK){
   return new THREE.ShaderMaterial({side:THREE.BackSide,
@@ -731,13 +770,13 @@ LIFE.cloud.value=noiseTex(256,256,(u,v)=>{const c=sstep(0.5,0.72,fbm(u*4,v*4,5,4
 LIFE.cloud.value.colorSpace=THREE.NoColorSpace;
 function lifeMat(mat,{wind=0,cloud=false}={}){
   mat.onBeforeCompile=sh=>{
-    sh.uniforms.uTime=LIFE.time;sh.uniforms.uCloud=LIFE.cloud;
-    sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nuniform float uTime;varying vec3 vCW;')
+    sh.uniforms.uTime=LIFE.time;sh.uniforms.uCloud=LIFE.cloud;sh.uniforms.uCloudK=LIFE.cloudK;sh.uniforms.uWindK=LIFE.windK;
+    sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nuniform float uTime;uniform float uWindK;varying vec3 vCW;')
       .replace('#include <begin_vertex>','#include <begin_vertex>\n'+(wind?`{vec3 ip=vec3(0.);
 #ifdef USE_INSTANCING
 ip=vec3(instanceMatrix[3]);
 #endif
-float s=max(transformed.y,0.);s*=s*${wind.toFixed(4)};
+float s=max(transformed.y,0.);s*=s*${wind.toFixed(4)}*uWindK;
 transformed.x+=sin(uTime*1.4+ip.x*0.07+ip.z*0.05)*s+sin(uTime*3.7+ip.z*0.3)*s*0.25;
 transformed.z+=cos(uTime*1.1+ip.x*0.05)*s*0.7;}`:''))
       .replace('#include <project_vertex>',`#include <project_vertex>
@@ -746,8 +785,8 @@ transformed.z+=cos(uTime*1.1+ip.x*0.05)*s*0.7;}`:''))
 cw=instanceMatrix*cw;
 #endif
 vCW=(modelMatrix*cw).xyz;}`);
-    if(cloud)sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nuniform float uTime;uniform sampler2D uCloud;varying vec3 vCW;')
-      .replace('#include <opaque_fragment>','float cs=texture2D(uCloud,(vCW.xz+uTime*vec2(7.,3.5))/560.).r;outgoingLight*=mix(1.,.66,cs);\n#include <opaque_fragment>');
+    if(cloud)sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nuniform float uTime;uniform float uCloudK;uniform sampler2D uCloud;varying vec3 vCW;')
+      .replace('#include <opaque_fragment>','float cs=texture2D(uCloud,(vCW.xz+uTime*vec2(7.,3.5))/560.).r;outgoingLight*=mix(1.,1.-.34*uCloudK,cs);\n#include <opaque_fragment>');
   };
   mat.customProgramCacheKey=()=>'life'+wind+cloud;return mat;
 }
@@ -832,15 +871,19 @@ function flat(cx,cz,w,d,mat,y=0.03,tile=6){
   const m=new THREE.Mesh(geo,mat);m.position.set(cx,y,cz);m.receiveShadow=true;scene.add(m);return m;
 }
 const roadMat=toonM({color:BIO.road,roughness:0.9}),laneMat=toonM({color:BIO.lane,roughness:0.85});let roadK=0;
-function rbox(cx,cz,w,d,mat){const h=0.28+(roadK++%6)*0.006,m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(cx,h/2,cz);m.receiveShadow=true;scene.add(m)}
+const ROADGEO=new Map();   // merged at the end of the road block: one draw call per material
+function rbox(cx,cz,w,d,mat){const h=0.28+(roadK++%6)*0.006,g=new THREE.BoxGeometry(w,h,d).translate(cx,h/2,cz);if(!ROADGEO.has(mat))ROADGEO.set(mat,[]);ROADGEO.get(mat).push(g)}
 function roadX(x0,x1,z,w,mat=gravelMat){rbox((x0+x1)/2,z,x1-x0,w,mat===asphaltMat?laneMat:roadMat)}
 function roadZ(z0,z1,x,w,mat=gravelMat){rbox(x,(z0+z1)/2,w,z1-z0,mat===asphaltMat?laneMat:roadMat)}
+for(const [mat,list] of ROADGEO){const m=new THREE.Mesh(mergeGeometries(list),mat);m.receiveShadow=true;scene.add(m);list.forEach(g=>g.dispose())}
 { // sand pads under each panel block, rounded like a model base
   const sandMat=toonM({map:sandTex,roughness:1,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});sandTex.repeat.set(1/10,1/10);
+  const pads=[];
   for(const b of blocks){const w=BW+4,d=BD+4,r=7,sh=new THREE.Shape();
     sh.moveTo(-w/2+r,-d/2);sh.lineTo(w/2-r,-d/2);sh.quadraticCurveTo(w/2,-d/2,w/2,-d/2+r);sh.lineTo(w/2,d/2-r);sh.quadraticCurveTo(w/2,d/2,w/2-r,d/2);
     sh.lineTo(-w/2+r,d/2);sh.quadraticCurveTo(-w/2,d/2,-w/2,d/2-r);sh.lineTo(-w/2,-d/2+r);sh.quadraticCurveTo(-w/2,-d/2,-w/2+r,-d/2);
-    const m=new THREE.Mesh(new THREE.ShapeGeometry(sh,6).rotateX(-Math.PI/2),sandMat);m.position.set(b.x,0.04,b.z);m.receiveShadow=true;scene.add(m)}
+    pads.push(new THREE.ShapeGeometry(sh,6).rotateX(-Math.PI/2).translate(b.x,0.04,b.z))}
+  const m=new THREE.Mesh(mergeGeometries(pads),sandMat);m.receiveShadow=true;scene.add(m);
 }
 {
   const o=9,x0=-ARR_W/2-o,x1=EAST+o,z0=-ARR_D/2-o,z1=ARR_D/2+o;
@@ -961,8 +1004,8 @@ function mainTransformer(){
   const pv=new THREE.Mesh(new THREE.PlaneGeometry(1.0,0.7).rotateX(-Math.PI/2+TILT),panelMat);pv.position.set(0.2,3.2,0.3);g.add(pv);
   g.add(cyl(0.11,0.08,std('#f4f4f4'),-1.2,5.48,0,14),cyl(0.11,0.08,std('#f4f4f4'),1.2,5.48,0,14));
   g.add(box(0.06,0.6,0.06,steelMat,0,6,0),box(0.7,0.04,0.04,steelMat,0,6.5,0));
-  g.position.set(WX.x,0,WX.z);scene.add(g);
-  register('wx',g,WX.x,WX.z,7,7,28);
+  g.position.set(WXS.x,0,WXS.z);scene.add(g);
+  register('wx',g,WXS.x,WXS.z,7,7,28);
 }
 { // perimeter fence
   const pts=[];const step=3.2;
@@ -984,11 +1027,12 @@ function mainTransformer(){
   poles.forEach(lattice);
   const lineMat=new THREE.LineBasicMaterial({color:'#30353a',transparent:true,opacity:0.75});
   const anchors=[[SUB.x+20,9.8],...poles.map(x=>[x,hAt(x,z)+14.5])];
+  const seg=[];
   for(let i=0;i<anchors.length-1;i++)for(const dz of [-2.4,0,2.4]){
-    const [a,ya]=anchors[i],[b,yb]=anchors[i+1],pts=[];
-    for(let k=0;k<=16;k++){const u=k/16;pts.push(new THREE.Vector3(a+(b-a)*u,ya+(yb-ya)*u-Math.sin(Math.PI*u)*1.4,z+dz))}
-    scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),lineMat));
+    const [a,ya]=anchors[i],[b,yb]=anchors[i+1],at=u=>[a+(b-a)*u,ya+(yb-ya)*u-Math.sin(Math.PI*u)*1.4,z+dz];
+    for(let k=0;k<16;k++)seg.push(...at(k/16),...at((k+1)/16));
   }
+  scene.add(new THREE.LineSegments(new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute(seg,3)),lineMat));
 }
 /* ---------------- living scene: trees, shrubs, rocks, pond ---------------- */
 function mergeGeos(list){
@@ -1013,7 +1057,7 @@ function clump(r,cx,cy,cz,detail,crown,top,amp=0.5){ const soft=amp<0.3;
 function trunk(h,r){const g=new THREE.CylinderGeometry(r*0.7,r,h,6,1,true).translate(0,h/2,0).toNonIndexed();g.computeVertexNormals();
   const c=new Float32Array(g.attributes.position.count*3);for(let i=0;i<c.length;i+=3){c[i]=0.32;c[i+1]=0.24;c[i+2]=0.17}g.setAttribute('color',new THREE.BufferAttribute(c,3));return g}
 const broadGeo=(()=>{const c=new THREE.Vector3(0,1.45,0);return mergeGeos([trunk(1.1,0.12),
-  clump(0.95,0,1.45,0,2,c,2.4,0.42),clump(0.72,0.6,1.15,0.15,1,c,2.4,0.5),clump(0.7,-0.5,1.2,-0.25,1,c,2.4,0.5),clump(0.6,0.1,1.95,-0.2,1,c,2.4,0.5)])})();
+  clump(0.95,0,1.45,0,1,c,2.4,0.42),clump(0.72,0.6,1.15,0.15,1,c,2.4,0.5),clump(0.7,-0.5,1.2,-0.25,1,c,2.4,0.5),clump(0.6,0.1,1.95,-0.2,1,c,2.4,0.5)])})();
 const cactusGeo=(()=>{const parts=[],cy=(r,h,x,y,z,rz=0)=>{const g=new THREE.CylinderGeometry(r*0.92,r,h,10).toNonIndexed();if(rz)g.rotateZ(rz);g.translate(x,y,z);g.computeVertexNormals();
     const p=g.attributes.position,c=new Float32Array(p.count*3);for(let i=0;i<p.count;i++){const a=0.7+0.3*Math.min(1,p.getY(i)/5);c[i*3]=c[i*3+1]=c[i*3+2]=a}g.setAttribute('color',new THREE.BufferAttribute(c,3));parts.push(g)};
   cy(0.38,5,0,2.5,0);cy(0.24,1.0,0.55,2.0,0,Math.PI/2);cy(0.24,1.7,1.0,2.75,0);cy(0.22,0.9,-0.5,2.8,0,Math.PI/2);cy(0.22,1.4,-0.9,3.4,0);
@@ -1025,8 +1069,8 @@ const conGeo=(()=>{const parts=[trunk(0.6,0.1)];
     for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i);const ao=0.62+0.38*Math.min(1,v.y/2.7);cols[i*3]=cols[i*3+1]=cols[i*3+2]=ao}
     g.setAttribute('color',new THREE.BufferAttribute(cols,3));parts.push(g)});
   return mergeGeos(parts)})();
-const shrubGeo=(()=>{const c=new THREE.Vector3(0,0.4,0);return mergeGeos([clump(0.55,0,0.42,0,2,c,1,0.1),clump(0.42,0.45,0.32,0.1,1,c,1,0.1)])})();
-const rockGeo=(()=>{const g=new THREE.IcosahedronGeometry(1,2);const p=g.attributes.position,v=new THREE.Vector3();
+const shrubGeo=(()=>{const c=new THREE.Vector3(0,0.4,0);return mergeGeos([clump(0.55,0,0.42,0,1,c,1,0.1),clump(0.42,0.45,0.32,0.1,1,c,1,0.1)])})();
+const rockGeo=(()=>{const g=new THREE.IcosahedronGeometry(1,1);const p=g.attributes.position,v=new THREE.Vector3();
   for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i);const k=1+(fbm(v.x*1.2+3,v.z*1.2+v.y,2)-0.5)*0.35;p.setXYZ(i,v.x*k,v.y*k*0.6,v.z*k)}
   g.computeVertexNormals();const c=new Float32Array(p.count*3);for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i);const a=0.6+0.4*Math.min(1,Math.max(0,v.y+0.5));c[i*3]=c[i*3+1]=c[i*3+2]=a}
   g.setAttribute('color',new THREE.BufferAttribute(c,3));return g})();
@@ -1044,7 +1088,7 @@ const rockMat=lifeMat(toonM({color:'#ffffff',vertexColors:true}),{cloud:true});
   const inSlab=(x,z,m)=>x>SLAB.x0+m&&x<SLAB.x1-m&&z>SLAB.z0+m&&z<SLAB.z1-m;
   const lineCorr=(x,z)=>x>SUB.x&&Math.abs(z-(SUB.z-2))<9;
   const wet=(x,z)=>Math.hypot(x-POND.x,z-POND.z)<POND.r+10;
-  for(let i=0;i<90000&&broad.length+con.length<3600;i++){
+  for(let i=0;i<90000&&broad.length+con.length<2600;i++){
     const x=SLAB.x0+rnd()*SW,z=SLAB.z0+rnd()*SD;
     if(!inSlab(x,z,3)||lineCorr(x,z)||wet(x,z))continue;
     const m=wild(x,z);if(m<0.3)continue;
@@ -1057,12 +1101,12 @@ const rockMat=lifeMat(toonM({color:'#ffffff',vertexColors:true}),{cloud:true});
     else{z=FENCE.z0+t*(FENCE.z1-FENCE.z0);x=edge===2?FENCE.x0-14-rnd()*14:FENCE.x1+14+rnd()*14}
     if(inSlab(x,z,3)&&Math.abs(z-ROADZ)>10&&!lineCorr(x,z))(BIOME==='alpine'?con:BIOME==='desert'?cacti:broad).push([x,z]);
   }
-  for(let i=0;i<50000&&shrubs.length<(BIOME==='meadow'?1600:BIOME==='alpine'?600:950);i++){const x=SLAB.x0+rnd()*SW,z=SLAB.z0+rnd()*SD;
+  for(let i=0;i<50000&&shrubs.length<(BIOME==='meadow'?1100:BIOME==='alpine'?450:700);i++){const x=SLAB.x0+rnd()*SW,z=SLAB.z0+rnd()*SD;
     if(!inSlab(x,z,2)||lineCorr(x,z))continue;const m=wild(x,z);
     if(m<0.06||(Math.abs(z-ROADZ)<5&&x>FENCE.x1))continue;
     if(wet(x,z)&&Math.hypot(x-POND.x,z-POND.z)<POND.r-2)continue;
     if(fbm(x/40+5,z/40+9,2)<0.42-m*0.1)continue;shrubs.push([x,z])}
-  for(let i=0;i<30000&&rocks.length<(BIOME==='meadow'?380:BIOME==='alpine'?1000:1300);i++){const x=SLAB.x0+rnd()*SW,z=SLAB.z0+rnd()*SD;
+  for(let i=0;i<30000&&rocks.length<(BIOME==='meadow'?300:BIOME==='alpine'?700:900);i++){const x=SLAB.x0+rnd()*SW,z=SLAB.z0+rnd()*SD;
     if(!inSlab(x,z,2))continue;const m=wild(x,z);if(m<0.5&&!wet(x,z))continue;if(fbm(x/30,z/30+4,2)<0.5)continue;rocks.push([x,z])}
   const mk=(g,mat,list,colorFn,place,shadow=true,ink=null)=>{const mesh=new THREE.InstancedMesh(g,mat,list.length);
     if(ink&&INK_ON){const o=new THREE.InstancedMesh(g,ink,list.length);o.instanceMatrix=mesh.instanceMatrix;o.frustumCulled=false;scene.add(o)}
@@ -1090,13 +1134,21 @@ if(BIOME!=='desert'){ // pond (frozen in the alpine look)
 
 /* ---------------- moving things ---------------- */
 const animators=[];
-if(BIOME==='alpine'){ // gentle snowfall
-  const N=4500,pos=new Float32Array(N*3),sp=new Float32Array(N);
+const PRECIP={snow:null,rain:null,amount:0};
+{ // snow and rain, shown according to the weather (live or demo)
+  const N=2500,pos=new Float32Array(N*3),sp=new Float32Array(N);
   for(let i=0;i<N;i++){pos[i*3]=SLAB.x0+rnd()*SW;pos[i*3+1]=rnd()*130;pos[i*3+2]=SLAB.z0+rnd()*SD;sp[i]=3+rnd()*4}
   const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));
-  const pts=new THREE.Points(g,new THREE.PointsMaterial({color:'#ffffff',size:2.6,sizeAttenuation:false,transparent:true,opacity:0.9,depthWrite:false}));
-  pts.frustumCulled=false;scene.add(pts);
-  animators.push((t,dt)=>{for(let i=0;i<N;i++){let y=pos[i*3+1]-sp[i]*dt;if(y<-5)y=130;pos[i*3+1]=y;pos[i*3]+=Math.sin(t*0.6+i)*dt*0.8}g.attributes.position.needsUpdate=true});
+  const snow=new THREE.Points(g,new THREE.PointsMaterial({color:'#ffffff',size:2.6,sizeAttenuation:false,transparent:true,opacity:0.9,depthWrite:false}));
+  snow.frustumCulled=false;snow.visible=false;scene.add(snow);PRECIP.snow=snow;
+  const RN=1800,rp=new Float32Array(RN*6),rs=new Float32Array(RN);
+  for(let i=0;i<RN;i++){const x=SLAB.x0+rnd()*SW,y=rnd()*130,z=SLAB.z0+rnd()*SD;rp.set([x,y,z,x-0.4,y-3.2,z-0.3],i*6);rs[i]=38+rnd()*14}
+  const rg=new THREE.BufferGeometry();rg.setAttribute('position',new THREE.BufferAttribute(rp,3));
+  const rain=new THREE.LineSegments(rg,new THREE.LineBasicMaterial({color:'#a9bccb',transparent:true,opacity:0.55,depthWrite:false}));
+  rain.frustumCulled=false;rain.visible=false;scene.add(rain);PRECIP.rain=rain;
+  animators.push((t,dt)=>{
+    if(snow.visible){const n=Math.round(N*PRECIP.amount);g.setDrawRange(0,n);for(let i=0;i<n;i++){let y=pos[i*3+1]-sp[i]*dt;if(y<-5)y=130;pos[i*3+1]=y;pos[i*3]+=Math.sin(t*0.6+i)*dt*0.8}g.attributes.position.needsUpdate=true}
+    if(rain.visible){const n=Math.round(RN*PRECIP.amount);rg.setDrawRange(0,n*2);for(let i=0;i<n;i++){let y=rp[i*6+1]-rs[i]*dt;if(y<-4)y=130;rp[i*6+1]=y;rp[i*6+4]=y-3.2}rg.attributes.position.needsUpdate=true}});
 }
 { // white model wind turbines on the hills
   const white=toonM({color:'#f7f7f4',roughness:0.55});
@@ -1193,7 +1245,7 @@ if(false){ // birds (off in the scale-model look)
   const mesh=new THREE.InstancedMesh(geo,new THREE.MeshBasicMaterial({color:'#ffffff',toneMapped:false}),counts.reduce((a,b)=>a+b,0));
   let k=0;blocks.forEach((b,i)=>{for(let j=0;j<counts[i];j++)mesh.setColorAt(k++,new THREE.Color(DERATE[b.letter]?'#ff9f1a':'#19e3c4'))});
   mesh.frustumCulled=false;scene.add(mesh);PULSE={mesh,counts};const offs=blocks.map(()=>0),p=new THREE.Vector3();
-  animators.push((t,dt)=>{let k=0;blocks.forEach((b,i)=>{const ac=sim.blocks[b.letter]?.ac??1500;offs[i]+=sim.G<=0?-dt*3:dt*(5+11*ac/INV_P);
+  animators.push((t,dt)=>{if(!mesh.visible)return;let k=0;blocks.forEach((b,i)=>{const ac=sim.blocks[b.letter]?.ac??1500;offs[i]+=sim.G<=0?-dt*3:dt*(5+11*ac/INV_P);
     const r=routes[i];for(let j=0;j<counts[i];j++){r.at(offs[i]+j*13,p);const fade=Math.min(1,Math.min((offs[i]+j*13)%r.len,r.len-(offs[i]+j*13)%r.len)/14);
       tmp.position.copy(p);tmp.rotation.set(0,0,0);tmp.scale.setScalar(0.35+0.65*fade);tmp.updateMatrix();mesh.setMatrixAt(k++,tmp.matrix)}});
     mesh.instanceMatrix.needsUpdate=true});
@@ -1291,11 +1343,42 @@ const DAYP={ // sunrise/sunset (local h), peak plane-of-array irradiance, ambien
   desert:{rise:5.67,set:19.08,Gmax:1010,Tmin:28,Tmax:42,soil:0.035,cloud:0.3,price:45,season:'May'},
 }[BIOME];
 const GAMMA=-0.0029, VMP=43.6, K_DC=0.94-DAYP.soil;   // TOPCon temp. coefficient, Vmp at STC; optical/IAM, low-light, DC wiring, mismatch and LID ≈ 6%, plus base soiling
-const CURTAIL={from:hm(10,12),to:hm(10,47),kw:7000};   // grid-operator set-point earlier today
+const CURTAIL={from:hm(10,12),to:hm(10,47),kw:7000};   // grid-operator set-point earlier today (re-anchored in live mode)
 const AUX_KW=25, MV_LOSS=0.013;
+/* ---------------- live weather (Open-Meteo, no key) ---------------- */
+const LOC={meadow:{name:'Alazani Valley, Kakheti',lat:41.86,lon:45.75,elev:420},alpine:{name:'Gudauri',lat:42.4775,lon:44.4797,elev:2196},desert:{name:'Udabno',lat:41.505,lon:45.38,elev:790}}[BIOME];
+let MODE='live';try{MODE=localStorage.getItem('sunfield-mode')||'live'}catch(e){}
+if(!['live','day','night'].includes(MODE))MODE='live';
+const DEMO={rise:DAYP.rise,set:DAYP.set,season:DAYP.season};
+let WX=null,WX_ERR=null;
+function parseWX(j){
+  const base=Date.parse(j.daily.time[0]+'T00:00:00Z');   // local wall-clock times → seconds since local midnight today
+  const toSec=t=>(Date.parse(t+(t.length===16?':00Z':'Z'))-base)/1000,H=j.hourly,D=j.daily,C=j.current;
+  const hs=H.time.map((t,i)=>({s:toSec(t),T:H.temperature_2m[i],cc:H.cloud_cover[i],code:H.weather_code[i],pp:H.precipitation_probability?.[i]??0,pr:H.precipitation[i]??0,G:H.global_tilted_irradiance[i]??0,w:H.wind_speed_10m[i]}));
+  const days=D.time.map((t,i)=>({date:t,code:D.weather_code[i],hi:D.temperature_2m_max[i],lo:D.temperature_2m_min[i],rise:toSec(D.sunrise[i])-i*86400,set:toSec(D.sunset[i])-i*86400,
+    pp:D.precipitation_probability_max?.[i]??0,pr:D.precipitation_sum?.[i]??0,sn:D.snowfall_sum?.[i]??0,gust:D.wind_gusts_10m_max?.[i]??0,
+    H:hs.filter(h=>Math.floor((h.s-1)/86400)===i).reduce((a,h)=>a+h.G/1000,0)}));
+  return {off:j.utc_offset_seconds,base:base/1000,hs,days,cur:{T:C.temperature_2m,feel:C.apparent_temperature,rh:C.relative_humidity_2m,pr:C.precipitation??0,sn:C.snowfall??0,
+    code:C.weather_code,cc:C.cloud_cover,w:C.wind_speed_10m,wd:C.wind_direction_10m,gust:C.wind_gusts_10m,isDay:C.is_day},at:Date.now()};
+}
+const liveNow=()=>Date.now()/1000+WX.off-WX.base;   // seconds since local midnight at the site
+function wxAt(key,sec){const a=WX.hs,f=(sec-a[0].s)/3600,i=Math.max(0,Math.min(a.length-2,Math.floor(f))),u=Math.max(0,Math.min(1,f-i));return a[i][key]+(a[i+1][key]-a[i][key])*u}
+const liveG=sec=>Math.max(0,wxAt('G',sec+1800));   // hourly irradiance is the mean of the preceding hour
+async function loadWeather(){
+  const q=`latitude=${LOC.lat}&longitude=${LOC.lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,rain,snowfall,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m,is_day`+
+    `&hourly=temperature_2m,cloud_cover,weather_code,precipitation_probability,precipitation,global_tilted_irradiance,wind_speed_10m`+
+    `&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max,precipitation_sum,snowfall_sum,wind_gusts_10m_max`+
+    `&tilt=25&azimuth=0&timezone=auto&forecast_days=5&wind_speed_unit=kmh`;
+  const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),20000);
+  try{const r=await fetch('https://api.open-meteo.com/v1/forecast?'+q,{signal:ctl.signal});if(!r.ok)throw new Error('HTTP '+r.status);WX=parseWX(await r.json());WX_ERR=null;return true}
+  catch(e){WX_ERR=e;return false}finally{clearTimeout(tm)}
+}
 const clearSky=h=>{if(h<=DAYP.rise||h>=DAYP.set)return 0;const x=(h-DAYP.rise)/(DAYP.set-DAYP.rise);return DAYP.Gmax*Math.pow(Math.sin(Math.PI*x),1.5)};
 const cloudF=sec=>1-Math.max(0,fbm(sec/55,3.3,3)-0.6)*1.7*DAYP.cloud;
-function weather(sec){const h=sec/3600;const G=clearSky(h)*cloudF(sec);
+function weather(sec){
+  if(MODE==='live'&&WX){const cc=wxAt('cc',sec)/100,flick=cc>0.15&&cc<0.9?1-Math.max(0,fbm(sec/55,3.3,3)-0.6)*1.4*cc:1;   // passing clouds between hourly values
+    const G=liveG(sec)*flick,Tamb=wxAt('T',sec);return {G,Tamb,Tc:Tamb+G*0.0285}}
+  const h=sec/3600;const G=clearSky(h)*cloudF(sec);
   const Tamb=DAYP.Tmin+(DAYP.Tmax-DAYP.Tmin)*(0.5-0.5*Math.cos(2*Math.PI*(h-4)/24));return {G,Tamb,Tc:Tamb+G*0.0285}}
 const eta=p=>p<=0?0:0.986-0.035*Math.exp(-p/(0.06*INV_P));   // inverter efficiency curve
 // fault effects on strings: [block, strings lost (fraction of a string), category, from]
@@ -1323,7 +1406,13 @@ function plantAt(sec,healthy=false){
 }
 const blockStrings={};for(const b of blocks)blockStrings[b.letter]=tables.filter(t=>t.block===b.letter).reduce((a,t)=>a+t.bf[0]+t.bf[1],0);
 // one simulated day: integrates energy, losses, irradiation and availability from sunrise to "now"
-const STEP=60, T0=Math.floor((DAYP.rise-0.5)*3600), T1=Math.ceil((DAYP.set+0.5)*3600), NB=Math.ceil((T1-T0)/300);
+const STEP=60;let T0=0,T1=0,NB=1;
+function configureDay(){   // live: today's real sunrise/sunset; demo: the fixed season day
+  if(MODE==='live'&&WX){DAYP.rise=WX.days[0].rise/3600;DAYP.set=WX.days[0].set/3600;DAYP.season=`Live · ${LOC.name}`}
+  else Object.assign(DAYP,DEMO);
+  T0=Math.floor((DAYP.rise-0.5)*3600);T1=Math.ceil((DAYP.set+0.5)*3600);NB=Math.ceil((T1-T0)/300);
+}
+configureDay();
 const day={};
 function resetDay(){Object.assign(day,{E:0,Eexp:0,H:0,Eref:0,Eb:Object.fromEntries(blocks.map(b=>[b.letter,0])),loss:{curt:0,derate:0,faults:0,soiling:0,module:0,clip:0},
   avT:0,avN:0,aux:0,act:new Array(NB).fill(null),exp:new Array(NB).fill(null),fc:new Array(NB).fill(0),done:T0,Efc:0})}
@@ -1337,7 +1426,7 @@ function accumulate(sec,dt){
   const i=Math.floor((sec-T0)/300);if(i>=0&&i<NB){day.act[i]=Math.max(0,r.export)/1000;day.exp[i]=Math.max(0,x.export)/1000}
 }
 function rebuildDay(now){resetDay();
-  for(let i=0;i<NB;i++){const s=T0+i*300+150,h=s/3600,G=clearSky(h)*0.94,Tc=(DAYP.Tmin+DAYP.Tmax)/2+4+G*0.0285;   // P50 forecast: clear sky with average cloud
+  for(let i=0;i<NB;i++){const s=T0+i*300+150,h=s/3600,live=MODE==='live'&&WX,G=live?liveG(s):clearSky(h)*0.94,Tc=(live?wxAt('T',s):(DAYP.Tmin+DAYP.Tmax)/2+4)+G*0.0285;   // P50 forecast: clear sky with average cloud
     const pkw=STR_KW*(G/1000)*(1+GAMMA*(Tc-25))*K_DC;let ac=0;for(const b of blocks){const d=blockStrings[b.letter]*pkw;ac+=Math.min(d*eta(d),INV_P)}
     day.fc[i]=Math.max(0,ac*(1-MV_LOSS)-AUX_KW)/1000;day.Efc+=day.fc[i]*300/3600}
   for(let s=T0;s<now;s+=STEP)accumulate(s,Math.min(STEP,now-s));day.done=now}
@@ -1346,9 +1435,11 @@ const ageOf=f=>{const d=Math.max(0,siteSec()-f.start);if(d<3600)return `${Math.f
 function alarmLoss(f){const L=day.loss;return {invD:L.derate,strB:L.faults*(1/3),isoC:L.faults*(2/3),soilE:L.soiling,hotA:L.module*0.52,crkF:L.module*0.48}[f.id]||0}
 const euro=v=>'€'+Math.round(v).toLocaleString('en-US');
 // drone thermography: survey started 10:10 at block A, ~15 min per block
-const SURVEY0=hm(10,10);
-function surveyOf(block){const i=LETTERS.indexOf(block),t=SURVEY0+i*900,now=siteSec();
-  return now<t?{done:false,txt:'Not surveyed yet today'}:now<t+900?{done:true,txt:`In progress · started ${pad2(Math.floor(t/3600))}:${pad2(Math.floor(t%3600/60))}`}:{done:true,txt:`Today ${pad2(Math.floor(t/3600))}:${pad2(Math.floor(t%3600/60))}`}}
+let SURVEY0=hm(10,10);
+for(const f of FAULTS)f.ago=hm(11,42)-f.start;   // fault ages, kept when the timeline is re-anchored
+function anchorFaults(at){for(const f of FAULTS)f.start=at-f.ago;SURVEY0=at-92*60;CURTAIL.from=at-90*60;CURTAIL.to=at-55*60}
+function surveyOf(block){const i=LETTERS.indexOf(block),t=SURVEY0+i*900,now=siteSec(),hh=x=>hhmm((x+86400)%86400);
+  return now<t?{done:false,txt:'Not surveyed yet today'}:now<t+900?{done:true,txt:`In progress · started ${hh(t)}`}:{done:true,txt:`${t<0?'Yesterday':'Today'} ${hh(t)}`}}
 function thermal(mkey){const f=FAULTS.find(x=>x.target==='module:'+mkey);
   if(f?.id==='hotA')return {dT:18,cls:'Class 2 · thermal abnormality',sev:'warn',loss:65};
   if(f?.id==='crkF')return {dT:6.5,cls:'Class 3 · safety relevant',sev:'crit',loss:60};
@@ -1497,6 +1588,10 @@ function renderOM(){const sv=surveyOf('F');
     sec('Open work orders',`<div class="list">${FAULTS.filter(f=>f.sev==='crit').map(f=>`<button class="item ${f.sev}" data-goto="${f.target}"><span class="sev"></span><span class="t"><b>${f.title}</b><span>${longLabel(f.target)}</span></span><span class="age">${euro(alarmLoss(f)*DAYP.price)} today</span></button>`).join('')}</div>`)};
 }
 function renderWX(){const f=faultById.wx,w=weather(Math.min(siteSec(),f.start)),stale=siteSec()>=f.start;
+  if(MODE==='live'&&WX){const c=WX.cur;return {title:'Weather station',status:statusOf('wx'),body:faultBoxes(faultsUnder('wx'))+
+    `<p class="note">The on-site logger is offline, so these are live model values for ${LOC.name} from Open-Meteo.</p>`+
+    `<div class="kpis">${kpi('Plane of array',fmt(sim.G,0),'W/m²','25° south')}${kpi('Ambient',fmt(c.T,1),'°C',`feels ${fmt(c.feel,0)} °C`)}${kpi('Cloud cover',fmt(c.cc,0),'%',WXT(c.code))}${kpi('Wind',fmt(c.w,0),'km/h',`gusts ${fmt(c.gust,0)}`)}${kpi('Humidity',fmt(c.rh,0),'%')}${kpi('Precipitation',fmt(c.pr,1),'mm/h')}</div>`+
+    `<button class="link" data-wxopen>Open the weather report</button>`}}
   return {eyebrow:'Meteorological station',title:'Weather station',status:statusOf('wx'),body:
     faultBoxes(faultsUnder('wx'))+
     `<p class="note">${stale?`Last values received at ${hhmm(f.start)}. Live irradiance now comes from the inverter reference cells: ${fmt(sim.G,0)} W/m².`:'Live values.'}</p>`+
@@ -1565,6 +1660,8 @@ function tipFor(id){
   return `<b>${longLabel(id)}</b><span class="m">${m}</span>${st!=='ok'?`<div>${pill(st)}</div>`:''}`;
 }
 canvas.addEventListener('pointerdown',e=>{downAt={x:e.clientX,y:e.clientY};canvas.classList.add('dragging')});
+let lastInput=performance.now();
+for(const ev of ['pointerdown','pointermove','wheel','keydown','touchstart'])addEventListener(ev,()=>{lastInput=performance.now()},{passive:true});
 canvas.addEventListener('pointermove',e=>{pointer={x:e.clientX,y:e.clientY,type:e.pointerType};needPick=true});
 canvas.addEventListener('pointerleave',()=>{pointer=null;hovered=null;hoverFrame.set(null);tip.hidden=true});
 canvas.addEventListener('pointerup',e=>{canvas.classList.remove('dragging');
@@ -1619,7 +1716,10 @@ function applyLayers(){
   if(PULSE)PULSE.mesh.visible=LAYERS.flow;
   const any=LAYER_KEYS.some(k=>LAYERS[k]);$('#lpAll').textContent=any?'Hide all':'Show all';
 }
-function placeOverlay(){
+let overlayKey='';
+function placeOverlay(force){
+  const key=camera.matrixWorld.elements.join(',')+camera.zoom+innerWidth+innerHeight+selected+JSON.stringify(LAYERS);
+  if(!force&&key===overlayKey)return;overlayKey=key;
   const w=wpp(),W=innerWidth,Hh=innerHeight;
   for(const it of items){
     V3.copy(it.pos).project(camera);
@@ -1701,6 +1801,8 @@ function updateLeft(r){
 let tickN=0,lastTick=performance.now();
 function tick(){
   const now=siteSec();
+  if(MODE==='live'&&WX&&isDark()!==NIGHT)applyNight(isDark());
+  if(MODE==='live'&&WX&&tickN%10===0){drawWxPill();if(!$('#wxPop').hidden)drawWxPop()}
   if(now>day.done){let t=day.done;while(t<now){const d=Math.min(STEP,now-t);accumulate(t,d);t+=d}day.done=now}
   const r=compute(now);Object.assign(sim,r);
   updateLeft(r);
@@ -1774,19 +1876,90 @@ const BG_NIGHT=(()=>{const c=document.createElement('canvas');c.width=c.height=1
   const rr=mulberry32(5);for(let i=0;i<420;i++){const a=0.25+rr()*0.65;g.fillStyle=`rgba(255,255,255,${a})`;const s=rr()<0.06?2:1;g.fillRect(rr()*1024,rr()*1024,s,s)}
   const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t})();
 
-function applyNight(on,fromToggle){
-  NIGHT=on;try{localStorage.setItem('sunfield-night',on?'1':'0')}catch(e){}
+function applyNight(on){
+  NIGHT=on;
   hemi.color.set(on?'#41598a':BIO.hemi[0]);hemi.groundColor.set(on?'#0d1422':BIO.hemi[1]);hemi.intensity=on?0.32:BIO.hemi[2];
   sun.color.set(on?'#b9ccff':BIO.sun[0]);sun.intensity=on?0.5:BIO.sun[1];
   renderer.toneMappingExposure=on?0.95:BIO.exp;scene.background=on?BG_NIGHT:BG_DAY;
   for(const n of NIGHT_OBJS){if(n.obj)n.obj.visible=on;if(n.mat)n.mat.emissiveIntensity=on?n.night:n.day}
   if(PULSE){let k=0;blocks.forEach((b,i)=>{for(let j=0;j<PULSE.counts[i];j++)PULSE.mesh.setColorAt(k++,new THREE.Color(on?'#5aa9ff':DERATE[b.letter]?'#ff9f1a':'#19e3c4'))});PULSE.mesh.instanceColor.needsUpdate=true}
   document.body.classList.toggle('night',on);
-  if(fromToggle){sim.clock0=on?hm(22,16):hm(11,42);sim.t0=performance.now();rebuildDay(siteSec());tick()}
-  document.querySelectorAll('[data-tod]').forEach(b=>b.setAttribute('aria-pressed',(b.dataset.tod==='night')===on));
+  applyWeatherScene();
 }
-document.querySelectorAll('[data-tod]').forEach(b=>b.onclick=()=>{const on=b.dataset.tod==='night';if(on!==NIGHT)applyNight(on,true)});
-applyNight(NIGHT,false);
+/* ---------------- weather in the scene and the weather report ---------------- */
+const WMO=c=>c===0?['Clear','sun']:c<=2?['Partly cloudy','part']:c===3?['Overcast','cloud']:c<=48?['Fog','fog']:c<=57?['Drizzle','rain']:c<=67?['Rain','rain']:c<=77?['Snow','snow']:c<=82?['Rain showers','rain']:c<=86?['Snow showers','snow']:['Thunderstorm','storm'];
+const WXT=c=>WMO(c)[0];
+const WXI={sun:'<circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/>',
+  moon:'<path d="M12.5 10.2A5.2 5.2 0 0 1 5.8 3.5a5.2 5.2 0 1 0 6.7 6.7z"/>',
+  part:'<path d="M6.2 3.1a2.6 2.6 0 0 1 3.9 2.1"/><path d="M3.9 4.5 3 3.6M6.2 1.6v.9M2.4 6.6h.9"/><path d="M5 13.5h6.5a2.5 2.5 0 0 0 .2-5A3.5 3.5 0 0 0 5 9.3a2.1 2.1 0 0 0 0 4.2z"/>',
+  cloud:'<path d="M4.5 13h7.2a2.8 2.8 0 0 0 .3-5.6A4 4 0 0 0 4.3 8.3a2.4 2.4 0 0 0 .2 4.7z"/>',
+  rain:'<path d="M4.5 10h7.2a2.8 2.8 0 0 0 .3-5.6A4 4 0 0 0 4.3 5.3a2.4 2.4 0 0 0 .2 4.7z"/><path d="m5.5 12-1 2M8.5 12l-1 2M11.5 12l-1 2"/>',
+  snow:'<path d="M4.5 10h7.2a2.8 2.8 0 0 0 .3-5.6A4 4 0 0 0 4.3 5.3a2.4 2.4 0 0 0 .2 4.7z"/><path d="M5 12.5v.01M8 13.5v.01M11 12.5v.01M6.5 14.8v.01M9.5 14.8v.01"/>',
+  fog:'<path d="M2.5 6h11M1.5 9h13M3.5 12h9"/>',
+  storm:'<path d="M4.5 9.5h7.2a2.8 2.8 0 0 0 .3-5.6A4 4 0 0 0 4.3 4.8a2.4 2.4 0 0 0 .2 4.7z"/><path d="m8.5 10.5-1.5 2.5h2l-1.5 2.5"/>'};
+const wxIcon=(code,day=true)=>{let k=WMO(code)[1];if(!day&&(k==='sun'||k==='part'))k=k==='sun'?'moon':'cloud';return `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${WXI[k]}</svg>`};
+function wxNow(){
+  if(MODE==='live'&&WX){const c=WX.cur;return {cc:c.cc/100,code:c.code,pr:c.pr,sn:c.sn,w:c.w}}
+  return BIOME==='alpine'?{cc:0.3,code:71,pr:0.4,sn:0.4,w:12}:{cc:0.25,code:1,pr:0,sn:0,w:12};   // demo day weather
+}
+function applyWeatherScene(){
+  const w=wxNow(),snowy=(w.code>=71&&w.code<=77)||w.code===85||w.code===86||w.sn>0,rainy=!snowy&&((w.code>=51&&w.code<=67)||(w.code>=80&&w.code<=82)||w.code>=95||w.pr>0.05);
+  PRECIP.snow.visible=snowy;PRECIP.rain.visible=rainy;PRECIP.amount=Math.min(1,0.25+Math.max(w.pr,w.sn)*0.6);
+  LIFE.cloudK.value=MODE==='live'&&WX?Math.min(1,0.2+w.cc):1;LIFE.windK.value=Math.max(0.3,Math.min(3,w.w/12));
+  if(!NIGHT){sun.intensity=BIO.sun[1]*(1-0.6*Math.pow(w.cc,1.6));hemi.intensity=BIO.hemi[2]*(1+0.25*w.cc)}
+}
+function isDark(){if(MODE==='night')return true;if(MODE!=='live')return false;const s=((siteSec()%86400)+86400)%86400;return s<DAYP.rise*3600||s>DAYP.set*3600}
+function setMode(m,store=true){
+  if(m==='live'&&!WX)m='day';
+  MODE=m;if(store)try{localStorage.setItem('sunfield-mode',m)}catch(e){}
+  configureDay();
+  const now=m==='live'?liveNow():m==='day'?hm(11,42):hm(22,16);
+  sim.clock0=now;sim.t0=performance.now();
+  if(m==='live'){const rise=DAYP.rise*3600,set=DAYP.set*3600;anchorFaults(now>=rise+5400?Math.min(now,set-3*3600):set-3*3600-86400)}else anchorFaults(hm(11,42));
+  rebuildDay(siteSec());applyNight(isDark());
+  document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===MODE));
+  if(FEED)FEED.last=-9;tick();drawWxPill();if(!$('#wxPop').hidden)drawWxPop();
+}
+function drawWxPill(){
+  const live=MODE==='live'&&WX,c=live?WX.cur:null,ic=live?wxIcon(c.code,!isDark()):wxIcon(wxNow().code,!NIGHT);
+  $('#wxIc').innerHTML=ic;$('#wxIcM').innerHTML=ic;
+  $('#wxT').textContent=live?`${Math.round(c.T)}°`:WX_ERR&&MODE==='live'?'–':'Demo';
+  $('#wxWhere').textContent=live?LOC.name.split(',')[0]:'';
+}
+function drawWxPop(){
+  const b=$('#wxBody'),head=`<div class="wp-head"><b>Weather report</b><span>${LOC.name} · ${fmt(LOC.elev,0)} m</span></div>`;
+  if(!(MODE==='live'&&WX)){b.innerHTML=head+`<p class="note">${WX?'Demo mode: weather and time are simulated. Switch to <b>Live</b> to see real conditions at the site.':'Live weather is unavailable right now, so the dashboard shows the demo day.'}</p>${WX?'<button class="link" data-mode-go="live">Switch to Live</button>':''}`;return}
+  const c=WX.cur,now=siteSec(),d0=WX.days[0],dark=isDark(),mwh=H=>DC_KWP/1000*H*0.84;
+  const hours=WX.hs.filter(h=>h.s>now).slice(0,12).map(h=>{const t=((h.s%86400)+86400)%86400,dayH=t>d0.rise&&t<d0.set;
+    return `<div class="wh"><span>${pad2(Math.floor(t/3600))}</span>${wxIcon(h.code,dayH)}<b>${Math.round(h.T)}°</b><i style="height:${Math.min(100,h.G/10).toFixed(0)}%" title="${fmt(h.G,0)} W/m²"></i></div>`}).join('');
+  const names=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const days=WX.days.slice(1,5).map(d=>`<div class="wd"><span>${names[new Date(d.date+'T12:00:00Z').getUTCDay()]}</span>${wxIcon(d.code)}<span class="wd-t"><b>${Math.round(d.hi)}°</b> ${Math.round(d.lo)}°</span><span class="wd-p">${d.pp?d.pp+'%':''}</span><b class="wd-e">${fmt(mwh(d.H),0)} MWh</b></div>`).join('');
+  const notes=[];const dn=d=>names[new Date(d.date+'T12:00:00Z').getUTCDay()];
+  const snowD=WX.days.slice(0,4).find(d=>d.sn>=1);if(snowD)notes.push(`Snow ${snowD===d0?'today':'on '+dn(snowD)} (${fmt(snowD.sn,0)} cm): expect low output until the panels clear.`);
+  const windD=WX.days.slice(0,4).find(d=>d.gust>=60);if(windD)notes.push(`Gusts up to ${Math.round(windD.gust)} km/h ${windD===d0?'today':'on '+dn(windD)}: check fencing and loose equipment.`);
+  const rainD=WX.days.slice(0,3).find(d=>d.pr>=5);if(rainD)notes.push(`${fmt(rainD.pr,0)} mm of rain ${rainD===d0?'today':'on '+dn(rainD)} will wash table E-03-4; the cleaning crew could wait.`);
+  const hotD=WX.days.slice(0,4).find(d=>d.hi>=33);if(hotD)notes.push(`${Math.round(hotD.hi)} °C ${hotD===d0?'today':'on '+dn(hotD)}: Inverter D will derate further until its fan is fixed.`);
+  if(!notes.length)notes.push(d0.H>4?'Good solar day: a fine window to finish the drone survey.':'No weather risks for operations in the next days.');
+  b.innerHTML=head+`<div class="wp-now">${wxIcon(c.code,!dark)}<div><b>${Math.round(c.T)}°</b><span>${WXT(c.code)} · feels ${Math.round(c.feel)}°</span></div></div>
+    <div class="wp-grid"><div><span>On panels</span><b>${fmt(sim.G,0)}<small>W/m²</small></b></div><div><span>Clouds</span><b>${fmt(c.cc,0)}<small>%</small></b></div><div><span>Wind</span><b>${fmt(c.w,0)}<small>km/h</small></b><small class="g">gusts ${fmt(c.gust,0)}</small></div><div><span>Humidity</span><b>${fmt(c.rh,0)}<small>%</small></b></div></div>
+    <div class="sec"><h3><span>Today</span><span>${hhmm(d0.rise)}–${hhmm(d0.set)}</span></h3>${rows([['High / low',`${Math.round(d0.hi)}° / ${Math.round(d0.lo)}°`],['Sun on the panels',`${fmt(d0.H,1)} kWh/m²`],['Expected energy',`${fmt(day.Efc,1)} MWh · ${euro(day.Efc*DAYP.price)}`]])}</div>
+    <div class="sec"><h3><span>Next 12 hours</span><span>bars: irradiance</span></h3><div class="wp-hours">${hours}</div></div>
+    <div class="sec"><h3><span>Next days</span><span>expected energy</span></h3><div class="wp-days">${days}</div></div>
+    <div class="sec"><h3><span>For operations</span></h3><ul class="wp-notes">${notes.slice(0,3).map(n=>`<li>${n}</li>`).join('')}</ul></div>
+    <p class="wp-src">Open-Meteo forecast model · updated ${new Date(WX.at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} your time</p>`;
+}
+{const pop=$('#wxPop'),open=o=>{pop.hidden=!o;$('#wxPill').setAttribute('aria-expanded',o);if(o)drawWxPop()};
+  $('#wxPill').onclick=e=>{e.stopPropagation();open(pop.hidden)};$('#wxMob').onclick=e=>{e.stopPropagation();open(pop.hidden)};
+  document.addEventListener('pointerdown',e=>{if(!pop.hidden&&!pop.contains(e.target)&&!e.target.closest('#wxPill,#wxMob,[data-wxopen]'))open(false)});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&!pop.hidden)open(false)});
+  document.addEventListener('click',e=>{if(e.target.closest('[data-wxopen]'))open(true);const g=e.target.closest('[data-mode-go]');if(g)setMode(g.dataset.modeGo)});}
+let userPickedMode=false;
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{userPickedMode=true;setMode(b.dataset.mode)});
+{const want=MODE;setMode(want==='live'?'day':want,false);
+  const goLive=ok=>{if(ok&&MODE==='day'&&!userPickedMode)setMode('live',false);drawWxPill();return ok};
+  if(want==='live')loadWeather().then(goLive).then(ok=>{if(!ok)setTimeout(()=>loadWeather().then(goLive),30000)});   // one retry on a slow connection
+  else loadWeather().then(()=>drawWxPill());
+  setInterval(()=>loadWeather().then(ok=>{if(ok&&MODE==='live'){configureDay();rebuildDay(siteSec());applyWeatherScene()}drawWxPill();if(!$('#wxPop').hidden)drawWxPop()}),15*60*1000);}
 /* ---------------- live CCTV cameras ---------------- */
 const CAMS=[
   {name:'CAM 1 · Main gate & O&M',pos:v3(OM.x+34,10,OM.z+44),look:v3(OM.x-6,2,OM.z+4),sweep:10},
@@ -1810,7 +1983,7 @@ function syncCamUI(){
   cwCams.querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-pressed',wallMode==='single'&&i===wallIdx));
   $('#cwGridBtn').setAttribute('aria-pressed',wallMode==='grid');
 }
-camSeg.onclick=e=>{const b=e.target.closest('[data-cam]');if(b){camIdx=+b.dataset.cam;syncCamUI()}};
+camSeg.onclick=e=>{const b=e.target.closest('[data-cam]');if(b){camIdx=+b.dataset.cam;FEED.last=-9;syncCamUI()}};
 function openWall(mode,idx){wallMode=mode;wallIdx=idx;$('#camwall').hidden=false;document.body.classList.add('walling');tip.hidden=true;syncCamUI();
   try{document.documentElement.requestFullscreen?.().catch(()=>{})}catch(e){}}
 function closeWall(){wallMode=null;$('#camwall').hidden=true;document.body.classList.remove('walling');
@@ -1828,6 +2001,18 @@ function aimCam(c,t){
   if(c.drone&&DRONE){const d=DRONE.position;c.cam.position.set(d.x,d.y-1.2,d.z);c.cam.lookAt(d.x+Math.sin(t*0.2)*6,d.y-24,d.z+16);return}
   c.cam.position.copy(c.pos);const s=Math.sin(t*0.12+c.sweep)*c.sweep;c.cam.lookAt(c.look.x+s,c.look.y,c.look.z-s*0.3);
 }
+var FEED={rt:new THREE.WebGLRenderTarget(4,4,{type:THREE.HalfFloatType}),last:-9,w:0,h:0,scene:new THREE.Scene(),cam:new THREE.OrthographicCamera(-1,1,1,-1,0,1)};
+FEED.scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),new THREE.MeshBasicMaterial({map:FEED.rt.texture,depthTest:false,depthWrite:false})));
+function drawCardFeed(c,el,t){   // the small card refreshes at ~8 fps instead of re-rendering the whole scene every frame
+  const r=el.getBoundingClientRect();if(r.width<2||r.height<2)return;
+  const pr=renderer.getPixelRatio(),w=Math.round(r.width*pr),h=Math.round(r.height*pr);
+  if(w!==FEED.w||h!==FEED.h){FEED.rt.setSize(w,h);FEED.w=w;FEED.h=h;FEED.last=-9}
+  if(t-FEED.last>0.125){c.cam.aspect=r.width/r.height;c.cam.updateProjectionMatrix();aimCam(c,t);
+    GLOW.uniforms.uH.value=h;renderer.setRenderTarget(FEED.rt);renderer.render(scene,c.cam);renderer.setRenderTarget(null);FEED.last=t}
+  const x=r.left,y=innerHeight-r.bottom;
+  renderer.setViewport(x,y,r.width,r.height);renderer.setScissor(x,y,r.width,r.height);renderer.setScissorTest(true);
+  renderer.render(FEED.scene,FEED.cam);renderer.setScissorTest(false);renderer.setViewport(0,0,innerWidth,innerHeight);
+}
 function drawFeed(c,el,t,bg){
   const r=el.getBoundingClientRect();if(r.width<2||r.height<2)return;
   const x=r.left,y=innerHeight-r.bottom;
@@ -1841,7 +2026,8 @@ setInterval(()=>{const s=stamp();$('#camTime').textContent=s;cwGrid.querySelecto
 let ftAcc=0,ftN=0,lastDraw=0;
 function frame(now){
   requestAnimationFrame(frame);
-  if(now-lastDraw<(hq?0:1000/30)-2)return;   // eco mode draws at most 30 frames a second
+  const idle=performance.now()-lastInput>15000&&!tween;
+  if(now-lastDraw<(hq?0:idle?1000/20:1000/30)-2)return;   // Eco: 30 fps, 20 fps when idle
   lastDraw=now;
   const raw=clock.getDelta(),dt=Math.min(raw,0.05),el=clock.elapsedTime;
   if(hq){ftAcc+=raw;ftN++;if(ftN>=90){const avg=ftAcc/ftN;ftAcc=0;ftN=0;if(avg>0.034)setQuality(false)}}
@@ -1875,7 +2061,7 @@ function frame(now){
     hoverFrame.group.visible=hf;selFrame.group.visible=sf;
   }else{
     GLOW.uniforms.uH.value=innerHeight*renderer.getPixelRatio();renderer.render(scene,camera);
-    const hf=hoverFrame.group.visible;hoverFrame.group.visible=false;drawFeed(CAMS[camIdx],$('#camView'),el);hoverFrame.group.visible=hf;
+    const hf=hoverFrame.group.visible;hoverFrame.group.visible=false;drawCardFeed(CAMS[camIdx],$('#camView'),el);hoverFrame.group.visible=hf;
   }
 }
 addEventListener('resize',()=>{fitFrustum();renderer.setSize(innerWidth,innerHeight,false);syncInk();composer?.setSize(innerWidth,innerHeight);aoPass?.setSize(innerWidth,innerHeight)});
