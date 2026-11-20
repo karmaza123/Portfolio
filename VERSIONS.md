@@ -37,4 +37,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.15   | 2026-11-19 | `05da053` | Project list layout switch: home and `/work` get a List / Grid toggle (choice remembered per browser). Grid shows cover cards — 4 per row on desktop, 2 on phones — and cuts `/work` from ~2,790px to ~1,920px tall. New optional `thumb` on `HomeProject` sets the grid cover, falling back to the case study's first image. PowerPay pages moved up to follow Mintly (002–004) and all projects renumbered. |
 
-**Next version:** `v0.16`
+| V0.16   | 2026-11-20 | — | New subdomain **solar.karmaza.design**: the Sunfield-1 solar park dashboard, an interactive 3D scale-model diorama of a demo plant with Liquid Glass panels, live simulated data (IEC 61724-style KPIs, losses in MWh and €, drone-survey module data), CCTV feeds with a camera wall, Meadow/Alpine/Desert sites and day/night modes. Self-contained static page at `public/solar/index.html` (three.js from jsDelivr). Root `middleware.ts` (Vercel Routing Middleware) rewrites every request on the solar host to that page, since `/` already matches the portfolio's `index.html` and real files win over `vercel.json` rewrites. Needs `solar.karmaza.design` added to the Vercel project's domains. |
+
+**Next version:** `v0.17`
