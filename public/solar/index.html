@@ -25,6 +25,8 @@
 :root{
   color-scheme:light;
   --camH:258px;
+  --r-card:22px;  /* one radius for every floating card */
+  --gap:12px;     /* one gap between stacked cards */
   --wxH:148px;
   --ground-a:#f1f2ee; --ground-b:#d2d5ce;
   --label:#1d1d1f; --label2:rgba(50,50,58,.74); --label3:rgba(50,50,58,.52);
@@ -61,13 +63,13 @@ button{font:inherit;color:inherit}
   background:radial-gradient(120% 60% at 15% 0%,rgba(255,255,255,.38),rgba(255,255,255,0) 60%),radial-gradient(80% 50% at 100% 100%,rgba(255,255,255,.14),rgba(255,255,255,0) 70%)}
 /* real refraction where the browser supports SVG backdrop filters (Chromium) */
 .refract .toolbar,.refract .co-card,.refract .chip{-webkit-backdrop-filter:url(#lg) blur(5px) saturate(1.9) brightness(1.06);backdrop-filter:url(#lg) blur(5px) saturate(1.9) brightness(1.06)}
-.card{border-radius:22px;padding:16px 18px}
+.card{border-radius:var(--r-card);padding:16px 18px}
 
 /* left column */
 /* the column is padded so card shadows have room and are never clipped by the scroll area */
 .left{position:fixed;z-index:5;top:calc(env(safe-area-inset-top,0px) - 8px);left:calc(max(16px,env(safe-area-inset-left,0px)) - 24px);
   width:366px;padding:24px 24px 40px;box-sizing:border-box;max-height:calc(100% + 8px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
-  overflow-y:auto;display:flex;flex-direction:column;gap:14px;scrollbar-width:none;pointer-events:none}
+  overflow-y:auto;display:flex;flex-direction:column;gap:var(--gap);scrollbar-width:none;pointer-events:none}
 .left>*{pointer-events:auto;flex:none}
 .left::-webkit-scrollbar{display:none}
 .c-head{display:flex;align-items:center;gap:10px}
@@ -131,7 +133,7 @@ button{font:inherit;color:inherit}
 
 /* detail panel */
 .right{z-index:5;position:fixed;top:calc(env(safe-area-inset-top,0px) + 16px);right:max(16px,env(safe-area-inset-right,0px));
-  bottom:calc(env(safe-area-inset-bottom,0px) + 16px + var(--camH) + var(--wxH) + 24px);width:360px;border-radius:22px;display:flex;flex-direction:column;overflow:hidden;
+  bottom:calc(env(safe-area-inset-bottom,0px) + 16px + var(--camH) + var(--wxH) + 2*var(--gap));width:360px;border-radius:var(--r-card);display:flex;flex-direction:column;overflow:hidden;
   }
 .det-head{padding:16px 18px 12px}
 .crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:0 2px;font-size:12.5px;margin-bottom:6px}
@@ -223,8 +225,8 @@ button{font:inherit;color:inherit}
 .biome .seg button:focus-visible{outline:2px solid var(--blue)}
 .biome .seg button[aria-pressed="true"]{background:rgba(255,255,255,.9);box-shadow:inset 0 1px 0 #fff,0 1px 4px rgba(0,0,0,.14)}
 /* live camera card: glass header + a clear window the 3D cameras render into */
-.camcard{position:fixed;z-index:5;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px);width:360px;height:var(--camH);display:flex;flex-direction:column;gap:6px}
-.cam-head{display:flex;align-items:center;gap:8px;padding:7px 8px 7px 14px;border-radius:16px}
+.camcard{position:fixed;z-index:5;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px);width:360px;height:var(--camH);display:flex;flex-direction:column;border-radius:var(--r-card);box-shadow:var(--shadow)}   /* one card: glass header on top, the live feed below */
+.cam-head{display:flex;align-items:center;gap:8px;padding:8px 8px 8px 14px;border-radius:var(--r-card) var(--r-card) 0 0;box-shadow:var(--glass-edge)}
 .cam-head h3{margin:0;font-size:13.5px;font-weight:600;flex:1;display:flex;align-items:center;gap:7px}
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--red-hi);box-shadow:0 0 0 3px rgba(255,59,48,.18);animation:blink 1.6s infinite}
 @keyframes blink{50%{opacity:.35}}
@@ -234,7 +236,7 @@ button{font:inherit;color:inherit}
 .icon-btn{all:unset;cursor:pointer;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:rgba(60,60,67,.08)}
 .icon-btn:hover{background:rgba(60,60,67,.16)}
 .icon-btn svg{width:15px;height:15px}
-.cam-view{all:unset;cursor:zoom-in;position:relative;flex:1;border-radius:6px;box-shadow:0 0 0 1.5px rgba(255,255,255,.85),var(--shadow);overflow:hidden;display:block}
+.cam-view{all:unset;cursor:zoom-in;position:relative;z-index:2;flex:1;border-radius:0 0 var(--r-card) var(--r-card);overflow:hidden;display:block;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
 .cam-view:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 .feed-ui{position:absolute;inset:0;pointer-events:none;font:600 10.5px/1.2 ui-monospace,'SF Mono',Menlo,monospace;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.7);letter-spacing:.03em}
 .feed-ui::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.07) 0 1px,transparent 1px 3px),radial-gradient(120% 100% at 50% 50%,transparent 60%,rgba(0,0,0,.35))}
@@ -355,8 +357,8 @@ body.night .wx-pill:hover,body.night .wx-pill[aria-expanded="true"]{background:r
 .wp-notes{margin:0;padding:0 0 0 18px;font-size:13px;display:flex;flex-direction:column;gap:4px}
 .wp-src{margin:0;font-size:11px;color:var(--label3)}
 /* weather card in the right column */
-.wxcard{box-sizing:border-box;cursor:pointer;border:0;margin:0;font:inherit;color:var(--label);text-align:left;position:fixed;z-index:5;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px + var(--camH) + 12px);
-  width:360px;height:var(--wxH);border-radius:20px;padding:12px 14px}
+.wxcard{box-sizing:border-box;cursor:pointer;border:0;margin:0;font:inherit;color:var(--label);text-align:left;position:fixed;z-index:5;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px + var(--camH) + var(--gap));
+  width:360px;height:var(--wxH);border-radius:var(--r-card);padding:12px 14px}
 .wxcard:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .wc{position:relative;z-index:2;display:flex;flex-direction:column;gap:9px;height:100%}
 .wc-top{display:grid;grid-template-columns:34px auto 1fr;align-items:center;gap:10px}
