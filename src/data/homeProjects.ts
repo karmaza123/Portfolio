@@ -29,9 +29,9 @@ export const HOME_PROJECTS: HomeProject[] = [
   },
   {
     num: "002",
-    title: "Solar, Quick concept",
+    title: "Sunfield, Solar parks concept",
     slug: "solar-concept",
-    thumb: "/case-studies/solar/desktop.png",
+    thumb: "/case-studies/solar/meadow-desktop.png",
     tags: ["Concept", "Web"],
     categories: ["UI/UX"],
     year: "2026",
