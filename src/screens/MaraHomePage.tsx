@@ -114,7 +114,7 @@ export function MaraHomePage() {
           </p>
           <div className="mp-hero-stats">
             <div>
-              <span className="mp-stat-num">08+</span>
+              <span className="mp-stat-num">10+</span>
               <span className="mp-stat-label">Years</span>
             </div>
             <div>
@@ -204,7 +204,7 @@ export function MaraHomePage() {
               <em>intention.</em>
             </h2>
             <p>
-              I&apos;m Dimitri — a product designer with over eight years of experience across web and
+              I&apos;m Dimitri — a product designer with over ten years of experience across web and
               mobile, from healthcare and finance to gaming and SaaS.
             </p>
             <p>

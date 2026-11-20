@@ -7,71 +7,84 @@ import "./MaraHomePage.css";
 import "./ResumeScreen.css";
 
 const SUMMARY_PARAS = [
-  "8+ years as a product designer, creating user-focused designs for digital and physical products. Skilled in concept development, prototyping, and user testing.",
-  "Expert at collaborating with cross-functional teams to deliver functional and visually appealing products.",
-  "Passionate about innovation and enhancing user experience through design.",
+  "Senior Product Designer with 10+ years designing web and mobile products for fintech, energy, B2B and creator-economy platforms.",
+  "I own the full process end to end — research, flows, prototyping, UI and design systems — and ship my own designs to production in React and TypeScript.",
+  "I build Figma component libraries and design tokens wired directly into code, with full light/dark theming, and work remotely with distributed, cross-functional teams.",
 ] as const;
 
 const SKILLS = [
-  "User-Centered Design (UCD)",
-  "UI/UX Design",
-  "Design Thinking & Problem-Solving",
-  "Adobe Creative Suite (Illustrator, Photoshop)",
-  "Figma, Sketch, and InVision",
-  "Interaction Design",
-  "Material Selection & Manufacturing Processes",
-  "Collaboration with Engineering and Marketing Teams",
-  "Brand Identity & Visual Design",
-  "Presentation & Communication Skills",
+  "UX/UI & interaction design",
+  "User research & usability testing",
+  "User flows & information architecture",
+  "Wireframing & prototyping",
+  "Design systems, tokens & theming",
+  "Accessibility & responsive design",
+  "React, TypeScript & Material UI",
+  "Fintech & payments (SEPA direct debit)",
+  "SaaS dashboards & admin portals",
+  "Figma, FigJam, Illustrator, Photoshop",
+  "Jira, Git & code review",
+  "Brand identity & visual design",
 ] as const;
 
 const EXPERIENCE = [
   {
     num: "01",
-    company: "Powerpay",
-    role: "Product Designer",
+    company: "PowerPay",
+    role: "Senior Product Designer · Full-time",
     period: "May 2025 — Present",
     companyLine:
-      "Innovative startup building digital products for the energy sector — digital financial products.",
+      "Energy-sector fintech startup with consumer, supplier, producer and trader portals.",
     description:
-      "UX/UI and product strategy across mobile apps, web interfaces, and admin systems — involved in nearly every stage of the product development process.",
+      "Design the financial product end to end and ship it in production React/TypeScript. Designed the SEPA direct-debit mandate flow, own the Figma component library and tokens wired to Material UI, delivered full light/dark theming, redesigned table filtering across the dashboard, and designed landing pages for all four audiences.",
   },
   {
     num: "02",
-    company: "Nordsec",
-    role: "Product Designer",
-    period: "June 2022 — October 2022",
-    companyLine: "B2B digital services for the gaming sector.",
+    company: "Independent",
+    role: "Product & Brand Designer",
+    period: "June 2014 — Present",
+    companyLine:
+      "Freelance practice alongside full-time roles; full-time freelance June 2024 — May 2025.",
     description:
-      "UX/UI for digital products: research, wireframing, and cross-functional collaboration to deliver user-friendly, effective design solutions.",
+      "Mintly, a creator-economy platform: product design and a complete design system with dark/light themes. Ancestry Tree, a genealogy product: desktop and mobile profile with a working front-end prototype. Product UI, landing pages, brand identity and print for clients across industries.",
   },
   {
     num: "03",
-    company: "Betsolutions",
-    role: "Product Designer",
-    period: "January 2021 — June 2022",
-    companyLine: "Digital games for the gambling sector.",
+    company: "Nordasec",
+    role: "Product Designer · Remote (Tallinn, Estonia)",
+    period: "June 2022 — June 2024",
+    companyLine: "B2B digital services provider.",
     description:
-      "Designed engaging gaming products to drive user satisfaction. Research, prototyping, and testing aligned with business strategy and user experience goals.",
+      "Led UX/UI design for B2B digital products end to end. Ran user research and wireframing to shape product direction, and partnered with engineering, product and business teams to turn requirements into usable interfaces.",
   },
   {
     num: "04",
-    company: "Webiz Georgia",
+    company: "BetSolutions",
     role: "Product Designer",
-    period: "March 2020 — August 2020",
-    companyLine: "B2C freelance platform providing digital solutions.",
-    description: "End-to-end product design for the platform offering.",
+    period: "January 2021 — June 2022",
+    companyLine: "B2B digital entertainment products.",
+    description:
+      "Designed player-facing products focused on engagement; ran research, prototyping and testing, iterated on results, and worked with engineering and product through release.",
   },
   {
     num: "05",
-    company: "Proservice",
-    role: "UI/UX Designer",
-    period: "October 2016 — March 2020",
-    companyLine: "Digital service provider platform.",
-    description: "UX/UI design for web and mobile products.",
+    company: "Webiz Georgia",
+    role: "Product Designer",
+    period: "March 2020 — August 2020",
+    companyLine: "B2C freelance platform.",
+    description: "Product design, interface design and user flows, through developer handoff.",
   },
   {
     num: "06",
+    company: "ProService",
+    role: "UI/UX Designer",
+    period: "October 2016 — March 2020",
+    companyLine: "Digital services platform.",
+    description:
+      "UI/UX design for 3.5 years: user flows, interfaces and visual design, working with developers into production.",
+  },
+  {
+    num: "07",
     company: "Smart Web Studio",
     role: "UI Designer",
     period: "January 2016 — September 2016",
@@ -116,7 +129,7 @@ export function ResumeScreen() {
             <span className="mpr-hero-title-accent">Karmazanashvili</span>
           </h1>
           <p className="mpr-hero-lead">
-            Product design across fintech, gaming, and platforms — from discovery to developer-ready UI.
+            Product design, design systems and design engineering for fintech, energy and B2B platforms — from research to production React.
           </p>
           <div className="mpr-hero-actions">
             <a
