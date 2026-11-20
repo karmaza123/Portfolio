@@ -54,6 +54,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.23   | 2026-11-20 | `ed52cc8` | Design critique fixes: career facts aligned (Senior Product Designer, 8+ years, project count from the list); muted text lightened to ~7:1 contrast and 10–11px labels raised to 12px; Artemis UI intro split into paragraphs and gallery captions added (optional `caption` on gallery images). |
 
-| V0.24   | 2026-11-20 | `PENDING` | Resume synced with the Nov 2026 CV: new summary and hero line, PowerPay as Senior Product Designer with concrete wins, Independent practice (2014–present) added, Nordasec name and dates corrected, current skills list, downloadable PDF replaced. Home back to 10+ years. |
+| V0.24   | 2026-11-20 | `c656a97` | Resume synced with the Nov 2026 CV: new summary and hero line, PowerPay as Senior Product Designer with concrete wins, Independent practice (2014–present) added, Nordasec name and dates corrected, current skills list, downloadable PDF replaced. Home back to 10+ years. |
 
 **Next version:** `v0.25`
