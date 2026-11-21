@@ -624,7 +624,6 @@ a.mp-nav-status--action:focus-visible {
   color: var(--mp-text);
   position: relative;
   overflow: hidden;
-  transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (max-width: 640px) {
@@ -652,25 +651,35 @@ a.mp-nav-status--action:focus-visible {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 0;
+  width: 100%;
   background: var(--mp-surface2);
-  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Wipe in with transform instead of animating width (no layout work) */
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 0;
 }
 
 .mp-project-item:hover::before {
-  width: 100%;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .mp-project-item:hover {
-    padding-left: 24px;
-  }
+  transform: scaleX(1);
 }
 
 .mp-project-item > * {
   position: relative;
   z-index: 1;
+}
+
+/* Number and title nudge right on hover (was a padding-left animation) */
+.mp-project-item > .mp-project-num,
+.mp-project-item > .mp-project-info {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mp-project-item:hover > .mp-project-num,
+  .mp-project-item:hover > .mp-project-info {
+    transform: translateX(24px);
+  }
 }
 
 .mp-project-item:focus-visible {

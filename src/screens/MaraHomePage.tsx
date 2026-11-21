@@ -288,7 +288,7 @@ export function MaraHomePage() {
           {CONTACT_EMAIL}
         </a>
         <div className="mp-contact-links">
-          <a href="https://www.behance.net/karmazan" className="mp-contact-link" target="_blank" rel="noreferrer">
+          <a href="https://www.behance.net/karmaza" className="mp-contact-link" target="_blank" rel="noreferrer">
             Behance
           </a>
           <Link to="/resume" className="mp-contact-link">

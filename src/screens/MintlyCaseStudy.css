@@ -588,7 +588,6 @@ html[data-mp-theme="light"] .mt-flow-step:last-child::before {
 .mt-finding {
   padding: 22px 22px 20px;
   border: 1px solid var(--aa-line);
-  border-left: 2px solid var(--mt-small);
   border-radius: 14px;
   background: var(--mt-surface);
 }

@@ -108,6 +108,11 @@ const EDUCATION = [
   },
 ] as const;
 
+const LANGUAGES = [
+  { name: "English", level: "Professional working proficiency" },
+  { name: "Georgian", level: "Native" },
+] as const;
+
 /** Icon links in the hero; same targets as the Connect section below. */
 const QUICK_LINKS = [
   {
@@ -139,7 +144,7 @@ const QUICK_LINKS = [
   },
   {
     label: "Behance",
-    href: "https://www.behance.net/karmazan",
+    href: "https://www.behance.net/karmaza",
     icon: (
       <>
         <path d="M3 6h5a3 3 0 0 1 0 6H3zM3 12h6a3 3 0 0 1 0 6H3z" />
@@ -287,6 +292,15 @@ export function ResumeScreen() {
                 </li>
               ))}
             </ul>
+            <h3 className="mpr-lang-title">Languages</h3>
+            <ul className="mpr-edu-list">
+              {LANGUAGES.map((l) => (
+                <li key={l.name} className="mpr-edu-card">
+                  <p className="mpr-edu-course">{l.name}</p>
+                  <p className="mpr-edu-meta">{l.level}</p>
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </section>
 
@@ -311,12 +325,12 @@ export function ResumeScreen() {
               </li>
               <li>
                 <a
-                  href="https://www.behance.net/karmazan"
+                  href="https://www.behance.net/karmaza"
                   className="mpr-contact-link"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  behance.net/karmazan
+                  behance.net/karmaza
                 </a>
               </li>
               <li>

@@ -18,6 +18,40 @@
   gap: 32px;
 }
 
+.mpr-hero > .reveal.mpr-quick-reveal {
+  align-self: end;
+  align-items: flex-end;
+}
+
+/* Brand doodle as a faint packaging-style texture on the right of the hero.
+   The SVG is a mask, so it takes the theme text colour; a gradient fades it
+   out toward the name. */
+.mpr-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.mpr-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 38%;
+  z-index: -1;
+  background: var(--mp-text);
+  opacity: 0.06;
+  -webkit-mask-image: url("/brand-doodle.svg"), linear-gradient(to right, transparent, #000 45%);
+  -webkit-mask-size: 1200px auto, 100% 100%;
+  -webkit-mask-position: right center, 0 0;
+  -webkit-mask-repeat: repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-image: url("/brand-doodle.svg"), linear-gradient(to right, transparent, #000 45%);
+  mask-size: 1200px auto, 100% 100%;
+  mask-position: right center, 0 0;
+  mask-repeat: repeat, no-repeat;
+  mask-composite: intersect;
+  pointer-events: none;
+}
+
 /* Quick contact icons, bottom-right of the hero, chip style like the filters */
 .mpr-quick {
   display: flex;
@@ -58,6 +92,13 @@
 @media (max-width: 720px) {
   .mpr-hero {
     grid-template-columns: 1fr;
+  }
+  .mpr-hero > .reveal.mpr-quick-reveal {
+    align-items: flex-start;
+  }
+  .mpr-hero::before {
+    inset: 0;
+    opacity: 0.045;
   }
 }
 
@@ -287,14 +328,16 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 0;
+  width: 100%;
   background: var(--mp-surface2);
-  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 0;
 }
 
 .mpr-exp-row:hover::before {
-  width: 100%;
+  transform: scaleX(1);
 }
 
 .mpr-exp-num,
@@ -553,3 +596,14 @@
     justify-content: center;
   }
 }
+
+.mpr-lang-title {
+  margin: 32px 0 16px;
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mp-muted);
+}
+
