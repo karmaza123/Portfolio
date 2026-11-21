@@ -62,4 +62,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.27   | 2026-11-21 | `71a4749` | One flow across the portfolio: shared case-study frame (`CaseStudyTop` / `CaseStudyFooter`) with the same top bar and a footer linking All work and the next project; mono back links to /work; Sunfield live button matches Download resume. PowerPay cards follow light mode and phone screens fill their frame width. 12px corner radius for cards and frames site-wide (Mintly product mockups keep their own). Sunfield phones: full 500px-wide recaptures, device shell with status strip, level location captions, more space above. |
 
-**Next version:** `v0.28`
+| V0.28   | 2026-11-21 | `PENDING` | Sunfield phones: screen top corners 4px so the app's gauge card is no longer clipped; bottom stays 24px to follow the shell. |
+
+**Next version:** `v0.29`

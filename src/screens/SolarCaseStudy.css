@@ -363,7 +363,9 @@
   /* Whole screen, never cropped: height follows the 500×1110 capture */
   width: 100%;
   height: auto;
-  border-radius: 12px 12px 24px 24px;
+  /* Top corners stay tight: the app's gauge card sits only a few px from the
+     screen edge, so a larger radius would clip it. */
+  border-radius: 4px 4px 24px 24px;
 }
 
 /* Tablet & phone: screen pinned on top, steps scroll underneath as cards */
