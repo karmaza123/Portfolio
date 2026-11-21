@@ -56,4 +56,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.24   | 2026-11-20 | `c656a97` | Resume synced with the Nov 2026 CV: new summary and hero line, PowerPay as Senior Product Designer with concrete wins, Independent practice (2014–present) added, Nordasec name and dates corrected, current skills list, downloadable PDF replaced. Home back to 10+ years. |
 
-**Next version:** `v0.25`
+| V0.25   | 2026-11-21 | `PENDING` | Alignment pass: case-study top bar (back link / title) sits on the content edges via `--aa-max` / `--aa-gutter` (Mintly and Sunfield set their wider widths); Sunfield hero and tour share one left edge, tour starts right after the hero, serif step headings, light-theme borders on park tabs. Project filters and List/Grid switch on one row with matching chip style. Resume hero gets quick contact icons (email, phone, LinkedIn, Behance). |
+
+**Next version:** `v0.26`

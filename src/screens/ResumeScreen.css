@@ -12,6 +12,53 @@
   padding-left: max(24px, min(6vw, 88px), env(safe-area-inset-left, 0px));
   padding-right: max(24px, min(6vw, 88px), env(safe-area-inset-right, 0px));
   border-bottom: 1px solid var(--mp-border);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 32px;
+}
+
+/* Quick contact icons, bottom-right of the hero, chip style like the filters */
+.mpr-quick {
+  display: flex;
+  gap: 8px;
+}
+
+.mpr-quick-link {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--mp-border2);
+  color: var(--mp-muted);
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.mpr-quick-link svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mpr-quick-link:hover {
+  color: var(--mp-bg);
+  background: var(--mp-accent);
+  border-color: var(--mp-accent);
+}
+
+.mpr-quick-link:focus-visible {
+  outline: 2px solid var(--mp-accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .mpr-hero {
+    grid-template-columns: 1fr;
+  }
 }
 
 .mpr-hero > .reveal {

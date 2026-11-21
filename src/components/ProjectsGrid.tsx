@@ -7,6 +7,8 @@ import "./ProjectsGrid.css";
 
 type ProjectsGridProps = {
   projects: readonly HomeProject[];
+  /** Rendered on the same row as the List/Grid switch (the category filter). */
+  toolbar?: React.ReactNode;
 };
 
 type Layout = "list" | "grid";
@@ -51,7 +53,7 @@ function ProjectLink({
   );
 }
 
-export function ProjectsGrid({ projects }: ProjectsGridProps) {
+export function ProjectsGrid({ projects, toolbar }: ProjectsGridProps) {
   const [layout, setLayout] = useState<Layout>(readLayout);
 
   const choose = (l: Layout) => {
@@ -65,6 +67,8 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
 
   return (
     <>
+      <div className="mp-projects-toolbar">
+      {toolbar}
       <div className="mp-layout-switch" role="group" aria-label="Project layout">
         <button
           type="button"
@@ -92,6 +96,11 @@ export function ProjectsGrid({ projects }: ProjectsGridProps) {
           Grid
         </button>
       </div>
+      </div>
+
+      {projects.length === 0 ? (
+        <p className="mp-project-filter-empty">No projects match this category.</p>
+      ) : null}
 
       {layout === "grid" ? (
         <div className="mp-projects-cards">

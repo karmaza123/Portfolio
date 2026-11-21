@@ -164,16 +164,16 @@ export function MaraHomePage() {
             </h2>
           </div>
         </Reveal>
-        <ProjectTagFilter
-          categories={PROJECT_FILTER_CATEGORIES}
-          activeCategory={activeCategory}
-          onChange={setActiveCategory}
+        <ProjectsGrid
+          projects={previewProjects}
+          toolbar={
+            <ProjectTagFilter
+              categories={PROJECT_FILTER_CATEGORIES}
+              activeCategory={activeCategory}
+              onChange={setActiveCategory}
+            />
+          }
         />
-        {previewProjects.length > 0 ? (
-          <ProjectsGrid projects={previewProjects} />
-        ) : (
-          <p className="mp-project-filter-empty">No projects match this category.</p>
-        )}
         {showViewMore ? (
           <div className="mp-project-view-more">
             <Link to="/work" className="mp-view-more">

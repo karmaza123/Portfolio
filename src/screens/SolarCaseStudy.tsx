@@ -125,8 +125,8 @@ export function SolarCaseStudy() {
           <Link to="/" className="aa-back">
             ← Portfolio
           </Link>
-          <div className="aa-brand" aria-label="Solar — Quick concept">
-            <span className="aa-brand-text">Solar — Quick concept</span>
+          <div className="aa-brand" aria-label="Sunfield — Solar parks concept">
+            <span className="aa-brand-text">Sunfield — Solar parks concept</span>
           </div>
           <span className="aa-top-spacer" aria-hidden />
         </header>

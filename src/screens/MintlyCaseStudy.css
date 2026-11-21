@@ -8,6 +8,9 @@
   --mt-rest: #7d7a72;
   --mt-gutter: max(48px, env(safe-area-inset-left, 0px));
   --mt-max: 1360px;
+  /* Top bar (back link / title) lines up with the Mintly content edges */
+  --aa-max: var(--mt-max);
+  --aa-gutter: var(--mt-gutter);
   --mt-surface: var(--mp-surface, #131310);
   --mt-mint: #93e9be;
   --mt-ink: #f0ede6;

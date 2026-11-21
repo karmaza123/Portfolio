@@ -108,6 +108,47 @@ const EDUCATION = [
   },
 ] as const;
 
+/** Icon links in the hero; same targets as the Connect section below. */
+const QUICK_LINKS = [
+  {
+    label: `Email ${CONTACT_EMAIL}`,
+    href: CONTACT_MAILTO,
+    icon: (
+      <>
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="m3 7 9 6 9-6" />
+      </>
+    ),
+  },
+  {
+    label: "Call +995 597 73 48 70",
+    href: "tel:+995597734870",
+    icon: (
+      <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" />
+    ),
+  },
+  {
+    label: "LinkedIn",
+    href: "https://linkedin.com/in/karmaza/",
+    icon: (
+      <>
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7" />
+      </>
+    ),
+  },
+  {
+    label: "Behance",
+    href: "https://www.behance.net/karmazan",
+    icon: (
+      <>
+        <path d="M3 6h5a3 3 0 0 1 0 6H3zM3 12h6a3 3 0 0 1 0 6H3z" />
+        <path d="M14 14h7a3.5 3.5 0 1 0-1 2.5M15 7h5" />
+      </>
+    ),
+  },
+] as const;
+
 /** Served from `/public` at dev and build time */
 const RESUME_PDF_URL = "/Dimitri-Karmazanashvili-Resume.pdf";
 
@@ -140,6 +181,24 @@ export function ResumeScreen() {
               Download resume <span className="mpr-download-icon" aria-hidden>↓</span>
             </a>
           </div>
+        </Reveal>
+        <Reveal staggerIndex={1} className="mpr-quick-reveal">
+          <nav className="mpr-quick" aria-label="Quick contact">
+            {QUICK_LINKS.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                className="mpr-quick-link"
+                aria-label={l.label}
+                title={l.label}
+                {...(l.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden>
+                  {l.icon}
+                </svg>
+              </a>
+            ))}
+          </nav>
         </Reveal>
       </header>
 

@@ -34,16 +34,16 @@ export function WorkPage() {
               </h1>
             </div>
           </Reveal>
-          <ProjectTagFilter
-            categories={PROJECT_FILTER_CATEGORIES}
-            activeCategory={activeCategory}
-            onChange={setActiveCategory}
+          <ProjectsGrid
+            projects={filteredProjects}
+            toolbar={
+              <ProjectTagFilter
+                categories={PROJECT_FILTER_CATEGORIES}
+                activeCategory={activeCategory}
+                onChange={setActiveCategory}
+              />
+            }
           />
-          {filteredProjects.length > 0 ? (
-            <ProjectsGrid projects={filteredProjects} />
-          ) : (
-            <p className="mp-project-filter-empty">No projects match this category.</p>
-          )}
           <p className="mp-work-back-wrap">
             <Link to="/" className="mp-work-back-link">
               ← Back to home
