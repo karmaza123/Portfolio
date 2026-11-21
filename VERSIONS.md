@@ -58,6 +58,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.25   | 2026-11-21 | `0753599` | Alignment pass: case-study top bar (back link / title) sits on the content edges via `--aa-max` / `--aa-gutter` (Mintly and Sunfield set their wider widths); Sunfield hero and tour share one left edge, tour starts right after the hero, serif step headings, light-theme borders on park tabs. Project filters and List/Grid switch on one row with matching chip style. Resume hero gets quick contact icons (email, phone, LinkedIn, Behance). |
 
-| V0.26   | 2026-11-21 | `PENDING` | Resume: brand doodle texture on the header (`public/brand-doodle.svg`, generated contour-line pattern in the brand style), Languages list (English, Georgian), Behance link corrected to karmaza everywhere. Hover fills on project and job rows animate with transforms instead of width/padding; Mintly finding cards lose the coloured side border. |
+| V0.26   | 2026-11-21 | `e2d2554` | Resume: brand doodle texture on the header (`public/brand-doodle.svg`, generated contour-line pattern in the brand style), Languages list (English, Georgian), Behance link corrected to karmaza everywhere. Hover fills on project and job rows animate with transforms instead of width/padding; Mintly finding cards lose the coloured side border. |
 
 **Next version:** `v0.27`
