@@ -21,6 +21,7 @@
 /* Hero: left-aligned, title / lede / meta / button share one edge */
 .sl-hero {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
   justify-items: start;
 }
@@ -394,7 +395,7 @@
     padding-top: 6vh;
   }
   .sl-mobile {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

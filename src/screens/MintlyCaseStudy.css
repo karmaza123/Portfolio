@@ -997,7 +997,7 @@ html[data-mp-theme="light"] .mt-finding-fix span {
 
   .mt-spec,
   .mt-shape {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1194,3 +1194,9 @@ html[data-mp-theme="light"] .mt-finding-fix span {
     grid-template-columns: 1fr;
   }
 }
+
+/* A hero ornament sits a few px past the edge on phones; clip it (clip keeps sticky working) */
+.aa.mt {
+  overflow-x: clip;
+}
+

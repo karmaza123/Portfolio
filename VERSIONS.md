@@ -64,4 +64,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.28   | 2026-11-21 | `e8934bc` | Sunfield phones: screen top corners 4px so the app's gauge card is no longer clipped; bottom stays 24px to follow the shell. |
 
-**Next version:** `v0.29`
+| V0.29   | 2026-11-21 | `PENDING` | PowerPay: blank launch-animation frames removed from the onboarding row, logo frame relabelled Launch screen. Phone width: Sunfield hero and Mintly spec grid no longer overflow at 375px (minmax columns; Mintly clips a hero ornament). |
+
+**Next version:** `v0.30`

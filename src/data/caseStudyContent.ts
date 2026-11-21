@@ -884,9 +884,7 @@ export const CASE_STUDIES: Record<string, CaseStudyContent> = {
     accentTeal: "#007867",
     galleryLayout: "grid",
     gallery: [
-      { src: "/case-studies/powerpay-app/screens/intro-1.png", alt: "Intro — your energy in one app", w: 375, h: 813 },
-      { src: "/case-studies/powerpay-app/screens/intro-2.png", alt: "Intro — usage at a glance", w: 375, h: 813 },
-      { src: "/case-studies/powerpay-app/screens/intro-3.png", alt: "Intro — bills and payments", w: 375, h: 813 },
+      { src: "/case-studies/powerpay-app/screens/intro-3.png", alt: "Launch screen", w: 375, h: 813 },
       { src: "/case-studies/powerpay-app/screens/sign-in.png", alt: "Sign in", w: 375, h: 813 },
       { src: "/case-studies/powerpay-app/screens/usage-day.png", alt: "Usage — day", w: 393, h: 1022 },
       { src: "/case-studies/powerpay-app/screens/usage-week.png", alt: "Usage — week", w: 403, h: 883 },
