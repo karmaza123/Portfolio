@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { Link } from "react-router-dom";
 import { MaraHeader } from "../components/MaraHeader";
 import { Reveal } from "../components/Reveal";
+import { CaseStudyFooter, CaseStudyTop } from "../components/CaseStudyFrame";
 import "./CaseStudyScreen.css";
 import "./SolarCaseStudy.css";
 
@@ -120,17 +120,7 @@ export function SolarCaseStudy() {
     <div className="aa sl" style={{ "--sl-amber": hue } as CSSProperties}>
       <MaraHeader active="work" />
 
-      <Reveal className="aa-top-reveal">
-        <header className="aa-top">
-          <Link to="/" className="aa-back">
-            ← Portfolio
-          </Link>
-          <div className="aa-brand" aria-label="Sunfield — Solar parks concept">
-            <span className="aa-brand-text">Sunfield — Solar parks concept</span>
-          </div>
-          <span className="aa-top-spacer" aria-hidden />
-        </header>
-      </Reveal>
+      <CaseStudyTop title="Sunfield — Solar parks concept" />
 
       <main id="main-content" tabIndex={-1}>
         <Reveal blur>
@@ -243,12 +233,14 @@ export function SolarCaseStudy() {
                   <div className="sl-phone">
                     <img src={`${IMG}/${p.id}-mobile.png`} alt={`Sunfield ${p.name} on mobile`} />
                   </div>
-                  <figcaption style={{ "--park": p.hue } as CSSProperties}>{p.name}</figcaption>
+                  <figcaption style={{ "--park": p.hue } as CSSProperties}>{p.where}</figcaption>
                 </figure>
               </Reveal>
             ))}
           </div>
         </section>
+
+        <CaseStudyFooter slug="solar-concept" />
       </main>
     </div>
   );

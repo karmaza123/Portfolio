@@ -1,7 +1,7 @@
 import { useEffect, useState, type CSSProperties } from "react";
-import { Link } from "react-router-dom";
 import { MaraHeader } from "../components/MaraHeader";
 import { Reveal } from "../components/Reveal";
+import { CaseStudyFooter, CaseStudyTop } from "../components/CaseStudyFrame";
 import "./CaseStudyScreen.css";
 
 const IMG = "/case-studies/rkali";
@@ -60,17 +60,7 @@ export function RkaliCaseStudy() {
     <div className="aa rk" style={theme}>
       <MaraHeader active="work" />
 
-      <Reveal className="aa-top-reveal">
-        <header className="aa-top">
-          <Link to="/" className="aa-back">
-            ← Portfolio
-          </Link>
-          <div className="aa-brand" aria-label="Rkali — Brand identity">
-            <span className="aa-brand-text">Rkali — Brand identity</span>
-          </div>
-          <span className="aa-top-spacer" aria-hidden />
-        </header>
-      </Reveal>
+      <CaseStudyTop title="Rkali — Brand identity" />
 
       <main id="main-content" tabIndex={-1}>
         <Reveal blur className="aa-hero-reveal">
@@ -161,13 +151,7 @@ export function RkaliCaseStudy() {
           </section>
         </Reveal>
 
-        <Reveal delayMs={80} className="aa-foot-reveal">
-          <footer className="aa-foot">
-            <Link to="/" className="aa-back aa-back--foot">
-              ← All projects
-            </Link>
-          </footer>
-        </Reveal>
+        <CaseStudyFooter slug="rkali-brand-design" />
       </main>
 
       {zoom && (

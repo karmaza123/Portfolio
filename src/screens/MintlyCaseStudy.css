@@ -142,7 +142,7 @@ html[data-mp-theme="light"] .mt-title em {
 .mt-shot {
   position: absolute;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 12px;
   border: 1px solid var(--aa-line-strong);
   background: var(--aa-media-bg);
   box-shadow: 0 40px 90px var(--aa-shadow);
@@ -409,7 +409,7 @@ html[data-mp-theme="light"] .mt-flow-step:last-child::before {
   margin: 0;
   padding: 28px 28px 22px;
   border: 1px solid var(--aa-line);
-  border-radius: 16px;
+  border-radius: 12px;
   background: var(--mt-surface);
 }
 
@@ -555,7 +555,7 @@ html[data-mp-theme="light"] .mt-flow-step:last-child::before {
   gap: 6px;
   padding: 20px 20px 18px;
   border: 1px solid var(--aa-line);
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--mt-surface);
 }
 
@@ -588,7 +588,7 @@ html[data-mp-theme="light"] .mt-flow-step:last-child::before {
 .mt-finding {
   padding: 22px 22px 20px;
   border: 1px solid var(--aa-line);
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--mt-surface);
 }
 
@@ -918,7 +918,7 @@ html[data-mp-theme="light"] .mt-finding-fix span {
   padding: 0;
   overflow: hidden;
   border: 1px solid var(--aa-line);
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--aa-media-bg);
   box-shadow: 0 24px 60px var(--aa-shadow-soft);
   cursor: zoom-in;

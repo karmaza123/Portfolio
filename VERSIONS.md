@@ -60,4 +60,6 @@ Track notable change batches here. The assistant labels work by version in chat 
 
 | V0.26   | 2026-11-21 | `e2d2554` | Resume: brand doodle texture on the header (`public/brand-doodle.svg`, generated contour-line pattern in the brand style), Languages list (English, Georgian), Behance link corrected to karmaza everywhere. Hover fills on project and job rows animate with transforms instead of width/padding; Mintly finding cards lose the coloured side border. |
 
-**Next version:** `v0.27`
+| V0.27   | 2026-11-21 | `PENDING` | One flow across the portfolio: shared case-study frame (`CaseStudyTop` / `CaseStudyFooter`) with the same top bar and a footer linking All work and the next project; mono back links to /work; Sunfield live button matches Download resume. PowerPay cards follow light mode and phone screens fill their frame width. 12px corner radius for cards and frames site-wide (Mintly product mockups keep their own). Sunfield phones: full 500px-wide recaptures, device shell with status strip, level location captions, more space above. |
+
+**Next version:** `v0.28`

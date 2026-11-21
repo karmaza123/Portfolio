@@ -63,7 +63,7 @@
 .pp-card {
   margin: 0;
   padding: 1.1rem;
-  border-radius: 1.25rem;
+  border-radius: 12px;
   border: 1px solid color-mix(in srgb, var(--aa-gold) 22%, transparent);
   background:
     radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--aa-gold) 10%, transparent), transparent 60%),
@@ -263,7 +263,7 @@
 
 .pp-shot {
   display: flex; flex-direction: column; gap: 0.6rem; width: 100%;
-  padding: 0.45rem 0.45rem 0.75rem; border-radius: 1rem;
+  padding: 0.45rem 0.45rem 0.75rem; border-radius: 12px;
   border: 1px solid color-mix(in srgb, var(--aa-gold) 16%, transparent);
   background: color-mix(in srgb, var(--aa-gold) 4%, transparent);
   color: inherit; font: inherit; text-align: left; cursor: zoom-in;
@@ -306,7 +306,6 @@
   background: var(--aa-bg);
   color: var(--aa-text);
 }
-.aa--pp .aa-top-reveal,
 .aa--pp .aa-hero-reveal,
 .aa--pp .aa-assets-lede,
 .aa--pp .aa-narrative-reveal { display: none; }
@@ -480,7 +479,7 @@
 
 /* Accounts tree */
 .pp-acc-tree { margin-top: 1.1rem; display: grid; justify-items: center; gap: 0.9rem; }
-.pp-acc-root { padding: 0.6rem 1.1rem; border-radius: 0.8rem; background: var(--aa-gold); color: var(--pp-on-accent); font-weight: 600; font-size: 0.92rem; animation: pp-rise 0.4s ease both; }
+.pp-acc-root { padding: 0.6rem 1.1rem; border-radius: 12px; background: var(--aa-gold); color: var(--pp-on-accent); font-weight: 600; font-size: 0.92rem; animation: pp-rise 0.4s ease both; }
 .pp-acc-kids { display: flex; flex-wrap: wrap; gap: 0.45rem; justify-content: center; padding-top: 0.9rem; border-top: 2px solid var(--aa-line-strong); width: 100%; }
 .pp-acc-kids span { padding: 0.5rem 0.8rem; border-radius: 0.7rem; border: 1px solid var(--aa-line-strong); background: var(--pp-surface); font-size: 0.85rem; animation: pp-rise 0.4s ease both; }
 
@@ -555,8 +554,8 @@
 
 /* Phone screens — individual app screens; long ones are cut at phone height */
 .pp-shots--phone { grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: 0.9rem; }
-.pp-shots--phone .pp-shot { padding: 0.35rem 0.35rem 0.65rem; border-radius: 1.6rem; }
-.pp-shots--phone .pp-shot-frame { aspect-ratio: 393 / 852; border-radius: 1.3rem; }
+.pp-shots--phone .pp-shot { padding: 0.35rem 0.35rem 0.65rem; border-radius: 12px; }
+.pp-shots--phone .pp-shot-frame { aspect-ratio: 393 / 852; border-radius: 6px; }
 .pp-shots--phone .pp-shot-cap { font-size: 0.8rem; text-align: center; padding: 0 0.25rem; }
 
 /* Research artifacts (board exports) */
@@ -564,7 +563,7 @@
 .pp-chapter:not(:has(.pp-shots)) .pp-artifact { grid-area: shots; }
 .pp-artifact button {
   position: relative; display: block; width: 100%; padding: 0.75rem; border: 1px solid var(--aa-line-strong);
-  border-radius: 1rem; background: #f5f5f3; cursor: zoom-in; overflow: hidden;
+  border-radius: 12px; background: #f5f5f3; cursor: zoom-in; overflow: hidden;
 }
 .pp-artifact button:focus-visible { outline: 2px solid var(--aa-gold); outline-offset: 3px; }
 .pp-artifact img { display: block; width: 100%; height: auto; border-radius: 0.5rem; }
@@ -596,7 +595,7 @@
 .pp-phone-screen {
   position: relative;
   aspect-ratio: 375 / 813;
-  border-radius: 1.9rem;
+  border-radius: 12px;
   padding: 0.45rem;
   background: #1c1c1a;
   box-shadow:
@@ -612,7 +611,7 @@
   height: calc(100% - 0.9rem);
   object-fit: cover;
   object-position: top;
-  border-radius: 1.5rem;
+  border-radius: 6px;
   background: #fff;
   opacity: 0;
   transform: translateY(8%) scale(0.98);
@@ -651,8 +650,8 @@
   transform: none;
   animation-name: pp-phone-rise;
 }
-.pp-phone-screen { height: calc(100% - 1.3rem); width: auto; border-radius: 1.5rem; padding: 0.35rem; }
-.pp-phone-screen img { inset: 0.35rem; width: calc(100% - 0.7rem); height: calc(100% - 0.7rem); border-radius: 1.2rem; }
+.pp-phone-screen { height: calc(100% - 1.3rem); width: auto; border-radius: 12px; padding: 0.35rem; }
+.pp-phone-screen img { inset: 0.35rem; width: calc(100% - 0.7rem); height: calc(100% - 0.7rem); border-radius: 6px; }
 .pp-phone-island { top: 0.65rem; height: 0.7rem; }
 .pp-phone-dots { margin-top: 0.6rem; }
 .pp-hero-frame--phone .pp-hero-title { max-width: 71%; }
@@ -674,7 +673,7 @@
 .ppa {
   position: absolute;
   inset: 0.35rem;
-  border-radius: 1.2rem;
+  border-radius: 6px;
   overflow: hidden;
   background: #fff;
   container-type: size;
@@ -905,7 +904,7 @@
 .pp-hero-visual { grid-column: 2; grid-row: 1; min-width: 0; animation: pp-phone-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both; }
 
 .pp-window {
-  border-radius: 0.9rem;
+  border-radius: 12px;
   overflow: hidden;
   background: #fff;
   box-shadow:
@@ -991,3 +990,28 @@
 
 /* 4. Text beside a tall widget sits at the top, not floating mid-way */
 .pp-chapter { align-items: start; }
+
+/* Shared case-study top bar and footer line up with the PowerPay story column */
+.aa--pp {
+  --aa-max: 72rem;
+  --aa-gutter: 22px;
+}
+
+
+/* Light theme: cards follow the page instead of staying dark (text already flips) */
+html[data-mp-theme="light"] .aa--pp {
+  --pp-surface: #ffffff;
+  --pp-surface-2: #f4f2ec;
+  --pp-surface-3: #e8e6e0;
+  --pp-field: #faf9f5;
+  --pp-on-accent: #ffffff;
+  --aa-muted: #55534c;
+}
+
+/* Phone screens fill the frame width; a short screen leaves space at the bottom
+   instead of cropping its sides */
+.pp-shots--phone .pp-shot-frame img {
+  height: auto;
+  object-fit: fill;
+  object-position: top center;
+}

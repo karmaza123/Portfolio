@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
-import { Link } from "react-router-dom";
 import { MaraHeader } from "../components/MaraHeader";
 import { Reveal } from "../components/Reveal";
+import { CaseStudyFooter, CaseStudyTop } from "../components/CaseStudyFrame";
 import { MintlyHeroStage } from "./MintlyHeroStage";
 import { MintlyShowcase } from "./MintlyShowcase";
 import "./CaseStudyScreen.css";
@@ -214,17 +214,7 @@ export function MintlyCaseStudy() {
     <div className="aa mt">
       <MaraHeader active="work" />
 
-      <Reveal className="aa-top-reveal">
-        <header className="aa-top">
-          <Link to="/" className="aa-back">
-            ← Portfolio
-          </Link>
-          <div className="aa-brand" aria-label="Mintly — Design system">
-            <span className="aa-brand-text">Mintly — Design system</span>
-          </div>
-          <span className="aa-top-spacer" aria-hidden />
-        </header>
-      </Reveal>
+      <CaseStudyTop title="Mintly — Design system" />
 
       <main id="main-content" tabIndex={-1}>
         <section className="mt-hero" aria-labelledby="mt-title">
@@ -518,12 +508,7 @@ export function MintlyCaseStudy() {
 
         <MintlyShowcase />
 
-        {/* Not wrapped in Reveal: as the last element it never clears Reveal's -12% bottom margin. */}
-        <footer className="aa-foot">
-          <Link to="/" className="aa-back aa-back--foot">
-            ← All projects
-          </Link>
-        </footer>
+        <CaseStudyFooter slug="mintly-design-system" />
       </main>
 
     </div>

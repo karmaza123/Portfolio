@@ -48,7 +48,7 @@
   flex-direction: column;
   height: 100%;
   border: 1px solid var(--mp-border);
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
   color: var(--mp-text);
   text-decoration: none;
